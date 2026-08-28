@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400;500;600;700&display=swap");
+
+:root {
+  --font-main: "Josefin Sans", sans-serif;
+
+  /* Couleurs Dark Mode */
+  --color-bg: #080b12;
+  --color-bg-secondary: #0d111a;
+  --color-surface: #111722;
+  --color-surface-secondary: #161d29;
+  --color-border: #232c3a;
+  --color-text-primary: #f5f7fa;
+  --color-text-secondary: #9aa5b5;
+  --color-text-muted: #667085;
+  --color-accent: #3b82f6;
+  --color-accent-hover: #60a5fa;
+  --color-navbar-bg: rgba(17, 23, 34, 0.85);
+
+  /* Transitions */
+  --transition-smooth: all 0.3s ease;
+}
+
+/* Variables pour le futur Light Mode */
+[data-theme="light"] {
+  --color-bg: #f7f8fa;
+  --color-bg-secondary: #eef1f5;
+  --color-surface: #ffffff;
+  --color-surface-secondary: #f4f6f8;
+  --color-border: #dde2e8;
+  --color-text-primary: #101828;
+  --color-text-secondary: #475467;
+  --color-text-muted: #667085;
+  --color-accent: #2563eb;
+  --color-accent-hover: #1d4ed8;
+  --color-navbar-bg: rgba(255, 255, 255, 0.9);
+}
+
+html {
+  font-family: var(--font-main);
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-main);
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  transition: var(--transition-smooth);
+  overflow-x: hidden;
+}
+
+main {
+  padding-top: 100px;
+}
+
+section {
+  scroll-margin-top: 100px;
+}
