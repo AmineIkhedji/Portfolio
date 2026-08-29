@@ -144,16 +144,18 @@ navLinkElements.forEach(link => {
 });
 
 // ==================== NAVIGATION ACTIVE ====================
+function setActiveNavLink(sectionId) {
+    navLinkElements.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${sectionId}`);
+    });
+}
+
 // Gestion du clic sur les liens
 navLinkElements.forEach(link => {
     link.addEventListener('click', function(e) {
         e.preventDefault();
-        
-        // Retirer la classe active de tous les liens
-        navLinkElements.forEach(l => l.classList.remove('active'));
-        
-        // Ajouter la classe active au lien cliqué
-        this.classList.add('active');
+
+        setActiveNavLink(this.getAttribute('href').slice(1));
         
         // Scroll vers la section
         const targetId = this.getAttribute('href');
@@ -167,24 +169,24 @@ navLinkElements.forEach(link => {
 // Détecter la section active au scroll
 const sections = document.querySelectorAll('section[id]');
 
-window.addEventListener('scroll', () => {
-    const scrollY = window.pageYOffset;
-    
+function updateActiveSection() {
+    const readingPosition = window.scrollY + 120;
+    let activeSection = sections[0];
+
     sections.forEach(section => {
-        const sectionHeight = section.offsetHeight;
-        const sectionTop = section.offsetTop - 100;
-        const sectionId = section.getAttribute('id');
-        
-        if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-            navLinkElements.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${sectionId}`) {
-                    link.classList.add('active');
-                }
-            });
+        if (section.offsetTop <= readingPosition) {
+            activeSection = section;
         }
     });
-});
+
+    if (activeSection) {
+        setActiveNavLink(activeSection.id);
+    }
+}
+
+window.addEventListener('scroll', updateActiveSection, { passive: true });
+window.addEventListener('resize', updateActiveSection);
+updateActiveSection();
 
 
 // ==================== ANIMATION LOGO ====================

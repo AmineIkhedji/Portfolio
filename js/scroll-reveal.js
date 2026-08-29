@@ -34,21 +34,30 @@
     document.querySelectorAll('[data-reveal-group]').forEach((group) => {
         const children = group.querySelectorAll('[data-reveal]');
         children.forEach((el, index) => {
-            el.style.setProperty('--reveal-delay', `${index * 90}ms`);
+            // On mémorise le délai de cascade sans l'appliquer tout de suite :
+            // il ne doit jouer qu'à l'apparition (voir l'observer plus bas),
+            // sinon il retarde aussi la disparition et les cartes traînent
+            // à l'écran bien après être sorties du viewport.
+            el.dataset.revealDelay = `${index * 90}ms`;
         });
     });
 
-    const observerOptions = {
-        threshold: 0,
-        // La marge du haut (-100px) correspond à la hauteur de la navbar :
-        // un élément est considéré "sorti" dès qu'il atteint ce niveau.
-        rootMargin: '-100px 0px -10% 0px',
-    };
+    // La navbar est en `position: fixed`, donc son rectangle (top/bottom)
+    // est stable quel que soit le scroll : on peut lire sa position réelle
+    // à l'écran directement, plutôt que de deviner sa hauteur avec une
+    // valeur codée en dur (qui décale le seuil de disparition et ne suit
+    // pas les breakpoints où la navbar rétrécit).
+    const navbarEl = document.querySelector('.navbar');
+
+    function getNavbarBottom() {
+        if (!navbarEl) return 100;
+        return Math.ceil(navbarEl.getBoundingClientRect().bottom);
+    }
 
     // [data-reveal-once] (optionnel) : l'élément s'anime une seule fois à
     // sa première apparition, puis reste visible même s'il ressort de la
     // zone observée.
-    const observer = new IntersectionObserver((entries) => {
+    function handleIntersections(entries, obs) {
         entries.forEach((entry) => {
             const target = entry.target.__revealTarget;
             if (!target) return;
@@ -56,13 +65,33 @@
             const playOnce = target.hasAttribute('data-reveal-once');
 
             if (entry.isIntersecting) {
+                // Cascade appliquée uniquement à l'entrée.
+                target.style.setProperty('--reveal-delay', target.dataset.revealDelay || '0ms');
                 target.classList.add('is-visible');
-                if (playOnce) observer.unobserve(entry.target);
+                if (playOnce) obs.unobserve(entry.target);
             } else if (!playOnce) {
+                // Pas de délai à la sortie : la disparition doit être
+                // immédiate, sans attendre le tour de l'élément dans la
+                // cascade (sinon, avec beaucoup d'éléments dans un même
+                // groupe, les derniers restent visibles bien trop longtemps).
+                target.style.setProperty('--reveal-delay', '0ms');
                 target.classList.remove('is-visible');
             }
         });
-    }, observerOptions);
+    }
+
+    function createObserver(navbarBottom) {
+        return new IntersectionObserver(handleIntersections, {
+            threshold: 0,
+            // Le haut de la zone observée colle exactement au bas réel de
+            // la navbar : un élément disparaît pile au moment où il
+            // l'atteint, ni avant ni après.
+            rootMargin: `-${navbarBottom}px 0px -10% 0px`,
+        });
+    }
+
+    let currentNavbarBottom = getNavbarBottom();
+    let observer = createObserver(currentNavbarBottom);
 
     const tracked = [];
 
@@ -87,6 +116,19 @@
         tracked.push({ sentinel, el });
     });
 
+    // Si la hauteur de la navbar change (resize, passage d'un breakpoint
+    // où elle rétrécit), le rootMargin déjà créé ne peut pas être modifié :
+    // on recrée l'observer avec la nouvelle valeur et on ré-observe tout.
+    function refreshObserverIfNavbarChanged() {
+        const navbarBottom = getNavbarBottom();
+        if (navbarBottom === currentNavbarBottom) return;
+
+        currentNavbarBottom = navbarBottom;
+        observer.disconnect();
+        observer = createObserver(currentNavbarBottom);
+        tracked.forEach(({ sentinel }) => observer.observe(sentinel));
+    }
+
     // Place chaque sentinelle sur les coordonnées réelles (layout, donc
     // hors animation) de son élément.
     function positionSentinels() {
@@ -99,10 +141,16 @@
     positionSentinels();
     // Recalcul après chargement complet (polices, images) et au resize,
     // car ces éléments peuvent changer la mise en page des grilles/flex.
-    window.addEventListener('load', positionSentinels);
+    window.addEventListener('load', () => {
+        positionSentinels();
+        refreshObserverIfNavbarChanged();
+    });
     let resizeTimer;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(positionSentinels, 150);
+        resizeTimer = setTimeout(() => {
+            positionSentinels();
+            refreshObserverIfNavbarChanged();
+        }, 150);
     });
 })();

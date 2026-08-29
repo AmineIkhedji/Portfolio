@@ -1,7 +1,7 @@
 /* ==================== A PROPOS DE MOI ==================== */
 
 #apropos {
-  padding: 2.5rem 0 6rem;
+  padding: 2.5rem 0 3rem;
 }
 
 .apropos-container {
@@ -109,7 +109,7 @@
 
 .apropos-divider {
   width: 100vw;
-  margin: 3rem 0 2rem;
+  margin: 3rem 0 1rem;
   margin-left: calc(50% - 50vw);
   border: none;
   border-top: 2px solid var(--color-border);
@@ -154,7 +154,7 @@
 }
 
 @media screen and (max-width: 900px) {
-  #apropos { padding: 4.5rem 0; }
+  #apropos { padding: 4.5rem 0 2.5rem; }
   .apropos-container { padding: 0 1.5rem; }
   .apropos-title { margin-bottom: 2.5rem; }
   .apropos-grid { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -179,7 +179,7 @@
 }
 
 @media screen and (max-width: 480px) {
-  #apropos { padding: 3.5rem 0; }
+  #apropos { padding: 3.5rem 0 2rem; }
   .apropos-container { padding: 0 1.25rem; }
   .apropos-stat-card { padding: 1.1rem; border-radius: 14px; }
   .apropos-meta { gap: 0.75rem; }

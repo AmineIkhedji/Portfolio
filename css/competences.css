@@ -2,7 +2,7 @@
 
 #competences {
   /* Reprend le padding de base de la section À propos */
-  padding: 2.5rem 0 6rem;
+  padding: 0 0 6rem;
 }
 
 .competences-container {
@@ -116,14 +116,14 @@
 /* ==================== RESPONSIVE (Basé sur apropos.css) ==================== */
 
 @media screen and (max-width: 900px) {
-  #competences { padding: 4.5rem 0; }
+  #competences { padding: 0 0 4.5rem; }
   .competences-container { padding: 0 1.5rem; }
   .competences-title { margin-bottom: 2.5rem; }
   .competences-grid { grid-template-columns: 1fr; }
 }
 
 @media screen and (max-width: 480px) {
-  #competences { padding: 3.5rem 0; }
+  #competences { padding: 0 0 3.5rem; }
   .competences-container { padding: 0 1.25rem; }
   .competence-card { padding: 1.1rem; border-radius: 14px; }
 }
