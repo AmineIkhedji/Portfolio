@@ -29,6 +29,14 @@
 
 /* On respecte les préférences d'accessibilité : pas d'animation,
    contenu affiché directement. */
+@media (max-width: 480px) {
+  .hero-avatar[data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-reveal] {
     opacity: 1 !important;
