@@ -196,6 +196,37 @@
   display: block !important;
 }
 
+/* ==================== ANIMATION TRANSITION THEME ==================== */
+
+/* On désactive le cross-fade par défaut de la View Transitions API :
+   l'animation est entièrement pilotée en JS via un clip-path circulaire
+   parti du bouton de theme-toggle, qui "aspire" l'ancien thème. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Par défaut (light -> dark) : l'ancien thème reste au-dessus le temps
+   qu'il rétrécisse vers le bouton, pour révéler le nouveau thème dessous. */
+::view-transition-old(root) {
+  z-index: 2;
+}
+
+::view-transition-new(root) {
+  z-index: 1;
+}
+
+/* dark -> light : on inverse l'empilement pour que le nouveau thème
+   (light) sorte du bouton et recouvre progressivement l'ancien thème. */
+html.theme-transition-reveal::view-transition-new(root) {
+  z-index: 2;
+}
+
+html.theme-transition-reveal::view-transition-old(root) {
+  z-index: 1;
+}
+
 /* ==================== MENU BURGER ==================== */
 
 .burger-menu {

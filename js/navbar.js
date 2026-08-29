@@ -37,7 +37,7 @@ function updateThemeIcon() {
 
 updateThemeIcon();
 
-themeToggle.addEventListener('click', () => {
+function applyTheme() {
     const isLightTheme = document.documentElement.dataset.theme === 'light';
 
     if (isLightTheme) {
@@ -49,7 +49,86 @@ themeToggle.addEventListener('click', () => {
     }
 
     updateThemeIcon();
-});
+}
+
+function switchTheme() {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // On détermine le sens du switch AVANT de changer le thème :
+    // - dark -> light : le nouveau thème sort ("reveal") du bouton
+    // - light -> dark : l'ancien thème est aspiré vers le bouton (comportement initial)
+    const switchingToLight = document.documentElement.dataset.theme !== 'light';
+
+    // Si le navigateur ne supporte pas la View Transitions API, ou si l'utilisateur
+    // préfère un affichage sans animation, on bascule le thème instantanément.
+    if (!document.startViewTransition || prefersReducedMotion) {
+        applyTheme();
+        return;
+    }
+
+    // Coordonnées du bouton : le point d'origine/destination de l'animation.
+    const rect = themeToggle.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+
+    // Rayon nécessaire pour couvrir tout l'écran depuis ce point.
+    const endRadius = Math.hypot(
+        Math.max(x, window.innerWidth - x),
+        Math.max(y, window.innerHeight - y)
+    );
+
+    // Cette classe permet au CSS d'inverser l'empilement (z-index) des
+    // snapshots old/new pendant la transition (voir navbar.css).
+    document.documentElement.classList.toggle('theme-transition-reveal', switchingToLight);
+
+    const transition = document.startViewTransition(() => {
+        applyTheme();
+    });
+
+    transition.ready.then(() => {
+        if (switchingToLight) {
+            // Le nouveau thème (light) part d'un point invisible sur le bouton
+            // et s'étend jusqu'à couvrir tout l'écran : effet "sortie du bouton".
+            document.documentElement.animate(
+                {
+                    clipPath: [
+                        `circle(0px at ${x}px ${y}px)`,
+                        `circle(${endRadius}px at ${x}px ${y}px)`,
+                    ],
+                },
+                {
+                    duration: 550,
+                    easing: 'ease-out',
+                    pseudoElement: '::view-transition-new(root)',
+                }
+            );
+        } else {
+            // L'ancien thème (celui affiché avant le clic) rétrécit jusqu'au
+            // bouton : effet "aspiration" (comportement original).
+            document.documentElement.animate(
+                {
+                    clipPath: [
+                        `circle(${endRadius}px at ${x}px ${y}px)`,
+                        `circle(0px at ${x}px ${y}px)`,
+                    ],
+                },
+                {
+                    duration: 550,
+                    easing: 'ease-in',
+                    pseudoElement: '::view-transition-old(root)',
+                }
+            );
+        }
+    });
+
+    // Nettoyage : on retire la classe une fois la transition terminée
+    // (que ce soit un succès ou une annulation).
+    transition.finished.finally(() => {
+        document.documentElement.classList.remove('theme-transition-reveal');
+    });
+}
+
+themeToggle.addEventListener('click', switchTheme);
 
 // ==================== MENU BURGER ====================
 burgerMenu.addEventListener('click', () => {
@@ -272,4 +351,3 @@ function resetLogo() {
 
 logo.addEventListener("mouseenter", animateLogo);
 logo.addEventListener("mouseleave", resetLogo);
-
