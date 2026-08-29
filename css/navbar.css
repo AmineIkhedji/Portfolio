@@ -248,7 +248,25 @@ html.theme-transition-reveal::view-transition-old(root) {
   height: 2px;
   background-color: var(--color-text-primary);
   border-radius: 2px;
-  transition: var(--transition-smooth);
+  transform-origin: center;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+/* Animation burger -> croix, calculée précisément à partir de la hauteur
+   du burger (21px, 3 lignes de 2px réparties en space-between) pour que
+   la croix soit parfaitement centrée et symétrique. */
+.burger-menu.active .burger-line:nth-child(1) {
+  transform: translateY(9.5px) rotate(45deg);
+}
+
+.burger-menu.active .burger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.burger-menu.active .burger-line:nth-child(3) {
+  transform: translateY(-9.5px) rotate(-45deg);
 }
 
 /* ==================== RESPONSIVE ==================== */

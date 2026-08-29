@@ -21,11 +21,6 @@ languageOptions.forEach(option => {
 
 // ==================== THEME ====================
 
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'light') {
-    document.documentElement.dataset.theme = 'light';
-}
-
 function updateThemeIcon() {
     const isLightTheme = document.documentElement.dataset.theme === 'light';
 
@@ -136,18 +131,7 @@ burgerMenu.addEventListener('click', () => {
     const isMenuOpen = burgerMenu.classList.toggle('active');
     navLinks.classList.toggle('active', isMenuOpen);
     burgerMenu.setAttribute('aria-expanded', String(isMenuOpen));
-    
-    // Animation du burger en croix
-    const lines = burgerMenu.querySelectorAll('.burger-line');
-    if (burgerMenu.classList.contains('active')) {
-        lines[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
-        lines[1].style.opacity = '0';
-        lines[2].style.transform = 'rotate(-45deg) translate(5px, -6px)';
-    } else {
-        lines[0].style.transform = 'none';
-        lines[1].style.opacity = '1';
-        lines[2].style.transform = 'none';
-    }
+    // L'animation de la croix (burger.active .burger-line) est gérée en CSS.
 });
 
 // Fermer le menu quand on clique sur un lien
@@ -156,12 +140,6 @@ navLinkElements.forEach(link => {
         navLinks.classList.remove('active');
         burgerMenu.classList.remove('active');
         burgerMenu.setAttribute('aria-expanded', 'false');
-        
-        // Reset burger animation
-        const lines = burgerMenu.querySelectorAll('.burger-line');
-        lines[0].style.transform = 'none';
-        lines[1].style.opacity = '1';
-        lines[2].style.transform = 'none';
     });
 });
 

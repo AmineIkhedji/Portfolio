@@ -4,10 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- Applique le thème sauvegardé avant le premier rendu, pour éviter
+         tout flash du splash screen (ou de la page) dans le mauvais thème. -->
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.dataset.theme = 'light';
+          }
+        } catch (e) {
+          // localStorage indisponible (mode privé strict, etc.) : on garde le thème par défaut.
+        }
+      })();
+    </script>
+
     <title>Portfolio - Ikhedji Amine</title>
 
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/navbar.css" />
+    <link rel="stylesheet" href="css/hero.css" />
   </head>
   <body>
     <!-- ==================== SPLASH SCREEN ==================== -->
@@ -105,9 +120,27 @@
     <!-- ==================== SECTIONS ==================== -->
 
     <main>
-      <section id="accueil">
-        <h1>Accueil</h1>
-        <p>Lorem ipsum dolor sit amet.</p>
+      <section id="accueil" class="hero">
+        <div class="hero-content">
+          <div class="hero-avatar">
+            <img src="assets/hero.png" alt="Photo de Ikhedji Amine" />
+          </div>
+
+          <p class="hero-eyebrow">
+            <span class="hero-eyebrow-line" aria-hidden="true"></span>
+            Bonjour, je suis
+          </p>
+
+          <h1 class="hero-title">Ikhedji Amine</h1>
+
+          <p class="hero-role">
+            <span id="heroRoleText"></span><span class="hero-cursor" aria-hidden="true"></span>
+          </p>
+
+          <a href="#projets" class="hero-cta">Voir mes projets</a>
+        </div>
+
+        <div class="hero-divider" aria-hidden="true"></div>
       </section>
 
       <section id="apropos">
@@ -140,5 +173,6 @@
     <!-- ==================== JAVASCRIPT ==================== -->
     <script src="js/splash.js"></script>
     <script src="js/navbar.js"></script>
+    <script src="js/hero.js"></script>
   </body>
 </html>

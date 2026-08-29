@@ -1,0 +1,161 @@
+/* ==================== HERO / ACCUEIL ==================== */
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  padding: 3.5rem 1.5rem 3rem;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 700px;
+}
+
+/* ---------- Avatar en bulle ---------- */
+
+.hero-avatar {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 0 0 8px var(--color-surface-secondary);
+  margin-bottom: 2rem;
+}
+
+.hero-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---------- Eyebrow "Bonjour, je suis" ---------- */
+
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 0.75rem;
+  color: var(--color-accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.hero-eyebrow-line {
+  width: 24px;
+  height: 2px;
+  background-color: var(--color-accent);
+  border-radius: 2px;
+}
+
+/* ---------- Titre ---------- */
+
+.hero-title {
+  margin: 0 0 0.75rem;
+  font-size: clamp(2.5rem, 6vw, 4.25rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--color-text-primary);
+}
+
+/* ---------- Rôle (animation machine à écrire) ---------- */
+
+.hero-role {
+  margin: 0 0 1.75rem;
+  font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  min-height: 1.6em;
+}
+
+.hero-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 3px;
+  background-color: var(--color-accent);
+  vertical-align: -0.15em;
+  animation: hero-cursor-blink 0.9s step-end infinite;
+}
+
+@keyframes hero-cursor-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ---------- Bouton ---------- */
+
+.hero-cta {
+  display: inline-block;
+  padding: 0.85rem 2rem;
+  background-color: var(--color-accent);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 50px;
+  transition: var(--transition-smooth);
+}
+
+.hero-cta:hover {
+  background-color: var(--color-accent-hover);
+  transform: translateY(-2px);
+}
+
+/* ---------- Barre de séparation avec la section suivante ---------- */
+
+.hero-divider {
+  /* Technique "full-bleed" : la barre s'étend sur toute la largeur de
+     l'écran, indépendamment des marges/paddings du conteneur parent. */
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  height: 1px;
+  margin-top: 3rem;
+  background-color: var(--color-border);
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+@media screen and (max-width: 900px) {
+  .hero {
+    padding-top: 2rem;
+    padding-bottom: 2.5rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .hero {
+    padding-top: 0.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .hero-avatar {
+    width: 130px;
+    height: 130px;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 0 0 6px var(--color-surface-secondary);
+  }
+
+  .hero-divider {
+    margin-top: 2rem;
+  }
+}
