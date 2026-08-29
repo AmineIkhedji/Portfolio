@@ -15,6 +15,9 @@
   --color-accent: #3b82f6;
   --color-accent-hover: #60a5fa;
   --color-navbar-bg: rgba(17, 23, 34, 0.85);
+  --scrollbar-track: rgba(148, 163, 184, 0.12);
+  --scrollbar-thumb: rgba(96, 165, 250, 0.75);
+  --scrollbar-thumb-hover: rgba(96, 165, 250, 1);
 
   /* Transitions */
   --transition-smooth: all 0.3s ease;
@@ -33,6 +36,9 @@
   --color-accent: #2563eb;
   --color-accent-hover: #1d4ed8;
   --color-navbar-bg: rgba(255, 255, 255, 0.9);
+  --scrollbar-track: rgba(15, 23, 42, 0.08);
+  --scrollbar-thumb: rgba(37, 99, 235, 0.6);
+  --scrollbar-thumb-hover: rgba(37, 99, 235, 0.85);
 }
 
 html {
@@ -40,6 +46,34 @@ html {
   scroll-behavior: smooth;
   box-sizing: border-box;
   overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+  background-clip: padding-box;
 }
 
 *,
