@@ -1,0 +1,38 @@
+/* ==================== SCROLL REVEAL ====================
+   Les éléments portant [data-reveal] sont masqués/décalés par défaut,
+   puis animés vers leur état final quand ils entrent dans le viewport.
+   Comme la classe .is-visible est retirée quand l'élément ressort du
+   viewport (voir scroll-reveal.js), l'animation se rejoue à chaque
+   passage, que l'on descende ou que l'on remonte la page. */
+
+[data-reveal] {
+  opacity: 0;
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+/* Directions disponibles : data-reveal="up|down|left|right|scale|fade" */
+[data-reveal="up"] { transform: translateY(36px); }
+[data-reveal="down"] { transform: translateY(-36px); }
+[data-reveal="left"] { transform: translateX(36px); }
+[data-reveal="right"] { transform: translateX(-36px); }
+[data-reveal="scale"] { transform: scale(0.94); }
+[data-reveal="fade"] { transform: none; }
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+}
+
+/* On respecte les préférences d'accessibilité : pas d'animation,
+   contenu affiché directement. */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

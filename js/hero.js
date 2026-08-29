@@ -1,4 +1,3 @@
-// ==================== HERO — MACHINE À ÉCRIRE ====================
 
 (function () {
     const roleText = document.getElementById('heroRoleText');

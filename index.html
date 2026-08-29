@@ -3,176 +3,131 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- Applique le thème sauvegardé avant le premier rendu, pour éviter
-         tout flash du splash screen (ou de la page) dans le mauvais thème. -->
     <script>
       (function () {
         try {
           if (localStorage.getItem('theme') === 'light') {
             document.documentElement.dataset.theme = 'light';
           }
-        } catch (e) {
-          // localStorage indisponible (mode privé strict, etc.) : on garde le thème par défaut.
-        }
+        } catch (e) {}
       })();
     </script>
-
     <title>Portfolio - Ikhedji Amine</title>
-
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/navbar.css" />
     <link rel="stylesheet" href="css/hero.css" />
+    <link rel="stylesheet" href="css/apropos.css" />
+    <link rel="stylesheet" href="css/scroll-reveal.css" />
   </head>
   <body>
-    <!-- ==================== SPLASH SCREEN ==================== -->
     <div class="splash-screen" id="splashScreen" aria-hidden="true">
       <span class="splash-logo">IA.</span>
     </div>
-
-    <!-- ==================== NAVBAR ==================== -->
     <nav class="navbar">
       <div class="navbar-container">
-        <!-- Logo -->
         <a href="#accueil" class="logo" id="logo">
           <span class="logo-text" id="logoText">IA</span>
         </a>
-
-        <!-- Bulle contenant uniquement les pages -->
         <div class="nav-links-container">
           <ul class="nav-links" id="navLinks">
-            <li>
-              <a href="#accueil" class="nav-link active"> Accueil </a>
-            </li>
-
-            <li>
-              <a href="#apropos" class="nav-link"> À propos de moi </a>
-            </li>
-
-            <li>
-              <a href="#competences" class="nav-link"> Compétences </a>
-            </li>
-
-            <li>
-              <a href="#projets" class="nav-link"> Projets </a>
-            </li>
-
-            <li>
-              <a href="#formation" class="nav-link"> Formation </a>
-            </li>
-
-            <li>
-              <a href="#contact" class="nav-link"> Contact </a>
-            </li>
+            <li><a href="#accueil" class="nav-link active"> Accueil </a></li>
+            <li><a href="#apropos" class="nav-link"> À propos de moi </a></li>
+            <li><a href="#competences" class="nav-link"> Compétences </a></li>
+            <li><a href="#projets" class="nav-link"> Projets </a></li>
+            <li><a href="#formation" class="nav-link"> Formation </a></li>
+            <li><a href="#contact" class="nav-link"> Contact </a></li>
           </ul>
         </div>
-
-        <!-- Contrôles -->
         <div class="navbar-controls">
-          <button
-            class="theme-toggle"
-            id="themeToggle"
-            aria-label="Changer de thème"
-          >
+          <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
             <span class="theme-icon" aria-hidden="true">
-              <svg class="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
-              </svg>
-              <svg class="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="4" />
-                <path d="M12 2v2" />
-                <path d="M12 20v2" />
-                <path d="m4.93 4.93 1.41 1.41" />
-                <path d="m17.66 17.66 1.41 1.41" />
-                <path d="M2 12h2" />
-                <path d="M20 12h2" />
-                <path d="m6.34 17.66-1.41 1.41" />
-                <path d="m19.07 4.93-1.41 1.41" />
-              </svg>
+              <svg class="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" /></svg>
+              <svg class="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>
             </span>
           </button>
-
           <div class="language-toggle" role="group" aria-label="Choisir la langue">
-            <button class="language-option active" type="button" data-language="fr" aria-label="Français" aria-pressed="true">
-              <img src="assets/Drapeaux/france.png" alt="Français" />
-            </button>
-            <button class="language-option" type="button" data-language="en" aria-label="English" aria-pressed="false">
-              <img src="assets/Drapeaux/royaume-uni.png" alt="English" />
-            </button>
+            <button class="language-option active" type="button" data-language="fr" aria-label="Français" aria-pressed="true"><img src="assets/Drapeaux/france.png" alt="Français" /></button>
+            <button class="language-option" type="button" data-language="en" aria-label="English" aria-pressed="false"><img src="assets/Drapeaux/royaume-uni.png" alt="English" /></button>
           </div>
         </div>
-
-        <!-- Menu burger -->
-        <button
-          class="burger-menu"
-          id="burgerMenu"
-          aria-label="Menu"
-          aria-expanded="false"
-        >
-          <span class="burger-line"></span>
-          <span class="burger-line"></span>
-          <span class="burger-line"></span>
+        <button class="burger-menu" id="burgerMenu" aria-label="Menu" aria-expanded="false">
+          <span class="burger-line"></span><span class="burger-line"></span><span class="burger-line"></span>
         </button>
       </div>
     </nav>
-  
-
-    <!-- ==================== SECTIONS ==================== -->
-
     <main>
       <section id="accueil" class="hero">
         <div class="hero-content">
-          <div class="hero-avatar">
-            <img src="assets/hero.png" alt="Photo de Ikhedji Amine" />
-          </div>
-
-          <p class="hero-eyebrow">
-            <span class="hero-eyebrow-line" aria-hidden="true"></span>
-            Bonjour, je suis
-          </p>
-
+          <div class="hero-avatar"><img src="assets/hero.png" alt="Photo de Ikhedji Amine" /></div>
+          <p class="hero-eyebrow"><span class="hero-eyebrow-line" aria-hidden="true"></span>Bonjour, je suis</p>
           <h1 class="hero-title">Ikhedji Amine</h1>
-
-          <p class="hero-role">
-            <span id="heroRoleText"></span><span class="hero-cursor" aria-hidden="true"></span>
-          </p>
-
+          <p class="hero-role"><span id="heroRoleText"></span><span class="hero-cursor" aria-hidden="true"></span></p>
           <a href="#projets" class="hero-cta">Voir mes projets</a>
         </div>
-
         <div class="hero-divider" aria-hidden="true"></div>
       </section>
 
       <section id="apropos">
-        <h1>À propos de moi</h1>
-        <p>Lorem ipsum dolor sit amet.</p>
+        <div class="apropos-container">
+          <p class="apropos-eyebrow" data-reveal="up">
+            <span class="apropos-eyebrow-index">02</span>
+            <span class="apropos-eyebrow-label">À propos de moi</span>
+          </p>
+
+          <h2 class="apropos-title" data-reveal="up">
+            Un développeur qui <span class="accent">aime créer.</span>
+          </h2>
+
+          <div class="apropos-grid">
+            <div class="apropos-text" data-reveal-group>
+              <p class="apropos-lead" data-reveal="up">
+                Je suis étudiant en Master 2 Génie Logiciel, passionné par le
+                développement et la création de projets numériques. J'aime
+                comprendre comment les choses fonctionnent, expérimenter
+                avec différentes technologies et surtout apprendre en
+                construisant.
+              </p>
+              <p data-reveal="up">
+                Mon parcours m'a amené à explorer plusieurs domaines du
+                développement, notamment le web, les applications mobiles
+                avec Flutter, la programmation en C et le développement de
+                jeux avec Godot.
+              </p>
+              <p data-reveal="up">
+                Je cherche constamment à élargir mes compétences et à
+                découvrir de nouvelles technologies. Mon objectif est de
+                devenir un développeur polyvalent, capable de m'adapter à
+                différents projets et de transformer des idées en
+                applications fonctionnelles, modernes et bien conçues.
+              </p>
+            </div>
+
+            <div class="apropos-stats" data-reveal-group>
+              <div class="apropos-stat-card" data-reveal="up"><span class="apropos-stat-number">10+</span><span class="apropos-stat-label">Technologies</span></div>
+              <div class="apropos-stat-card" data-reveal="up"><span class="apropos-stat-number">5+</span><span class="apropos-stat-label">Projets</span></div>
+              <div class="apropos-stat-card" data-reveal="up"><span class="apropos-stat-number">3</span><span class="apropos-stat-label">Domaines</span></div>
+              <div class="apropos-stat-card" data-reveal="up"><span class="apropos-stat-number">&#8734;</span><span class="apropos-stat-label">À apprendre</span></div>
+            </div>
+          </div>
+
+          <div class="apropos-meta" data-reveal-group>
+            <div class="apropos-meta-item" data-reveal="up"><span class="apropos-meta-label">Localisation</span><span class="apropos-meta-value">Béjaïa, Algérie</span></div>
+            <div class="apropos-meta-item" data-reveal="up"><span class="apropos-meta-label">Formation</span><span class="apropos-meta-value">Master 2 Génie Logiciel</span></div>
+            <div class="apropos-meta-item" data-reveal="up"><span class="apropos-meta-label">Focus</span><span class="apropos-meta-value">Web · Mobile · Jeux</span></div>
+          </div>
+
+          <hr class="apropos-divider" />
+        </div>
       </section>
 
-      <section id="competences">
-        <h1>Compétences</h1>
-        <p>Lorem ipsum dolor sit amet.</p>
-      </section>
-
-      <section id="projets">
-        <h1>Projets</h1>
-        <p>Lorem ipsum dolor sit amet.</p>
-      </section>
-
-      <section id="formation">
-        <h1>Formation</h1>
-        <p>Lorem ipsum dolor sit amet.</p>
-      </section>
-
-      
-      <section id="contact">
-        <h1>Contact</h1>
-        <p>Lorem ipsum dolor sit amet.</p>
-      </section>
+      <section id="competences"><h1 data-reveal="up">Compétences</h1><p data-reveal="up">Lorem ipsum dolor sit amet.</p></section>
+      <section id="projets"><h1 data-reveal="up">Projets</h1><p data-reveal="up">Lorem ipsum dolor sit amet.</p></section>
+      <section id="formation"><h1 data-reveal="up">Formation</h1><p data-reveal="up">Lorem ipsum dolor sit amet.</p></section>
+      <section id="contact"><h1 data-reveal="up">Contact</h1><p data-reveal="up">Lorem ipsum dolor sit amet.</p></section>
     </main>
-
-    <!-- ==================== JAVASCRIPT ==================== -->
     <script src="js/splash.js"></script>
     <script src="js/navbar.js"></script>
     <script src="js/hero.js"></script>
+    <script src="js/scroll-reveal.js"></script>
   </body>
 </html>

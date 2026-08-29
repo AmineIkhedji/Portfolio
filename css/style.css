@@ -54,7 +54,6 @@ body {
   background-color: var(--color-bg);
   color: var(--color-text-primary);
   transition: var(--transition-smooth);
-  overflow-x: hidden;
 }
 
 main {

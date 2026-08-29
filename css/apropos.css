@@ -1,0 +1,187 @@
+/* ==================== A PROPOS DE MOI ==================== */
+
+#apropos {
+  padding: 6rem 0;
+}
+
+.apropos-container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.apropos-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 1.25rem;
+}
+
+.apropos-eyebrow-index {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--color-text-muted);
+}
+
+.apropos-eyebrow-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.apropos-title {
+  margin: 0 0 3.5rem;
+  font-size: clamp(2.1rem, 4vw, 3.1rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--color-text-primary);
+  text-align: left;
+  max-width: 720px;
+}
+
+.apropos-title .accent {
+  color: var(--color-accent);
+}
+
+.apropos-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 4rem;
+  align-items: start;
+}
+
+.apropos-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.apropos-lead {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--color-text-primary);
+}
+
+.apropos-text p:not(.apropos-lead) {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.75;
+  color: var(--color-text-secondary);
+}
+
+.apropos-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.apropos-stat-card {
+  padding: 1.5rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  transition: var(--transition-smooth);
+}
+
+.apropos-stat-card:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-3px);
+}
+
+.apropos-stat-number {
+  display: block;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: var(--color-accent);
+  line-height: 1;
+  margin-bottom: 0.6rem;
+}
+
+.apropos-stat-label {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.apropos-divider {
+  width: 100vw;
+  margin: 3rem 0 2rem;
+  margin-left: calc(50% - 50vw);
+  border: none;
+  border-top: 2px solid var(--color-border);
+}
+
+.apropos-meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.apropos-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1.1rem 1.3rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  transition: var(--transition-smooth);
+  min-width: 0;
+}
+
+.apropos-meta-item:hover {
+  border-color: var(--color-accent);
+}
+
+.apropos-meta-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.apropos-meta-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+@media screen and (max-width: 900px) {
+  #apropos { padding: 4.5rem 0; }
+  .apropos-container { padding: 0 1.5rem; }
+  .apropos-title { margin-bottom: 2.5rem; }
+  .apropos-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+
+  /* Le texte occupe maintenant toute la largeur : les stats passent
+     sur une seule ligne de 4 pour combler l'espace au lieu de rester
+     coincées dans une colonne étroite. */
+  .apropos-stats { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media screen and (max-width: 700px) {
+  /* Plus assez de place pour 4 colonnes sans écraser le contenu :
+     retour à une grille 2x2, mais sur toute la largeur disponible. */
+  .apropos-stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media screen and (max-width: 560px) {
+  /* 3 cartes de largeur égale ne tiennent plus proprement : on les
+     empile pour garder une lecture propre plutôt qu'un retour à la
+     ligne asymétrique (2 puis 1). */
+  .apropos-meta { grid-template-columns: 1fr; }
+}
+
+@media screen and (max-width: 480px) {
+  #apropos { padding: 3.5rem 0; }
+  .apropos-container { padding: 0 1.25rem; }
+  .apropos-stat-card { padding: 1.1rem; border-radius: 14px; }
+  .apropos-meta { gap: 0.75rem; }
+  .apropos-meta-item { padding: 0.9rem 1rem; }
+}
