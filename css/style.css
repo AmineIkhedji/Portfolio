@@ -41,6 +41,41 @@
   --scrollbar-thumb-hover: rgba(37, 99, 235, 0.85);
 }
 
+/* ==================== VIEW TRANSITIONS (navigation entre pages) ====================
+   Active la View Transitions API "cross-document" : sur les navigateurs qui
+   la supportent, chaque navigation entre index.html et projet.html est
+   animée nativement par le navigateur (capture des deux pages + morphing
+   des éléments partageant le même view-transition-name, voir projets.js /
+   projet-page.js), ce qui supprime le flash blanc du chargement de page.
+   Sur les navigateurs qui ne la supportent pas, cette règle est
+   simplement ignorée et la navigation reste normale (instantanée, sans
+   animation). Il n'y a volontairement AUCUN JS impliqué dans cette
+   transition : mélanger un fallback JS "maison" à la transition native
+   causait des conflits (image qui reste invisible, double-animation).
+   C'est du CSS pur, comme sur le projet de référence. */
+@view-transition {
+  navigation: auto;
+}
+
+/* Durée et courbe d'animation explicites : sans ça, certains navigateurs
+   utilisent une valeur par défaut trop rapide/abrupte pour que l'effet de
+   morphing soit perceptible. */
+::view-transition-group(*) {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Respect de prefers-reduced-motion : on garde la navigation (donc le
+   contenu s'affiche instantanément), mais on désactive les animations de
+   transition elles-mêmes. */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 html {
   font-family: var(--font-main);
   scroll-behavior: smooth;

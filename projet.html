@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem("theme") === "light") {
+            document.documentElement.dataset.theme = "light";
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <title>Projet - Ikhedji Amine</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/projets.css" />
+    <link rel="stylesheet" href="css/projet-page.css" />
+  </head>
+  <body class="no-navbar">
+    <main>
+      <section id="projet-detail">
+        <div class="projet-page-hero" id="projetPageHero">
+          <!-- Image + bouton retour injectés par projet-page.js -->
+        </div>
+        <div class="projet-page-container">
+          <div id="projetPageContent">
+            <!-- Badge, titre, description, tags, actions injectés par projet-page.js -->
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="js/projets_data.js"></script>
+    <script src="js/projet-page.js"></script>
+  </body>
+</html>

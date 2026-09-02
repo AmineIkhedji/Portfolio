@@ -144,22 +144,46 @@ navLinkElements.forEach(link => {
 });
 
 // ==================== NAVIGATION ACTIVE ====================
+let navLockTimer = null;
+let isNavLocked = false;
+let lockedSectionId = null;
+
 function setActiveNavLink(sectionId) {
     navLinkElements.forEach(link => {
         link.classList.toggle('active', link.getAttribute('href') === `#${sectionId}`);
     });
 }
 
+function lockActiveNavSection(sectionId) {
+    isNavLocked = true;
+    lockedSectionId = sectionId;
+    setActiveNavLink(sectionId);
+
+    clearTimeout(navLockTimer);
+    navLockTimer = setTimeout(() => {
+        isNavLocked = false;
+        lockedSectionId = null;
+        updateActiveSection();
+    }, 700);
+}
+
 // Gestion du clic sur les liens
 navLinkElements.forEach(link => {
     link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+
+        // Lien vers une autre page (ex: "index.html#projets" depuis
+        // projet.html) : on laisse le navigateur naviguer normalement,
+        // il n'y a pas de section à cibler sur la page courante.
+        if (!href.startsWith('#')) return;
+
         e.preventDefault();
 
-        setActiveNavLink(this.getAttribute('href').slice(1));
-        
+        const targetId = href.slice(1);
+        lockActiveNavSection(targetId);
+
         // Scroll vers la section
-        const targetId = this.getAttribute('href');
-        const targetSection = document.querySelector(targetId);
+        const targetSection = document.querySelector(`#${targetId}`);
         if (targetSection) {
             targetSection.scrollIntoView({ behavior: 'smooth' });
         }
@@ -170,6 +194,15 @@ navLinkElements.forEach(link => {
 const sections = document.querySelectorAll('section[id]');
 
 function updateActiveSection() {
+    if (isNavLocked) {
+        if (lockedSectionId) {
+            setActiveNavLink(lockedSectionId);
+        }
+        return;
+    }
+
+    if (!sections.length) return;
+
     const readingPosition = window.scrollY + 120;
     let activeSection = sections[0];
 

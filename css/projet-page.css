@@ -1,0 +1,158 @@
+/* ==================== PAGE DÉTAIL PROJET ==================== */
+/* Pas de navbar sur cette page : on retire le padding réservé à la
+   navbar fixe (posé globalement sur <main> dans style.css), pour que
+   l'image hero touche vraiment le haut de la fenêtre. */
+body.no-navbar main {
+  padding-top: 0;
+}
+
+/* ---------- Clone d'animation (voir projet-page.js) ----------
+   Image temporaire, positionnée en `fixed`, qui part de la position
+   exacte de l'image cliquée sur la liste des projets et anime jusqu'à
+   la position de la bannière hero, donnant l'impression que l'image
+   "monte" et grandit pour devenir la bannière. Retirée du DOM une fois
+   l'animation terminée. */
+.projet-transition-clone {
+  position: fixed;
+  z-index: 9999;
+  margin: 0;
+  object-fit: cover;
+  pointer-events: none;
+  will-change: top, left, width, height, border-radius;
+}
+
+#projet-detail {
+  padding-bottom: 6rem;
+}
+
+/* ---------- Bannière hero (image pleine largeur) ---------- */
+
+.projet-page-hero {
+  position: relative;
+}
+
+.projet-page-hero-image {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  height: min(58vh, 520px);
+  overflow: hidden;
+  background-color: var(--color-surface-secondary);
+}
+
+.projet-page-hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.projet-back-btn {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.6rem 1.15rem;
+  background-color: rgba(8, 11, 18, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50px;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
+
+.projet-back-btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* ---------- Contenu ---------- */
+
+.projet-page-container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 0;
+}
+
+.projet-page-badge {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.3rem 0.75rem;
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  color: var(--color-accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.projet-page-title {
+  margin: 0 0 1.75rem;
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-text-primary);
+}
+
+.projet-page-description {
+  font-size: 1.02rem;
+  line-height: 1.8;
+  color: var(--color-text-secondary);
+}
+
+.projet-page-description p {
+  margin: 0 0 1.1rem;
+}
+
+.projet-page-description p:last-child {
+  margin-bottom: 0;
+}
+
+.projet-page-tags {
+  margin-top: 1.75rem;
+}
+
+.projet-page-actions {
+  margin-top: 2rem;
+}
+
+/* ---------- État "projet introuvable" ---------- */
+
+.projet-page-notfound {
+  text-align: center;
+  padding: 6rem 0 2rem;
+}
+
+.projet-page-notfound h1 {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-text-primary);
+}
+
+.projet-page-notfound p {
+  color: var(--color-text-secondary);
+  margin-bottom: 1.75rem;
+}
+
+@media screen and (max-width: 480px) {
+  .projet-page-hero-image {
+    height: 260px;
+  }
+  .projet-back-btn {
+    top: 1rem;
+    left: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+  .projet-page-container {
+    padding: 1.75rem 1.25rem 0;
+  }
+}

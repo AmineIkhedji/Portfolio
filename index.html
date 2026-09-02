@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="css/hero.css" />
     <link rel="stylesheet" href="css/apropos.css" />
     <link rel="stylesheet" href="css/competences.css" />
+    <link rel="stylesheet" href="css/projets.css" />
     <link rel="stylesheet" href="css/scroll-reveal.css" />
   </head>
   <body>
@@ -222,10 +223,18 @@
           </div>
         </div>
       </section>
+
       <section id="projets">
-        <h1 data-reveal="up">Projets</h1>
-        <p data-reveal="up">Lorem ipsum dolor sit amet.</p>
+        <div class="projets-container">
+          <h2 class="projets-title" data-reveal="up">
+            Mes <span class="accent">projets.</span>
+          </h2>
+          <div class="projets-grid" id="projetsGrid" data-reveal-group>
+            <!-- Les cartes sont générées dynamiquement par projets.js -->
+          </div>
+        </div>
       </section>
+
       <section id="formation">
         <h1 data-reveal="up">Formation</h1>
         <p data-reveal="up">Lorem ipsum dolor sit amet.</p>
@@ -235,10 +244,13 @@
         <p data-reveal="up">Lorem ipsum dolor sit amet.</p>
       </section>
     </main>
+
     <script src="js/splash.js"></script>
     <script src="js/navbar.js"></script>
     <script src="js/hero.js"></script>
     <script src="js/competences.js"></script>
+    <script src="js/projets_data.js"></script>
+    <script src="js/projets.js"></script>
     <script src="js/scroll-reveal.js"></script>
   </body>
 </html>
