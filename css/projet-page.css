@@ -33,8 +33,8 @@ body.no-navbar main {
 }
 
 .projet-page-hero-image {
-  width: min(92vw, 920px);
-  margin: 0 auto;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
   overflow: hidden;
   background-color: var(--color-bg);
 }
@@ -45,7 +45,7 @@ body.no-navbar main {
 
 .projet-gallery-track {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 7 / 3;
   overflow: hidden;
   background-color: var(--color-surface-secondary);
 }
@@ -55,7 +55,7 @@ body.no-navbar main {
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: fill;
   object-position: center;
   opacity: 0;
   transition: opacity 0.55s ease;
@@ -70,25 +70,55 @@ body.no-navbar main {
   top: 50%;
   z-index: 1;
   display: grid;
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 3rem;
+  height: 3rem;
   place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 55%, transparent);
   border-radius: 50%;
-  background-color: rgba(8, 11, 18, 0.65);
-  color: #ffffff;
+  background-color: color-mix(in srgb, var(--color-surface) 88%, transparent);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
+  color: var(--color-text-primary);
   cursor: pointer;
-  font-size: 1.35rem;
-  line-height: 1;
+  line-height: 0;
+  padding: 0;
+  text-align: center;
   transform: translateY(-50%);
-  transition: var(--transition-smooth);
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .projet-gallery-arrow:hover,
 .projet-gallery-arrow:focus-visible {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+  border-color: var(--color-accent-hover);
+  background-color: var(--color-accent);
+  color: #ffffff;
+  box-shadow: 0 10px 28px rgba(37, 99, 235, 0.3);
   outline: none;
+}
+
+.projet-gallery-arrow svg {
+  display: block;
+  width: 1.2rem;
+  height: 1.2rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.25;
+}
+
+.projet-gallery-arrow-previous:hover,
+.projet-gallery-arrow-previous:focus-visible {
+  transform: translate(-2px, -50%);
+}
+
+.projet-gallery-arrow-next:hover,
+.projet-gallery-arrow-next:focus-visible {
+  transform: translate(2px, -50%);
 }
 
 .projet-gallery-arrow-previous {
@@ -100,21 +130,34 @@ body.no-navbar main {
 }
 
 .projet-gallery-dots {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  z-index: 2;
   display: flex;
   justify-content: center;
-  gap: 0.55rem;
-  padding: 0.9rem 0 0.2rem;
+  gap: 0.65rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background-color: rgba(8, 11, 18, 0.58);
+  transform: translateX(-50%);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 .projet-gallery-dot {
-  width: 0.6rem;
-  height: 0.6rem;
+  width: 0.55rem;
+  height: 0.55rem;
   padding: 0;
-  border: 1px solid var(--color-text-secondary);
+  border: 1px solid color-mix(in srgb, var(--color-text-secondary) 70%, transparent);
   border-radius: 50%;
-  background-color: transparent;
+  background-color: color-mix(in srgb, var(--color-text-secondary) 18%, transparent);
   cursor: pointer;
-  transition: var(--transition-smooth);
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    border-color 0.25s ease;
 }
 
 .projet-gallery-dot.is-active,
@@ -122,13 +165,14 @@ body.no-navbar main {
 .projet-gallery-dot:focus-visible {
   border-color: var(--color-accent);
   background-color: var(--color-accent);
+  transform: scale(1.3);
   outline: none;
 }
 
 .projet-page-hero-image > img {
   width: 100%;
   height: auto;
-  object-fit: contain;
+  object-fit: fill;
   object-position: center;
   display: block;
 }
@@ -287,7 +331,8 @@ body.no-navbar main {
 
 @media screen and (max-width: 480px) {
   .projet-page-hero-image {
-    width: 92vw;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
   }
   .projet-back-btn {
     top: 1rem;
@@ -296,8 +341,8 @@ body.no-navbar main {
     font-size: 0.8rem;
   }
   .projet-gallery-arrow {
-    width: 2.35rem;
-    height: 2.35rem;
+    width: 2.5rem;
+    height: 2.5rem;
   }
   .projet-gallery-arrow-previous {
     left: 0.65rem;

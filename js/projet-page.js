@@ -15,11 +15,14 @@ function getProjetIdFromUrl() {
 }
 
 function getProjetImages(projet) {
-  const gallery = Array.isArray(projet.gallery)
+  const additionalImages = Array.isArray(projet.gallery)
     ? projet.gallery.filter((image) => typeof image === "string" && image.trim())
     : [];
 
-  return gallery.length ? gallery : [projet.image];
+  return [
+    projet.image,
+    ...additionalImages.filter((image) => image !== projet.image),
+  ];
 }
 
 function renderProjetNotFound(heroContainer, container) {
@@ -256,8 +259,8 @@ function renderProjetPage() {
         ${
           images.length > 1
             ? `
-              <button class="projet-gallery-arrow projet-gallery-arrow-previous" type="button" data-gallery-previous aria-label="Image précédente">&#8592;</button>
-              <button class="projet-gallery-arrow projet-gallery-arrow-next" type="button" data-gallery-next aria-label="Image suivante">&#8594;</button>
+              <button class="projet-gallery-arrow projet-gallery-arrow-previous" type="button" data-gallery-previous aria-label="Image précédente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
+              <button class="projet-gallery-arrow projet-gallery-arrow-next" type="button" data-gallery-next aria-label="Image suivante"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
               <div class="projet-gallery-dots" role="tablist" aria-label="Choisir une image">
                 ${images
                   .map(

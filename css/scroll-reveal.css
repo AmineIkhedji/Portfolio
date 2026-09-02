@@ -44,3 +44,11 @@
     transition: none !important;
   }
 }
+
+/* Désactivation temporaire : le code de révélation reste conservé pour
+   pouvoir réactiver l'animation plus tard en supprimant ce bloc. */
+[data-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}

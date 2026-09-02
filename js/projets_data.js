@@ -48,9 +48,8 @@ const projetsData = [
     demoUrl: "",
     githubUrl: "",
     gallery: [
-      "assets/projets/diabetes-prediction.png",
-      "assets/projets/diabetes-prediction.png",
-      "assets/projets/diabetes-prediction.png",
+      "assets/projets/Projects.jpg",
+      "assets/projets/BATMAN.jpg",
     ],
   },
 ];

@@ -105,8 +105,8 @@ const TRANSITION_EASING = "cubic-bezier(0.4, 0, 0.2, 1)";
 function getHeroBannerRect() {
   // Doit rester identique aux formules CSS de .projet-page-hero-image pour
   // que le raccord avec projet-page.js tombe pile sur la bonne position.
-  const width = Math.min(window.innerWidth * 0.92, 920);
-  const height = width * 0.75;
+  const width = window.innerWidth;
+  const height = width * 0.5625;
 
   return {
     top: 0,
