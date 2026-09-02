@@ -12,6 +12,11 @@
         } catch (e) {}
       })();
     </script>
+    <script>
+      if (new URLSearchParams(window.location.search).has("back")) {
+        document.documentElement.classList.add("skip-splash");
+      }
+    </script>
     <title>Portfolio - Ikhedji Amine</title>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/navbar.css" />

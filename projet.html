@@ -12,6 +12,13 @@
         } catch (e) {}
       })();
     </script>
+    <script>
+      try {
+        if (sessionStorage.getItem("projet-transition")) {
+          document.documentElement.classList.add("project-transition-active");
+        }
+      } catch (e) {}
+    </script>
     <title>Projet - Ikhedji Amine</title>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/projets.css" />

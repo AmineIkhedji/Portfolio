@@ -41,33 +41,18 @@
   --scrollbar-thumb-hover: rgba(37, 99, 235, 0.85);
 }
 
-/* ==================== VIEW TRANSITIONS (navigation entre pages) ====================
-   Active la View Transitions API "cross-document" : sur les navigateurs qui
-   la supportent, chaque navigation entre index.html et projet.html est
-   animée nativement par le navigateur (capture des deux pages + morphing
-   des éléments partageant le même view-transition-name, voir projets.js /
-   projet-page.js), ce qui supprime le flash blanc du chargement de page.
-   Sur les navigateurs qui ne la supportent pas, cette règle est
-   simplement ignorée et la navigation reste normale (instantanée, sans
-   animation). Il n'y a volontairement AUCUN JS impliqué dans cette
-   transition : mélanger un fallback JS "maison" à la transition native
-   causait des conflits (image qui reste invisible, double-animation).
-   C'est du CSS pur, comme sur le projet de référence. */
-@view-transition {
-  navigation: auto;
-}
+/* ==================== TRANSITIONS DE PAGE ====================
+   La transition d'image entre la grille des projets et la page de détail
+   (et le retour) n'utilise plus la View Transitions API "cross-document" :
+   elle n'est supportée que par certains navigateurs, ce qui donnait une
+   navigation "normale" sans aucune animation ailleurs, et ne gérait pas du
+   tout le retour. Elle est désormais gérée entièrement en JS via un clone
+   d'image animé, relayé entre les deux pages par sessionStorage — voir le
+   commentaire en tête de js/projets.js pour le détail du mécanisme. */
 
-/* Durée et courbe d'animation explicites : sans ça, certains navigateurs
-   utilisent une valeur par défaut trop rapide/abrupte pour que l'effet de
-   morphing soit perceptible. */
-::view-transition-group(*) {
-  animation-duration: 0.6s;
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Respect de prefers-reduced-motion : on garde la navigation (donc le
-   contenu s'affiche instantanément), mais on désactive les animations de
-   transition elles-mêmes. */
+/* La transition de thème (clair/sombre, voir navbar.js) utilise elle bien
+   la View Transitions API, mais uniquement au sein d'un même document : on
+   garde donc ce garde-fou pour prefers-reduced-motion. */
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(*),
   ::view-transition-old(*),
@@ -173,6 +158,10 @@ body.splash-active {
   background-color: var(--color-bg);
   transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1);
   will-change: transform;
+}
+
+html.skip-splash .splash-screen {
+  display: none;
 }
 
 .splash-screen.splash-hide {

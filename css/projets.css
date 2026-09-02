@@ -76,13 +76,14 @@
 }
 
 .projet-transition-clone {
+  display: block;
   position: fixed;
   z-index: 9999;
   margin: 0;
   object-fit: cover;
   pointer-events: none;
   transform-origin: center center;
-  will-change: top, left, width, height, border-radius, transform, box-shadow;
+  will-change: top, left, width, height, border-radius;
 }
 
 .projet-type-badge {

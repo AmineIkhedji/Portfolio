@@ -13,6 +13,7 @@ body.no-navbar main {
    "monte" et grandit pour devenir la bannière. Retirée du DOM une fois
    l'animation terminée. */
 .projet-transition-clone {
+  display: block;
   position: fixed;
   z-index: 9999;
   margin: 0;
@@ -32,17 +33,103 @@ body.no-navbar main {
 }
 
 .projet-page-hero-image {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  height: min(58vh, 520px);
+  width: min(92vw, 920px);
+  margin: 0 auto;
+  overflow: hidden;
+  background-color: var(--color-bg);
+}
+
+.projet-gallery {
+  position: relative;
+}
+
+.projet-gallery-track {
+  position: relative;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   background-color: var(--color-surface-secondary);
 }
 
-.projet-page-hero-image img {
+.projet-gallery-slide {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
+  opacity: 0;
+  transition: opacity 0.55s ease;
+}
+
+.projet-gallery-slide.is-active {
+  opacity: 1;
+}
+
+.projet-gallery-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 50%;
+  background-color: rgba(8, 11, 18, 0.65);
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 1.35rem;
+  line-height: 1;
+  transform: translateY(-50%);
+  transition: var(--transition-smooth);
+}
+
+.projet-gallery-arrow:hover,
+.projet-gallery-arrow:focus-visible {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  outline: none;
+}
+
+.projet-gallery-arrow-previous {
+  left: 1rem;
+}
+
+.projet-gallery-arrow-next {
+  right: 1rem;
+}
+
+.projet-gallery-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.9rem 0 0.2rem;
+}
+
+.projet-gallery-dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  padding: 0;
+  border: 1px solid var(--color-text-secondary);
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.projet-gallery-dot.is-active,
+.projet-gallery-dot:hover,
+.projet-gallery-dot:focus-visible {
+  border-color: var(--color-accent);
+  background-color: var(--color-accent);
+  outline: none;
+}
+
+.projet-page-hero-image > img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
   display: block;
 }
 
@@ -124,6 +211,62 @@ body.no-navbar main {
   margin-top: 2rem;
 }
 
+/* ---------- Fond et apparition du contenu ---------- */
+.projet-page-container {
+  position: relative;
+  z-index: 0;
+}
+
+.projet-page-container::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  background-color: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+}
+
+/* Le contenu apparaît pendant le raccord de l'image réelle, sans retarder
+   le mouvement du clone lancé depuis la page d'accueil. */
+.projet-page-content-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition:
+    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.projet-page-content-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Le bouton retour a par ailleurs sa propre transition (hover, voir plus
+   haut) : on la recombine ici pour ne pas la perdre en écrasant la
+   propriété "transition" avec les valeurs de révélation ci-dessus. */
+.projet-back-btn.projet-page-content-reveal {
+  transition:
+    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projet-page-content-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    pointer-events: auto !important;
+  }
+}
+
 /* ---------- État "projet introuvable" ---------- */
 
 .projet-page-notfound {
@@ -144,13 +287,23 @@ body.no-navbar main {
 
 @media screen and (max-width: 480px) {
   .projet-page-hero-image {
-    height: 260px;
+    width: 92vw;
   }
   .projet-back-btn {
     top: 1rem;
     left: 1rem;
     padding: 0.5rem 1rem;
     font-size: 0.8rem;
+  }
+  .projet-gallery-arrow {
+    width: 2.35rem;
+    height: 2.35rem;
+  }
+  .projet-gallery-arrow-previous {
+    left: 0.65rem;
+  }
+  .projet-gallery-arrow-next {
+    right: 0.65rem;
   }
   .projet-page-container {
     padding: 1.75rem 1.25rem 0;
