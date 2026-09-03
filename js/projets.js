@@ -39,7 +39,7 @@ function projetUrl(id) {
 
 function renderProjetCard(projet) {
   return `
-    <article class="projet-card" data-reveal="up" data-projet-id="${projet.id}">
+    <article class="projet-card" data-reveal="scale" data-projet-id="${projet.id}">
       <a class="projet-image-link" href="${projetUrl(projet.id)}" aria-label="Voir le projet ${projet.title}">
         <div class="projet-image-wrap">
           <img src="${projet.image}" alt="${projet.title}" loading="lazy" />

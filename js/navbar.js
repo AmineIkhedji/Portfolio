@@ -164,7 +164,7 @@ function lockActiveNavSection(sectionId) {
         isNavLocked = false;
         lockedSectionId = null;
         updateActiveSection();
-    }, 700);
+    }, 1500);
 }
 
 // Gestion du clic sur les liens
@@ -202,6 +202,13 @@ function updateActiveSection() {
     }
 
     if (!sections.length) return;
+
+    const isAtPageBottom =
+        window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+    if (isAtPageBottom) {
+        setActiveNavLink(sections[sections.length - 1].id);
+        return;
+    }
 
     const readingPosition = window.scrollY + 120;
     let activeSection = sections[0];
