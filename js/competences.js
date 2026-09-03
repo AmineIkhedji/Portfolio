@@ -23,19 +23,19 @@ const competencesData = [
     title: "Backend & API",
     subtitle: "Serveur & API",
     icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" /></svg>',
-    tags: ["PHP", "Node.js", "Express.js"],
+    tags: ["PHP", "Node.js", "Express.js", "Supabase"],
   },
   {
     title: "Bases de données",
     subtitle: "Gestion des données",
     icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 21 19V5" /><path d="M3 12A9 3 0 0 0 21 12" /></svg>',
-    tags: ["MySQL", "PostgreSQL", "MongoDB", "Supabase"],
+    tags: ["MySQL", "PostgreSQL", "MongoDB"],
   },
   {
     title: "Outils",
     subtitle: "WorkFlow de développement",
     icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2" /><path d="M17 3h2a2 2 0 0 1 2 2v2" /><path d="M21 17v2a2 2 0 0 1-2 2h-2" /><path d="M7 21H5a2 2 0 0 1-2-2v-2" /><line x1="7" x2="17" y1="12" y2="12" /></svg>',
-    tags: ["GitHub"],
+    tags: ["GitHub","Postman"],
   },
   {
     title: "Cloud & Déploiement",
