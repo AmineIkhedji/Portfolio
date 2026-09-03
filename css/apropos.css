@@ -81,6 +81,7 @@
 }
 
 .apropos-stat-card {
+  min-width: 0;
   padding: 1.5rem;
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -95,11 +96,12 @@
 
 .apropos-stat-number {
   display: block;
-  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  overflow-wrap: break-word;
+  font-size: clamp(1.15rem, 2.6vw, 1.5rem);
   font-weight: 700;
   color: var(--color-accent);
-  line-height: 1;
-  margin-bottom: 0.6rem;
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
 }
 
 .apropos-stat-label {
@@ -157,7 +159,7 @@
   #apropos { padding: 4.5rem 0 2.5rem; }
   .apropos-container { padding: 0 1.5rem; }
   .apropos-title { margin-bottom: 2.5rem; }
-  .apropos-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .apropos-grid { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
 
   /* Le texte occupe maintenant toute la largeur : les stats passent
      sur une seule ligne de 4 pour combler l'espace au lieu de rester

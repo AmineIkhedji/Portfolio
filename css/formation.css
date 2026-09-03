@@ -1,0 +1,226 @@
+/* ==================== FORMATION ==================== */
+
+#formation {
+  padding: 0 0 6rem;
+}
+
+.formation-container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.formation-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 1.25rem;
+}
+
+.formation-eyebrow-index {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--color-text-muted);
+}
+
+.formation-eyebrow-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.formation-title {
+  margin: 0 0 3.5rem;
+  font-size: clamp(2.1rem, 4vw, 3.1rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--color-text-primary);
+  text-align: left;
+  max-width: 720px;
+}
+
+.formation-title .accent {
+  color: var(--color-accent);
+}
+
+.formation-block + .formation-block {
+  margin-top: 4rem;
+}
+
+.formation-block-title {
+  margin: 0 0 2rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+/* ---------- Carrière (timeline) ---------- */
+
+.formation-timeline {
+  display: flex;
+  flex-direction: column;
+  max-width: 720px;
+}
+
+.formation-timeline-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  column-gap: 1.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.formation-timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.formation-timeline-marker {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.formation-timeline-dot {
+  width: 12px;
+  height: 12px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  box-shadow: 0 0 0 4px var(--color-bg);
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.formation-timeline-line {
+  position: absolute;
+  top: 18px;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background-color: var(--color-border);
+  transform: translateX(-50%);
+}
+
+.formation-timeline-item:last-child .formation-timeline-line {
+  display: none;
+}
+
+.formation-timeline-content {
+  min-width: 0;
+  padding-top: 1px;
+}
+
+.formation-timeline-date {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--color-accent);
+}
+
+.formation-timeline-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.formation-timeline-description {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--color-text-secondary);
+  max-width: 560px;
+}
+
+/* ---------- Certifications ---------- */
+
+.certifications-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.certification-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  padding: 1.5rem;
+  transition: var(--transition-smooth);
+}
+
+.certification-card:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-3px);
+}
+
+.certification-icon {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.certification-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--color-accent);
+}
+
+.certification-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.certification-org {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.certification-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--color-text-primary);
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+@media screen and (max-width: 900px) {
+  #formation { padding: 0 0 4.5rem; }
+  .formation-container { padding: 0 1.5rem; }
+  .formation-title { margin-bottom: 2.5rem; }
+  .certifications-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media screen and (max-width: 600px) {
+  .certifications-grid { grid-template-columns: 1fr; }
+}
+
+@media screen and (max-width: 480px) {
+  #formation { padding: 0 0 3.5rem; }
+  .formation-container { padding: 0 1.25rem; }
+  .formation-block + .formation-block { margin-top: 3rem; }
+  .certification-card { padding: 1.1rem; border-radius: 14px; }
+  .formation-timeline-item { column-gap: 1.1rem; padding-bottom: 2rem; }
+}

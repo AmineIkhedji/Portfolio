@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="css/apropos.css" />
     <link rel="stylesheet" href="css/competences.css" />
     <link rel="stylesheet" href="css/projets.css" />
+    <link rel="stylesheet" href="css/formation.css" />
     <link rel="stylesheet" href="css/scroll-reveal.css" />
   </head>
   <body>
@@ -182,7 +183,9 @@
             <div class="apropos-stats" data-reveal-group>
               <div class="apropos-stat-card" data-reveal="up">
                 <span class="apropos-stat-number">Projets personnels</span
-                ><span class="apropos-stat-label">Apprendre par la pratique</span>
+                ><span class="apropos-stat-label"
+                  >Apprendre par la pratique</span
+                >
               </div>
               <div class="apropos-stat-card" data-reveal="up">
                 <span class="apropos-stat-number">Full Stack</span
@@ -190,11 +193,15 @@
               </div>
               <div class="apropos-stat-card" data-reveal="up">
                 <span class="apropos-stat-number">Multi-plateforme</span
-                ><span class="apropos-stat-label">Web · Mobile · Desktop · Jeux</span>
+                ><span class="apropos-stat-label"
+                  >Web · Mobile · Desktop · Jeux</span
+                >
               </div>
               <div class="apropos-stat-card" data-reveal="up">
                 <span class="apropos-stat-number">Domaines</span
-                ><span class="apropos-stat-label">Développement · Design · Création</span>
+                ><span class="apropos-stat-label"
+                  >Développement · Design · Création</span
+                >
               </div>
             </div>
           </div>
@@ -227,6 +234,7 @@
             <!-- Les cartes sont générées dynamiquement par competences.js -->
           </div>
         </div>
+        <div class="hero-divider" aria-hidden="true"></div>
       </section>
 
       <section id="projets">
@@ -238,11 +246,42 @@
             <!-- Les cartes sont générées dynamiquement par projets.js -->
           </div>
         </div>
+        <div class="hero-divider" aria-hidden="true"></div>
       </section>
 
       <section id="formation">
-        <h1 data-reveal="up">Formation</h1>
-        <p data-reveal="up">Lorem ipsum dolor sit amet.</p>
+        <div class="formation-container">
+          <div class="formation-eyebrow" data-reveal="up">
+          </div>
+          <h2 class="formation-title" data-reveal="up">
+            Apprendre en <span class="accent">construisant.</span>
+          </h2>
+
+          <div class="formation-block">
+            <h3 class="formation-block-title" data-reveal="up">Carrière</h3>
+            <div
+              class="formation-timeline"
+              id="formationTimeline"
+              data-reveal-group
+            >
+              <!-- Générée dynamiquement par formation.js -->
+            </div>
+          </div>
+
+          <div class="formation-block">
+            <h3 class="formation-block-title" data-reveal="up">
+              Certifications
+            </h3>
+            <div
+              class="certifications-grid"
+              id="certificationsGrid"
+              data-reveal-group
+            >
+              <!-- Générée dynamiquement par formation.js -->
+            </div>
+          </div>
+        </div>
+        <div class="hero-divider" aria-hidden="true"></div>
       </section>
       <section id="contact">
         <h1 data-reveal="up">Contact</h1>
@@ -256,6 +295,8 @@
     <script src="js/competences.js"></script>
     <script src="js/projets_data.js"></script>
     <script src="js/projets.js"></script>
+    <script src="js/formation_data.js"></script>
+    <script src="js/formation.js"></script>
     <script src="js/scroll-reveal.js"></script>
   </body>
 </html>
