@@ -135,8 +135,12 @@
 /* ==================== RESPONSIVE ==================== */
 
 @media screen and (max-width: 900px) {
-  .contact { padding: 4rem 0 5rem; }
-  .contact-container { padding: 0 1.5rem; }
+  .contact {
+    padding: 4rem 0 5rem;
+  }
+  .contact-container {
+    padding: 0 1.5rem;
+  }
 }
 
 @media screen and (max-width: 600px) {
@@ -148,10 +152,22 @@
 }
 
 @media screen and (max-width: 480px) {
-  .contact { padding: 3rem 0 4rem; }
-  .contact-container { padding: 0 1.25rem; }
-  .contact-title { margin-bottom: 0.85rem; }
-  .contact-subtitle { margin-bottom: 1.5rem; }
-  .site-footer { padding: 1.25rem 0; }
-  .site-footer-container { padding: 0 1.25rem; }
+  .contact {
+    padding: 3rem 0 4rem;
+  }
+  .contact-container {
+    padding: 0 1.25rem;
+  }
+  .contact-title {
+    margin-bottom: 0.85rem;
+  }
+  .contact-subtitle {
+    margin-bottom: 1.5rem;
+  }
+  .site-footer {
+    padding: 1.25rem 0;
+  }
+  .site-footer-container {
+    padding: 0 1.25rem;
+  }
 }

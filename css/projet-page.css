@@ -150,9 +150,14 @@ body.no-navbar main {
   width: 0.55rem;
   height: 0.55rem;
   padding: 0;
-  border: 1px solid color-mix(in srgb, var(--color-text-secondary) 70%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--color-text-secondary) 70%, transparent);
   border-radius: 50%;
-  background-color: color-mix(in srgb, var(--color-text-secondary) 18%, transparent);
+  background-color: color-mix(
+    in srgb,
+    var(--color-text-secondary) 18%,
+    transparent
+  );
   cursor: pointer;
   transition:
     transform 0.25s ease,

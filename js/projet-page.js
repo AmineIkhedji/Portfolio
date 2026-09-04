@@ -16,7 +16,9 @@ function getProjetIdFromUrl() {
 
 function getProjetImages(projet) {
   const additionalImages = Array.isArray(projet.gallery)
-    ? projet.gallery.filter((image) => typeof image === "string" && image.trim())
+    ? projet.gallery.filter(
+        (image) => typeof image === "string" && image.trim(),
+      )
     : [];
 
   return [
@@ -29,9 +31,9 @@ function renderProjetNotFound(heroContainer, container) {
   heroContainer.innerHTML = "";
   container.innerHTML = `
     <div class="projet-page-notfound">
-      <h1>Projet introuvable</h1>
-      <p>Ce projet n'existe pas ou a été retiré.</p>
-      <a class="projet-btn projet-btn-primary" href="index.html#projets">Retour aux projets</a>
+      <h1 data-i18n="projects.not_found.title">Projet introuvable</h1>
+      <p data-i18n="projects.not_found.description">Ce projet n'existe pas ou a été retiré.</p>
+      <a class="projet-btn projet-btn-primary" data-i18n="projects.back" href="index.html#projets">Retour aux projets</a>
     </div>
   `;
   document.title = "Projet introuvable - Ikhedji Amine";
@@ -136,7 +138,9 @@ function setupProjetGallery(images) {
 
   const showSlide = (nextIndex) => {
     currentIndex = (nextIndex + slides.length) % slides.length;
-    slides.forEach((slide, index) => slide.classList.toggle("is-active", index === currentIndex));
+    slides.forEach((slide, index) =>
+      slide.classList.toggle("is-active", index === currentIndex),
+    );
     dots.forEach((dot, index) => {
       const isActive = index === currentIndex;
       dot.classList.toggle("is-active", isActive);
@@ -183,7 +187,13 @@ function setupBackTransition(projet, heroImg) {
   if (!backBtn) return;
 
   backBtn.addEventListener("click", (event) => {
-    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+    if (
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
       return;
     }
 
@@ -199,10 +209,15 @@ function setupBackTransition(projet, heroImg) {
           src: heroImg ? heroImg.currentSrc || heroImg.src : projet.image,
           direction: "backward",
           rect: rect
-            ? { top: rect.top, left: rect.left, width: rect.width, height: rect.height }
+            ? {
+                top: rect.top,
+                left: rect.left,
+                width: rect.width,
+                height: rect.height,
+              }
             : null,
           time: Date.now(),
-        })
+        }),
       );
     } catch (e) {
       /* sessionStorage indisponible : navigation simple, sans animation retour */
@@ -252,7 +267,7 @@ function renderProjetPage() {
                   alt="${projet.title} - image ${index + 1}"
                   ${index === 0 && incoming ? 'style="opacity:0;"' : ""}
                 />
-              `
+              `,
             )
             .join("")}
         </div>
@@ -264,7 +279,8 @@ function renderProjetPage() {
               <div class="projet-gallery-dots" role="tablist" aria-label="Choisir une image">
                 ${images
                   .map(
-                    (_, index) => `<button class="projet-gallery-dot${index === 0 ? " is-active" : ""}" type="button" role="tab" aria-label="Afficher l'image ${index + 1}" aria-current="${index === 0 ? "true" : "false"}"></button>`
+                    (_, index) =>
+                      `<button class="projet-gallery-dot${index === 0 ? " is-active" : ""}" type="button" role="tab" aria-label="Afficher l'image ${index + 1}" aria-current="${index === 0 ? "true" : "false"}"></button>`,
                   )
                   .join("")}
               </div>
@@ -273,7 +289,7 @@ function renderProjetPage() {
         }
       </div>
     </div>
-    <a href="index.html#projets" class="projet-back-btn projet-page-content-reveal" id="projetBackBtn">&larr; Retour aux projets</a>
+    <a href="index.html#projets" class="projet-back-btn projet-page-content-reveal" id="projetBackBtn"><span aria-hidden="true">&larr;</span> <span data-i18n="projects.back">Retour aux projets</span></a>
   `;
 
   container.classList.add("projet-page-content-reveal");
@@ -289,12 +305,12 @@ function renderProjetPage() {
     <div class="projet-actions projet-page-actions">
       ${
         projet.demoUrl
-          ? `<a class="projet-btn projet-btn-primary" href="${projet.demoUrl}" target="_blank" rel="noopener">${ICON_EXTERNAL} Demo</a>`
+          ? `<a class="projet-btn projet-btn-primary" href="${projet.demoUrl}" target="_blank" rel="noopener">${ICON_EXTERNAL} <span data-i18n="projects.demo">Demo</span></a>`
           : ""
       }
       ${
         projet.githubUrl
-          ? `<a class="projet-btn" href="${projet.githubUrl}" target="_blank" rel="noopener">${ICON_GITHUB} GitHub</a>`
+          ? `<a class="projet-btn" href="${projet.githubUrl}" target="_blank" rel="noopener">${ICON_GITHUB} <span data-i18n="projects.github">GitHub</span></a>`
           : ""
       }
     </div>
@@ -320,8 +336,12 @@ window.addEventListener("pageshow", (event) => {
   if (heroImg) {
     heroImg.style.opacity = "";
   }
-  document.querySelectorAll(".projet-transition-clone").forEach((clone) => clone.remove());
-  document.querySelectorAll(".projet-page-content-reveal").forEach((el) => el.classList.add("is-visible"));
+  document
+    .querySelectorAll(".projet-transition-clone")
+    .forEach((clone) => clone.remove());
+  document
+    .querySelectorAll(".projet-page-content-reveal")
+    .forEach((el) => el.classList.add("is-visible"));
 });
 
 renderProjetPage();

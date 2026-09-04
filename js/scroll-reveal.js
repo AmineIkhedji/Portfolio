@@ -1,25 +1,40 @@
 // ==================== SCROLL REVEAL ====================
 
 (function () {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const revealItems = document.querySelectorAll('[data-reveal]');
-    if (!revealItems.length) return;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle("is-visible", entry.isIntersecting);
+      });
+    },
+    {
+      threshold: 0.12,
+      rootMargin: "-8% 0px -8% 0px",
+    },
+  );
 
-    document.querySelectorAll('[data-reveal-group]').forEach((group) => {
-        group.querySelectorAll('[data-reveal]').forEach((element, index) => {
-            element.style.setProperty('--reveal-delay', `${Math.min(index * 80, 400)}ms`);
-        });
+  window.refreshScrollReveal = function () {
+    document.querySelectorAll("[data-reveal-group]").forEach((group) => {
+      group.querySelectorAll("[data-reveal]").forEach((element, index) => {
+        element.style.setProperty(
+          "--reveal-delay",
+          `${Math.min(index * 80, 400)}ms`,
+        );
+      });
     });
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            entry.target.classList.toggle('is-visible', entry.isIntersecting);
-        });
-    }, {
-        threshold: 0.12,
-        rootMargin: '-8% 0px -8% 0px',
-    });
+    document.querySelectorAll("[data-reveal]").forEach((element) => {
+      observer.observe(element);
 
-    revealItems.forEach((element) => observer.observe(element));
+      const rect = element.getBoundingClientRect();
+      const isInViewport = rect.bottom > 0 && rect.top < window.innerHeight;
+      if (isInViewport) {
+        element.classList.add("is-visible");
+      }
+    });
+  };
+
+  window.refreshScrollReveal();
 })();

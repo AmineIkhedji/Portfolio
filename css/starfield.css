@@ -1,0 +1,18 @@
+/* ==================== FOND ANIMÉ (étoiles / constellation) ====================
+   Canvas plein écran, position fixed (ne scrolle pas), placé derrière tout
+   le contenu (z-index négatif) : il apparaît partout où le fond des
+   sections est transparent. Rendu différent selon le thème actif — voir
+   js/starfield.js (étoiles en dark, constellation en light). */
+
+#starfield {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+#starfield.is-visible {
+  opacity: 1;
+}

@@ -47,9 +47,6 @@ const projetsData = [
     ],
     demoUrl: "",
     githubUrl: "",
-    gallery: [
-      "assets/projets/Projects.jpg",
-      "assets/projets/BATMAN.jpg",
-    ],
+    gallery: ["assets/projets/Projects.jpg", "assets/projets/BATMAN.jpg"],
   },
 ];

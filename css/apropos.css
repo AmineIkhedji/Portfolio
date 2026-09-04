@@ -156,34 +156,60 @@
 }
 
 @media screen and (max-width: 900px) {
-  #apropos { padding: 4.5rem 0 2.5rem; }
-  .apropos-container { padding: 0 1.5rem; }
-  .apropos-title { margin-bottom: 2.5rem; }
-  .apropos-grid { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+  #apropos {
+    padding: 4.5rem 0 2.5rem;
+  }
+  .apropos-container {
+    padding: 0 1.5rem;
+  }
+  .apropos-title {
+    margin-bottom: 2.5rem;
+  }
+  .apropos-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+  }
 
   /* Le texte occupe maintenant toute la largeur : les stats passent
      sur une seule ligne de 4 pour combler l'espace au lieu de rester
      coincées dans une colonne étroite. */
-  .apropos-stats { grid-template-columns: repeat(4, 1fr); }
+  .apropos-stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 @media screen and (max-width: 700px) {
   /* Plus assez de place pour 4 colonnes sans écraser le contenu :
      retour à une grille 2x2, mais sur toute la largeur disponible. */
-  .apropos-stats { grid-template-columns: repeat(2, 1fr); }
+  .apropos-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media screen and (max-width: 560px) {
   /* 3 cartes de largeur égale ne tiennent plus proprement : on les
      empile pour garder une lecture propre plutôt qu'un retour à la
      ligne asymétrique (2 puis 1). */
-  .apropos-meta { grid-template-columns: 1fr; }
+  .apropos-meta {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media screen and (max-width: 480px) {
-  #apropos { padding: 3.5rem 0 2rem; }
-  .apropos-container { padding: 0 1.25rem; }
-  .apropos-stat-card { padding: 1.1rem; border-radius: 14px; }
-  .apropos-meta { gap: 0.75rem; }
-  .apropos-meta-item { padding: 0.9rem 1rem; }
+  #apropos {
+    padding: 3.5rem 0 2rem;
+  }
+  .apropos-container {
+    padding: 0 1.25rem;
+  }
+  .apropos-stat-card {
+    padding: 1.1rem;
+    border-radius: 14px;
+  }
+  .apropos-meta {
+    gap: 0.75rem;
+  }
+  .apropos-meta-item {
+    padding: 0.9rem 1rem;
+  }
 }

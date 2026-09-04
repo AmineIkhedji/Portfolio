@@ -9,12 +9,24 @@
   will-change: opacity, transform;
 }
 
-[data-reveal="up"] { transform: translateY(24px); }
-[data-reveal="down"] { transform: translateY(-24px); }
-[data-reveal="left"] { transform: translateX(24px); }
-[data-reveal="right"] { transform: translateX(-24px); }
-[data-reveal="scale"] { transform: scale(0.97); }
-[data-reveal="fade"] { transform: translateY(8px); }
+[data-reveal="up"] {
+  transform: translateY(24px);
+}
+[data-reveal="down"] {
+  transform: translateY(-24px);
+}
+[data-reveal="left"] {
+  transform: translateX(24px);
+}
+[data-reveal="right"] {
+  transform: translateX(-24px);
+}
+[data-reveal="scale"] {
+  transform: scale(0.97);
+}
+[data-reveal="fade"] {
+  transform: translateY(8px);
+}
 [data-reveal="line"] {
   transform: scaleX(0);
   transform-origin: left center;

@@ -188,8 +188,13 @@ function startForwardTransition(id, card) {
 
   const clone = createTransitionClone(
     src,
-    { top: startRect.top, left: startRect.left, width: startRect.width, height: startRect.height },
-    radius
+    {
+      top: startRect.top,
+      left: startRect.left,
+      width: startRect.width,
+      height: startRect.height,
+    },
+    radius,
   );
   wrap.style.visibility = "hidden";
 
@@ -208,7 +213,7 @@ function startForwardTransition(id, card) {
         },
         targetRect,
         time: Date.now(),
-      })
+      }),
     );
   } catch (e) {
     /* sessionStorage indisponible : la navigation aura quand même lieu,
@@ -223,7 +228,13 @@ document.addEventListener("click", (event) => {
   // On laisse le comportement natif du navigateur pour les clics avec
   // modificateur (ouverture dans un nouvel onglet/fenêtre) ou un bouton
   // autre que le clic gauche.
-  if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+  if (
+    event.button !== 0 ||
+    event.metaKey ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.altKey
+  ) {
     return;
   }
 
@@ -267,7 +278,7 @@ function readBackwardTransition() {
 
 function playBackwardTransition(data) {
   const card = Array.from(document.querySelectorAll(".projet-card")).find(
-    (c) => c.getAttribute("data-projet-id") === data.id
+    (c) => c.getAttribute("data-projet-id") === data.id,
   );
   if (!card) return;
 
@@ -280,19 +291,29 @@ function playBackwardTransition(data) {
 
   const clone = createTransitionClone(
     data.src,
-    { top: startRect.top, left: startRect.left, width: startRect.width, height: startRect.height },
-    0
+    {
+      top: startRect.top,
+      left: startRect.left,
+      width: startRect.width,
+      height: startRect.height,
+    },
+    0,
   );
   wrap.style.visibility = "hidden";
 
   animateClone(
     clone,
-    { top: targetRect.top, left: targetRect.left, width: targetRect.width, height: targetRect.height },
+    {
+      top: targetRect.top,
+      left: targetRect.left,
+      width: targetRect.width,
+      height: targetRect.height,
+    },
     radius,
     () => {
       wrap.style.visibility = "visible";
       clone.remove();
-    }
+    },
   );
 }
 
@@ -310,7 +331,7 @@ window.addEventListener(
       } catch (e) {}
     }
   },
-  { once: true }
+  { once: true },
 );
 
 // Sécurité : si la page est restaurée depuis le cache du navigateur (bouton
@@ -320,7 +341,9 @@ window.addEventListener("pageshow", (event) => {
   document.querySelectorAll(".projet-image-wrap").forEach((wrap) => {
     wrap.style.visibility = "";
   });
-  document.querySelectorAll(".projet-transition-clone").forEach((clone) => clone.remove());
+  document
+    .querySelectorAll(".projet-transition-clone")
+    .forEach((clone) => clone.remove());
 });
 
 renderProjets();

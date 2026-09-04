@@ -207,20 +207,42 @@
 /* ==================== RESPONSIVE ==================== */
 
 @media screen and (max-width: 900px) {
-  #formation { padding: 0 0 4.5rem; }
-  .formation-container { padding: 0 1.5rem; }
-  .formation-title { margin-bottom: 2.5rem; }
-  .certifications-grid { grid-template-columns: repeat(2, 1fr); }
+  #formation {
+    padding: 0 0 4.5rem;
+  }
+  .formation-container {
+    padding: 0 1.5rem;
+  }
+  .formation-title {
+    margin-bottom: 2.5rem;
+  }
+  .certifications-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media screen and (max-width: 600px) {
-  .certifications-grid { grid-template-columns: 1fr; }
+  .certifications-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media screen and (max-width: 480px) {
-  #formation { padding: 0 0 3.5rem; }
-  .formation-container { padding: 0 1.25rem; }
-  .formation-block + .formation-block { margin-top: 3rem; }
-  .certification-card { padding: 1.1rem; border-radius: 14px; }
-  .formation-timeline-item { column-gap: 1.1rem; padding-bottom: 2rem; }
+  #formation {
+    padding: 0 0 3.5rem;
+  }
+  .formation-container {
+    padding: 0 1.25rem;
+  }
+  .formation-block + .formation-block {
+    margin-top: 3rem;
+  }
+  .certification-card {
+    padding: 1.1rem;
+    border-radius: 14px;
+  }
+  .formation-timeline-item {
+    column-gap: 1.1rem;
+    padding-bottom: 2rem;
+  }
 }
