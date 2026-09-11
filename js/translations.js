@@ -133,43 +133,51 @@ const translations = {
       timeline: [
         {
           date: "2026 — Présent",
-          title: "Master 2 — Génie Logiciel",
-          description:
-            "Études avancées en génie logiciel, développement d'applications et architecture logicielle.",
+          title: "Master 2 Informatique",
+          description: "Univ. Béjaïa — Spécialité Génie logiciel",
         },
         {
           date: "2025 — 2026",
-          title: "Développement Full Stack",
-          description:
-            "Construction d'applications web complètes : frontend, backend, bases de données et API REST.",
+          title: "Master 1 Informatique",
+          description: "Univ. Béjaïa — Spécialité Génie logiciel",
         },
         {
-          date: "2025 — Présent",
-          title: "Mobile & Développement de jeux",
-          description:
-            "Exploration de Flutter pour le mobile, et de C / Godot pour la création de jeux.",
+          date: "2024 — 2025",
+          title: "Licence 3 Informatique",
+          description: "Univ. Béjaïa — Spécialité Système informatique",
+        },
+        {
+          date: "2023 — 2024",
+          title: "Licence 2 Informatique",
+          description: "Univ. Béjaïa",
+        },
+        {
+          date: "2022 — 2023",
+          title: "Licence 1 Informatique",
+          description: "Univ. Béjaïa",
+        },
+        {
+          date: "2022",
+          title: "Baccalauréat Mathématique",
+          description: "Mention Bien",
         },
       ],
       certifications: [
         {
-          org: "ServiceNow",
-          title: "ServiceNow Certified System Administrator",
+          org: "Université de Béjaïa",
+          title: "Licence — Spécialité Système informatique",
         },
         {
-          org: "ServiceNow",
-          title: "ServiceNow Certified Application Developer",
+          org: "Top Excellence",
+          title: "MERN Full Stack (Création de site web)",
         },
         {
-          org: "AICTE",
-          title: "Python Development",
+          org: "Tusna",
+          title: "Création de site web",
         },
         {
-          org: "EduSkills",
-          title: "Python Full Stack",
-        },
-        {
-          org: "AICTE",
-          title: "Frontend Development",
+          org: "Udemy",
+          title: "Formation en C en ligne",
         },
       ],
     },
@@ -323,43 +331,51 @@ const translations = {
       timeline: [
         {
           date: "2026 — Present",
-          title: "Master 2 — Software Engineering",
-          description:
-            "Advanced studies in software engineering, application development, and software architecture.",
+          title: "Master 2 Computer Science",
+          description: "University of Béjaïa — Software Engineering specialization",
         },
         {
           date: "2025 — 2026",
-          title: "Full Stack Development",
-          description:
-            "Building complete web applications: frontend, backend, databases, and REST APIs.",
+          title: "Master 1 Computer Science",
+          description: "University of Béjaïa — Software Engineering specialization",
         },
         {
-          date: "2025 — Present",
-          title: "Mobile & Game Development",
-          description:
-            "Exploring Flutter for mobile, and C / Godot for game creation.",
+          date: "2024 — 2025",
+          title: "Bachelor 3 Computer Science",
+          description: "University of Béjaïa — Computer Systems specialization",
+        },
+        {
+          date: "2023 — 2024",
+          title: "Bachelor 2 Computer Science",
+          description: "University of Béjaïa",
+        },
+        {
+          date: "2022 — 2023",
+          title: "Bachelor 1 Computer Science",
+          description: "University of Béjaïa",
+        },
+        {
+          date: "2022",
+          title: "Mathematics Baccalaureate",
+          description: "Honors: Good",
         },
       ],
       certifications: [
         {
-          org: "ServiceNow",
-          title: "ServiceNow Certified System Administrator",
+          org: "University of Béjaïa",
+          title: "Bachelor's Degree — Computer Systems specialization",
         },
         {
-          org: "ServiceNow",
-          title: "ServiceNow Certified Application Developer",
+          org: "Top Excellence",
+          title: "MERN Full Stack (Website Creation)",
         },
         {
-          org: "AICTE",
-          title: "Python Development",
+          org: "Tusna",
+          title: "Website Creation",
         },
         {
-          org: "EduSkills",
-          title: "Python Full Stack",
-        },
-        {
-          org: "AICTE",
-          title: "Frontend Development",
+          org: "Udemy",
+          title: "Online C Programming Course",
         },
       ],
     },

@@ -10,21 +10,33 @@
 const carriereData = [
   {
     date: "2026 — Présent",
-    title: "Master 2 — Génie Logiciel",
-    description:
-      "Études avancées en génie logiciel, développement d'applications et architecture logicielle.",
+    title: "Master 2 Informatique",
+    description: "Univ. Béjaïa — Spécialité Génie logiciel",
   },
   {
     date: "2025 — 2026",
-    title: "Développement Full Stack",
-    description:
-      "Construction d'applications web complètes : frontend, backend, bases de données et API REST.",
+    title: "Master 1 Informatique",
+    description: "Univ. Béjaïa — Spécialité Génie logiciel",
   },
   {
-    date: "2025 — Présent",
-    title: "Mobile & Développement de jeux",
-    description:
-      "Exploration de Flutter pour le mobile, et de C / Godot pour la création de jeux.",
+    date: "2024 — 2025",
+    title: "Licence 3 Informatique",
+    description: "Univ. Béjaïa — Spécialité Système informatique",
+  },
+  {
+    date: "2023 — 2024",
+    title: "Licence 2 Informatique",
+    description: "Univ. Béjaïa",
+  },
+  {
+    date: "2022 — 2023",
+    title: "Licence 1 Informatique",
+    description: "Univ. Béjaïa",
+  },
+  {
+    date: "2022",
+    title: "Baccalauréat Mathématique",
+    description: "Mention Bien",
   },
 ];
 
@@ -34,23 +46,19 @@ const carriereData = [
 
 const certificationsData = [
   {
-    org: "ServiceNow",
-    title: "ServiceNow Certified System Administrator",
+    org: "Université de Béjaïa",
+    title: "Licence — Spécialité Système informatique",
   },
   {
-    org: "ServiceNow",
-    title: "ServiceNow Certified Application Developer",
+    org: "Top Excellence",
+    title: "MERN Full Stack (Création de site web)",
   },
   {
-    org: "AICTE",
-    title: "Python Development",
+    org: "Tusna",
+    title: "Création de site web",
   },
   {
-    org: "EduSkills",
-    title: "Python Full Stack",
-  },
-  {
-    org: "AICTE",
-    title: "Frontend Development",
+    org: "Udemy",
+    title: "Formation en C en ligne",
   },
 ];
