@@ -79,10 +79,25 @@ function renderProjetCard(projet) {
   `;
 }
 
+function markPortraitProjectImages() {
+  document.querySelectorAll(".projet-image-wrap img").forEach((img) => {
+    const updateOrientation = () => {
+      img.classList.toggle("projet-image-portrait", img.naturalHeight > img.naturalWidth);
+    };
+
+    if (img.complete) {
+      updateOrientation();
+    } else {
+      img.addEventListener("load", updateOrientation, { once: true });
+    }
+  });
+}
+
 function renderProjets() {
   const container = document.getElementById("projetsGrid");
   if (!container) return;
   container.innerHTML = projetsData.map(renderProjetCard).join("");
+  markPortraitProjectImages();
 }
 
 function updateReadMoreVisibility() {
@@ -121,10 +136,10 @@ function getRadius(el, fallback) {
   return Number.isFinite(val) ? val : fallback;
 }
 
-function createTransitionClone(src, rect, radius) {
+function createTransitionClone(src, rect, radius, isPortrait = false) {
   const clone = document.createElement("img");
+  clone.className = `projet-transition-clone${isPortrait ? " projet-image-portrait" : ""}`;
   clone.src = src;
-  clone.className = "projet-transition-clone";
   clone.style.top = `${rect.top}px`;
   clone.style.left = `${rect.left}px`;
   clone.style.width = `${rect.width}px`;
@@ -195,6 +210,7 @@ function startForwardTransition(id, card) {
       height: startRect.height,
     },
     radius,
+    img.classList.contains("projet-image-portrait"),
   );
   wrap.style.visibility = "hidden";
 

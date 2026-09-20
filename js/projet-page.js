@@ -127,8 +127,9 @@ function revealPageContent() {
 
 function setupProjetGallery(images) {
   const gallery = document.querySelector(".projet-gallery");
-  if (!gallery || images.length < 2) return;
+  if (!gallery) return;
 
+  const track = gallery.querySelector(".projet-gallery-track");
   const slides = Array.from(gallery.querySelectorAll(".projet-gallery-slide"));
   const dots = Array.from(gallery.querySelectorAll(".projet-gallery-dot"));
   const previousButton = gallery.querySelector("[data-gallery-previous]");
@@ -136,17 +137,29 @@ function setupProjetGallery(images) {
   let currentIndex = 0;
   let timer;
 
+  const updateGalleryBackground = (slide) => {
+    if (!track || !slide) return;
+    const imageSource = slide.currentSrc || slide.src;
+    track.style.setProperty("--gallery-background-image", `url("${imageSource}")`);
+  };
+
   const showSlide = (nextIndex) => {
     currentIndex = (nextIndex + slides.length) % slides.length;
     slides.forEach((slide, index) =>
       slide.classList.toggle("is-active", index === currentIndex),
     );
+    slides.forEach((slide, index) => {
+      slide.hidden = index !== currentIndex;
+    });
+    updateGalleryBackground(slides[currentIndex]);
     dots.forEach((dot, index) => {
       const isActive = index === currentIndex;
       dot.classList.toggle("is-active", isActive);
       dot.setAttribute("aria-current", isActive ? "true" : "false");
     });
   };
+
+  updateGalleryBackground(slides[currentIndex]);
 
   const restartTimer = () => {
     window.clearInterval(timer);
@@ -262,6 +275,7 @@ function renderProjetPage() {
               (image, index) => `
                 <img
                   class="projet-gallery-slide${index === 0 ? " is-active" : ""}"
+                  ${index !== 0 ? "hidden" : ""}
                   ${index === 0 ? 'id="projetHeroImage"' : ""}
                   src="${image}"
                   alt="${projet.title} - image ${index + 1}"
