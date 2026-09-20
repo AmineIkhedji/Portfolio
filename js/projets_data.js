@@ -1,11 +1,12 @@
 // ==================== DONNÉES DES PROJETS ====================
 // Pour ajouter un projet : copie/colle un objet dans le tableau ci-dessous.
-// Champs optionnels : demoUrl, githubUrl, gallery.
+// Champs optionnels : demoUrl, githubUrl, gallery, platform.
 // - Si "demoUrl" est vide/absent -> le bouton "Demo" est caché.
 // - Si "githubUrl" est vide/absent -> le bouton "GitHub" est caché.
 // - "description" = texte court affiché sur la carte (tronqué à 3 lignes).
 // - "fullDescription" = texte complet affiché dans la fenêtre de détail.
 // - "gallery" = liste d'images affichées dans le carrousel de la page détail.
+// - "platform: mobile" = affiche les captures dans un mockup de téléphone.
 
 const projetsData = [
   {
@@ -32,7 +33,8 @@ const projetsData = [
     id: "kidney-stone-detection",
     tag: "ML",
     title: "Kidney Stone Detection",
-    image: "assets/projets/diabetes-prediction.png",
+    platform: "mobile",
+    image: "assets/projets/chill.jpg",
     description:
       "Solution d'imagerie médicale par deep learning utilisant des modèles CNN pour classifier des images d'échographie rénale.",
     fullDescription: [
@@ -47,6 +49,22 @@ const projetsData = [
     ],
     demoUrl: "",
     githubUrl: "",
-    gallery: ["assets/projets/Projects.jpg", "assets/projets/BATMAN.jpg","assets/projets/image12.png","assets/projets/image15.png","assets/projets/prduit fournisseur info.png"],
+    gallery: [
+      "assets/projets/chill.jpg",
+      "assets/projets/diabetes-prediction.png",
+      "assets/projets/Ergonomie.avif",
+      "assets/projets/HTML interface.webp",
+      "assets/projets/IMG20260920162425.jpg",
+      "assets/projets/interface 1960.jpg",
+      "assets/projets/Interface du futur.jpeg",
+      "assets/projets/Machine Interface Homme.png",
+      "assets/projets/Macintosh.webp",
+      "assets/projets/Methode evaluation UI.gif",
+      "assets/projets/Modern UI.webp",
+      "assets/projets/msdos 1960.webp",
+      "assets/projets/NLS 1960.png",
+      "assets/projets/Responsive.jpg",
+      "assets/projets/VR && AR.jpeg",
+    ],
   },
 ];

@@ -27,6 +27,72 @@ function getProjetImages(projet) {
   ];
 }
 
+// ---------- Choix du cadre selon le type de projet et le ratio réel ----------
+// platform : "mobile" | "web" | "game" (ou absent).
+//   phone   -> cadre de téléphone
+//   browser -> fenêtre de navigateur
+//   plain   -> image simple, coins arrondis et ombre (jeux, visuels déjà travaillés)
+// Le choix final se fait image par image : un projet mobile qui contient une
+// capture paysage (tablette) ou un projet web qui contient une capture
+// portrait (version mobile du site) reçoivent automatiquement le bon cadre.
+
+function guessInitialFrame(platform) {
+  if (platform === "mobile") return "phone";
+  if (platform === "web") return "browser";
+  return "plain";
+}
+
+function pickFrame(platform, ratio) {
+  if (platform === "game") return "plain";
+  if (platform === "mobile") return ratio < 1 ? "phone" : "plain";
+  if (ratio < 0.75) return "phone";
+  return platform === "web" ? "browser" : "plain";
+}
+
+function renderGallerySlide(image, index, projet, incoming) {
+  const imageAttributes = `
+    ${index === 0 ? 'id="projetHeroImage"' : ""}
+    src="${image}"
+    alt="${projet.title} - image ${index + 1}"
+    ${index === 0 && incoming ? 'style="opacity:0;"' : ""}
+  `;
+
+  return `
+    <div class="projet-gallery-slide" data-frame="${guessInitialFrame(projet.platform)}">
+      <div class="projet-media">
+        <div class="projet-media-bar" aria-hidden="true"></div>
+        <span class="projet-media-camera" aria-hidden="true"></span>
+        <div class="projet-media-screen">
+          <img ${imageAttributes} />
+        </div>
+        <span class="projet-media-home" aria-hidden="true"></span>
+      </div>
+    </div>
+  `;
+}
+
+// Mesure le ratio réel de chaque image et applique le bon cadre.
+// Si l'image est déjà en cache, c'est fait immédiatement (pas de saut visuel).
+function setupSlideMedia(gallery, projet) {
+  gallery.querySelectorAll(".projet-gallery-slide").forEach((slide) => {
+    const img = slide.querySelector("img");
+    if (!img) return;
+
+    const apply = () => {
+      if (!img.naturalWidth || !img.naturalHeight) return;
+      const ratio = img.naturalWidth / img.naturalHeight;
+      slide.style.setProperty("--ratio", ratio.toFixed(4));
+      slide.dataset.frame = pickFrame(projet.platform, ratio);
+    };
+
+    if (img.complete) {
+      apply();
+    } else {
+      img.addEventListener("load", apply, { once: true });
+    }
+  });
+}
+
 function renderProjetNotFound(heroContainer, container) {
   heroContainer.innerHTML = "";
   container.innerHTML = `
@@ -58,11 +124,26 @@ function readIncomingTransition(id) {
 
 function playArrivalTransition(incoming, heroImg) {
   const startRect = incoming.startRect || incoming.rect;
-  const targetRect = incoming.targetRect || incoming.rect;
+
+  // La cible est mesurée sur l'écran réel (cadre inclus) : la taille de
+  // l'image dépend maintenant de son ratio, elle ne peut plus être
+  // pré-calculée par projets.js. On garde la valeur stockée en repli.
+  const measured = heroImg.getBoundingClientRect();
+  const targetRect =
+    measured.width > 0 && measured.height > 0
+      ? measured
+      : incoming.targetRect || incoming.rect;
+
   if (!startRect || !targetRect) {
     revealPageContent();
     return;
   }
+
+  // Le clone finit avec les mêmes coins arrondis que l'écran réel.
+  const targetRadius =
+    (heroImg.parentElement &&
+      getComputedStyle(heroImg.parentElement).borderTopLeftRadius) ||
+    "0px";
 
   // Le clone reprend exactement le mouvement de la carte vers le hero,
   // pendant que la page et son contenu finissent de se rendre.
@@ -92,7 +173,7 @@ function playArrivalTransition(incoming, heroImg) {
       clone.style.left = `${targetRect.left}px`;
       clone.style.width = `${targetRect.width}px`;
       clone.style.height = `${targetRect.height}px`;
-      clone.style.borderRadius = "0px";
+      clone.style.borderRadius = targetRadius;
     });
   });
 
@@ -125,75 +206,161 @@ function revealPageContent() {
   if (backBtn) backBtn.classList.add("is-visible");
 }
 
-function setupProjetGallery(images) {
+function setupProjetGallery() {
   const gallery = document.querySelector(".projet-gallery");
   if (!gallery) return;
 
   const track = gallery.querySelector(".projet-gallery-track");
-  const slides = Array.from(gallery.querySelectorAll(".projet-gallery-slide"));
+  const strip = gallery.querySelector(".projet-gallery-strip");
+  if (!track || !strip) return;
+
+  const slides = Array.from(strip.querySelectorAll(".projet-gallery-slide"));
   const dots = Array.from(gallery.querySelectorAll(".projet-gallery-dot"));
+  const dotsWrap = gallery.querySelector(".projet-gallery-dots");
   const previousButton = gallery.querySelector("[data-gallery-previous]");
   const nextButton = gallery.querySelector("[data-gallery-next]");
+  const scrollBehavior = window.matchMedia("(prefers-reduced-motion: reduce)")
+    .matches
+    ? "auto"
+    : "smooth";
   let currentIndex = 0;
-  let timer;
+  let lastBackgroundIndex = -1;
 
-  const updateGalleryBackground = (slide) => {
-    if (!track || !slide) return;
-    const imageSource = slide.currentSrc || slide.src;
-    track.style.setProperty("--gallery-background-image", `url("${imageSource}")`);
+  const setBackground = (index) => {
+    if (index === lastBackgroundIndex) return;
+    const image = slides[index]?.querySelector("img");
+    if (!image) return;
+    lastBackgroundIndex = index;
+    track.style.setProperty(
+      "--gallery-background-image",
+      `url("${image.currentSrc || image.src}")`,
+    );
   };
 
-  const showSlide = (nextIndex) => {
-    currentIndex = (nextIndex + slides.length) % slides.length;
-    slides.forEach((slide, index) =>
-      slide.classList.toggle("is-active", index === currentIndex),
-    );
+  // Image "courante" : la plus proche du centre visible. Aux deux
+  // extrémités de la bande, on prend directement la première / dernière.
+  const findCurrentIndex = (maxScroll) => {
+    if (strip.scrollLeft <= 1) return 0;
+    if (strip.scrollLeft >= maxScroll - 1) return slides.length - 1;
+    const center = strip.scrollLeft + strip.clientWidth / 2;
+    let best = 0;
+    let bestDistance = Infinity;
     slides.forEach((slide, index) => {
-      slide.hidden = index !== currentIndex;
+      const distance = Math.abs(slide.offsetLeft + slide.offsetWidth / 2 - center);
+      if (distance < bestDistance) {
+        best = index;
+        bestDistance = distance;
+      }
     });
-    updateGalleryBackground(slides[currentIndex]);
+    return best;
+  };
+
+  const updateState = () => {
+    const maxScroll = strip.scrollWidth - strip.clientWidth;
+    const canScroll = maxScroll > 2;
+
+    // Si tout tient à l'écran, flèches et points ne servent à rien.
+    if (previousButton) previousButton.hidden = !canScroll;
+    if (nextButton) nextButton.hidden = !canScroll;
+    if (dotsWrap) dotsWrap.hidden = !canScroll;
+    if (previousButton) previousButton.disabled = strip.scrollLeft <= 1;
+    if (nextButton) nextButton.disabled = strip.scrollLeft >= maxScroll - 1;
+
+    currentIndex = canScroll ? findCurrentIndex(maxScroll) : 0;
     dots.forEach((dot, index) => {
       const isActive = index === currentIndex;
       dot.classList.toggle("is-active", isActive);
       dot.setAttribute("aria-current", isActive ? "true" : "false");
     });
+    setBackground(currentIndex);
   };
 
-  updateGalleryBackground(slides[currentIndex]);
-
-  const restartTimer = () => {
-    window.clearInterval(timer);
-    timer = window.setInterval(() => showSlide(currentIndex + 1), 7000);
-  };
-
-  previousButton?.addEventListener("click", () => {
-    showSlide(currentIndex - 1);
-    restartTimer();
-  });
-
-  nextButton?.addEventListener("click", () => {
-    showSlide(currentIndex + 1);
-    restartTimer();
-  });
-
-  dots.forEach((dot, index) => {
-    dot.addEventListener("click", () => {
-      showSlide(index);
-      restartTimer();
+  const scrollByPage = (direction) => {
+    strip.scrollBy({
+      left: direction * strip.clientWidth * 0.65,
+      behavior: scrollBehavior,
     });
+  };
+
+  const goToSlide = (index) => {
+    const slide = slides[index];
+    if (!slide) return;
+    const left = slide.offsetLeft - (strip.clientWidth - slide.offsetWidth) / 2;
+    strip.scrollTo({ left: Math.max(0, left), behavior: scrollBehavior });
+  };
+
+  setBackground(0);
+  if (slides.length < 2) return;
+
+  previousButton?.addEventListener("click", () => scrollByPage(-1));
+  nextButton?.addEventListener("click", () => scrollByPage(1));
+  dots.forEach((dot, index) =>
+    dot.addEventListener("click", () => goToSlide(index)),
+  );
+
+  let ticking = false;
+  strip.addEventListener(
+    "scroll",
+    () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        updateState();
+      });
+    },
+    { passive: true },
+  );
+
+  // Les tailles changent quand une image se charge (ratio réel) ou quand
+  // la fenêtre est redimensionnée : on remet flèches et points à jour.
+  if ("ResizeObserver" in window) {
+    const observer = new ResizeObserver(updateState);
+    observer.observe(strip);
+    slides.forEach((slide) => observer.observe(slide));
+  } else {
+    window.addEventListener("resize", updateState);
+  }
+
+  // Clavier : flèches gauche / droite.
+  document.addEventListener("keydown", (event) => {
+    if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey)
+      return;
+    if (strip.scrollWidth - strip.clientWidth <= 2) return;
+    const target = event.target;
+    if (
+      target instanceof HTMLElement &&
+      (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName))
+    )
+      return;
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      scrollByPage(-1);
+    } else if (event.key === "ArrowRight") {
+      event.preventDefault();
+      scrollByPage(1);
+    }
   });
 
-  gallery.addEventListener("mouseenter", () => window.clearInterval(timer));
-  gallery.addEventListener("mouseleave", restartTimer);
-  gallery.addEventListener("focusin", () => window.clearInterval(timer));
-  gallery.addEventListener("focusout", (event) => {
-    if (!gallery.contains(event.relatedTarget)) restartTimer();
-  });
-
-  restartTimer();
+  updateState();
 }
 
 // ---------- Départ (transition RETOUR vers la grille) ----------
+
+// Rectangle de l'image seulement si elle est réellement visible (elle peut
+// être hors champ si la bande a été défilée) ; sinon pas d'animation retour.
+function getVisibleRect(element) {
+  if (!element) return null;
+  const rect = element.getBoundingClientRect();
+  const isVisible =
+    rect.width > 0 &&
+    rect.height > 0 &&
+    rect.right > 0 &&
+    rect.left < window.innerWidth &&
+    rect.bottom > 0 &&
+    rect.top < window.innerHeight;
+  return isVisible ? rect : null;
+}
 
 function setupBackTransition(projet, heroImg) {
   const backBtn = document.getElementById("projetBackBtn");
@@ -212,7 +379,7 @@ function setupBackTransition(projet, heroImg) {
 
     event.preventDefault();
 
-    const rect = heroImg ? heroImg.getBoundingClientRect() : null;
+    const rect = getVisibleRect(heroImg);
 
     try {
       sessionStorage.setItem(
@@ -268,33 +435,26 @@ function renderProjetPage() {
 
   heroContainer.innerHTML = `
     <div class="projet-page-hero-image">
-      <div class="projet-gallery" aria-label="Galerie d'images du projet">
+      <div class="projet-gallery" data-platform="${projet.platform || "auto"}" aria-label="Galerie d'images du projet">
         <div class="projet-gallery-track">
-          ${images
-            .map(
-              (image, index) => `
-                <img
-                  class="projet-gallery-slide${index === 0 ? " is-active" : ""}"
-                  ${index !== 0 ? "hidden" : ""}
-                  ${index === 0 ? 'id="projetHeroImage"' : ""}
-                  src="${image}"
-                  alt="${projet.title} - image ${index + 1}"
-                  ${index === 0 && incoming ? 'style="opacity:0;"' : ""}
-                />
-              `,
-            )
-            .join("")}
+          <div class="projet-gallery-strip" tabindex="0" role="group" aria-label="Captures du projet">
+            ${images
+              .map((image, index) =>
+                renderGallerySlide(image, index, projet, incoming),
+              )
+              .join("")}
+          </div>
         </div>
         ${
           images.length > 1
             ? `
               <button class="projet-gallery-arrow projet-gallery-arrow-previous" type="button" data-gallery-previous aria-label="Image précédente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
               <button class="projet-gallery-arrow projet-gallery-arrow-next" type="button" data-gallery-next aria-label="Image suivante"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
-              <div class="projet-gallery-dots" role="tablist" aria-label="Choisir une image">
+              <div class="projet-gallery-dots" aria-label="Aller à une image">
                 ${images
                   .map(
                     (_, index) =>
-                      `<button class="projet-gallery-dot${index === 0 ? " is-active" : ""}" type="button" role="tab" aria-label="Afficher l'image ${index + 1}" aria-current="${index === 0 ? "true" : "false"}"></button>`,
+                      `<button class="projet-gallery-dot${index === 0 ? " is-active" : ""}" type="button" aria-label="Afficher l'image ${index + 1}" aria-current="${index === 0 ? "true" : "false"}"></button>`,
                   )
                   .join("")}
               </div>
@@ -330,6 +490,10 @@ function renderProjetPage() {
     </div>
   `;
 
+  // Ratio réel + cadre adapté, AVANT de mesurer l'image pour la transition.
+  const gallery = heroContainer.querySelector(".projet-gallery");
+  if (gallery) setupSlideMedia(gallery, projet);
+
   const heroImg = document.getElementById("projetHeroImage");
 
   if (incoming && heroImg) {
@@ -338,7 +502,7 @@ function renderProjetPage() {
     revealPageContent();
   }
 
-  setupProjetGallery(images);
+  setupProjetGallery();
 
   setupBackTransition(projet, heroImg);
 }

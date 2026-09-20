@@ -27,7 +27,7 @@ body.no-navbar main {
   padding-bottom: 6rem;
 }
 
-/* ---------- Bannière hero (image pleine largeur) ---------- */
+/* ---------- Bannière hero (galerie pleine largeur) ---------- */
 
 .projet-page-hero {
   position: relative;
@@ -40,17 +40,37 @@ body.no-navbar main {
   background-color: var(--color-bg);
 }
 
+/* ==================== GALERIE ADAPTATIVE ====================
+   Principe : une bande horizontale où TOUTES les images ont la même
+   hauteur (la plus grande possible dans la fenêtre) et une largeur qui
+   suit leur ratio réel (variable --ratio, mesurée en JS).
+   - Captures mobiles (étroites) : plusieurs téléphones côte à côte, la
+     place est remplie au lieu de laisser un grand vide.
+   - Captures web / jeux (larges) : une image principale, avec un aperçu
+     de la suivante qui invite à faire défiler.
+   - Rien ne se recouvre : marge du haut pour le bouton retour, marge du
+     bas pour les points, marges latérales pour les flèches.
+   ============================================================ */
+
 .projet-gallery {
+  --stage-h: clamp(420px, 86vh, 880px);
+  --pad-top: 4rem;
+  --pad-bottom: 3rem;
+  --pad-x: 4.5rem;
+  --gap: 1.5rem;
   position: relative;
 }
 
 .projet-gallery-track {
   position: relative;
-  aspect-ratio: 7 / 3;
+  height: var(--stage-h);
+  /* Permet d'utiliser cqw / cqh (taille de la scène) dans les enfants. */
+  container-type: size;
   overflow: hidden;
   background-color: var(--color-surface-secondary);
 }
 
+/* Fond flou : reprend l'image courante pour remplir les côtés. */
 .projet-gallery-track::before {
   position: absolute;
   inset: -2rem;
@@ -65,21 +85,211 @@ body.no-navbar main {
   transition: background-image 0.55s ease;
 }
 
-.projet-gallery-slide {
+/* La bande défile horizontalement (souris, trackpad, doigt, clavier). */
+.projet-gallery-strip {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-  opacity: 0;
-  transition: opacity 0.55s ease;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  padding: var(--pad-top) var(--pad-x) var(--pad-bottom);
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
 }
 
-.projet-gallery-slide.is-active {
-  opacity: 1;
+.projet-gallery-strip::-webkit-scrollbar {
+  display: none;
 }
+
+.projet-gallery-strip:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -4px;
+}
+
+.projet-gallery-slide {
+  /* Espace maximal occupé par une image (cadre compris). */
+  --fit-w: calc(100cqw - 2 * var(--pad-x));
+  --fit-h: calc(100cqh - var(--pad-top) - var(--pad-bottom));
+  /* Ratio largeur / hauteur de la capture. Valeur de repli ; le JS
+     la remplace par le ratio réel dès que l'image est chargée. */
+  --ratio: 1.6;
+  /* Place prise par le cadre autour de l'écran (bordure, barre...). */
+  --chrome-x: 0px;
+  --chrome-y: 0px;
+  --frame-radius: 0.75rem;
+
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  scroll-snap-align: center;
+}
+
+/* Marges automatiques : la bande est centrée quand tout tient à l'écran,
+   et démarre normalement à gauche quand elle déborde. */
+.projet-gallery-slide:first-child {
+  margin-left: auto;
+}
+
+.projet-gallery-slide:last-child {
+  margin-right: auto;
+}
+
+/* ---------- Cadre commun ---------- */
+
+.projet-media {
+  position: relative;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  box-sizing: content-box;
+  overflow: hidden;
+  border-radius: var(--frame-radius);
+}
+
+/* L'écran : c'est LUI qui reçoit la taille. Il prend la plus grande
+   largeur possible qui respecte à la fois la largeur ET la hauteur
+   disponibles, au ratio exact de l'image. */
+.projet-media-screen {
+  position: relative;
+  box-sizing: content-box;
+  width: min(
+    calc(var(--fit-w) - var(--chrome-x)),
+    calc((var(--fit-h) - var(--chrome-y)) * var(--ratio))
+  );
+  aspect-ratio: var(--ratio);
+  overflow: hidden;
+  background-color: var(--color-surface-secondary);
+}
+
+.projet-media-screen img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* Le conteneur a déjà le ratio de l'image : "cover" ne rogne rien,
+     il supprime juste tout risque de bande vide. */
+  object-fit: cover;
+}
+
+/* Éléments décoratifs : masqués par défaut, activés selon le cadre. */
+.projet-media-bar,
+.projet-media-camera,
+.projet-media-home {
+  display: none;
+}
+
+/* ---------- Cadre "phone" (projets mobiles) ---------- */
+
+.projet-gallery-slide[data-frame="phone"] {
+  --bezel: 0.6rem;
+  --frame-radius: 2.4rem;
+  --ratio: 0.46;
+  --chrome-x: calc(2 * (var(--bezel) + 2px));
+  --chrome-y: calc(2 * (var(--bezel) + 2px));
+}
+
+.projet-gallery-slide[data-frame="phone"] .projet-media {
+  isolation: isolate;
+  padding: var(--bezel);
+  border: 2px solid #424854;
+  background: linear-gradient(145deg, #333945, #101216 52%, #3d434d);
+  box-shadow:
+    0 1.5rem 3rem rgba(0, 0, 0, 0.42),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.projet-gallery-slide[data-frame="phone"] .projet-media-screen {
+  border-radius: calc(var(--frame-radius) - var(--bezel) - 2px);
+  background: #0b0d11;
+}
+
+/* Petite caméra "punch-hole" : gêne moins l'interface que l'ancienne
+   encoche large. */
+.projet-gallery-slide[data-frame="phone"] .projet-media-camera {
+  position: absolute;
+  top: calc(var(--bezel) + 0.55rem);
+  left: 50%;
+  z-index: 2;
+  display: block;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: #050608;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.06);
+  transform: translateX(-50%);
+}
+
+/* Barre d'accueil : blanche sur fond sombre, sombre sur fond clair
+   (mix-blend-mode), pour rester visible sur les captures claires. */
+.projet-gallery-slide[data-frame="phone"] .projet-media-home {
+  position: absolute;
+  bottom: calc(var(--bezel) + 0.4rem);
+  left: 50%;
+  z-index: 2;
+  display: block;
+  width: 26%;
+  height: 0.22rem;
+  border-radius: 999px;
+  background: #ffffff;
+  mix-blend-mode: difference;
+  transform: translateX(-50%);
+}
+
+/* ---------- Cadre "browser" (projets web) ---------- */
+
+.projet-gallery-slide[data-frame="browser"] {
+  --bar-h: 2.1rem;
+  --ratio: 1.6;
+  --chrome-x: 2px;
+  --chrome-y: calc(var(--bar-h) + 2px);
+}
+
+.projet-gallery-slide[data-frame="browser"] .projet-media {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: #171a20;
+  box-shadow:
+    0 1.5rem 3rem rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.projet-gallery-slide[data-frame="browser"] .projet-media-bar {
+  display: flex;
+  align-items: center;
+  height: var(--bar-h);
+  background: #20242c;
+}
+
+/* Les trois pastilles sont dessinées avec un seul pseudo-élément. */
+.projet-gallery-slide[data-frame="browser"] .projet-media-bar::before {
+  width: 0.6rem;
+  height: 0.6rem;
+  margin-left: 0.85rem;
+  border-radius: 50%;
+  background: #ff5f57;
+  box-shadow:
+    1rem 0 0 #febc2e,
+    2rem 0 0 #28c840;
+  content: "";
+  opacity: 0.85;
+}
+
+/* ---------- Cadre "plain" (jeux, visuels déjà travaillés) ---------- */
+
+.projet-gallery-slide[data-frame="plain"] .projet-media {
+  box-shadow:
+    0 1.5rem 3rem rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.projet-gallery-slide[data-frame="plain"] .projet-media-screen {
+  border-radius: var(--frame-radius);
+}
+
+/* ---------- Flèches et points ---------- */
 
 .projet-gallery-arrow {
   position: absolute;
@@ -114,6 +324,17 @@ body.no-navbar main {
   color: #ffffff;
   box-shadow: 0 10px 28px rgba(37, 99, 235, 0.3);
   outline: none;
+}
+
+.projet-gallery-arrow[hidden],
+.projet-gallery-dots[hidden] {
+  display: none;
+}
+
+.projet-gallery-arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+  pointer-events: none;
 }
 
 .projet-gallery-arrow svg {
@@ -190,20 +411,11 @@ body.no-navbar main {
   outline: none;
 }
 
-.projet-page-hero-image > img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  object-position: center;
-  background-color: var(--color-surface-secondary);
-  display: block;
-}
-
 .projet-back-btn {
   position: absolute;
   top: 1.25rem;
   left: 1.25rem;
-  z-index: 2;
+  z-index: 3;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -331,6 +543,10 @@ body.no-navbar main {
     transition: none !important;
     pointer-events: auto !important;
   }
+
+  .projet-gallery-track::before {
+    transition: none;
+  }
 }
 
 /* ---------- État "projet introuvable" ---------- */
@@ -351,6 +567,59 @@ body.no-navbar main {
   margin-bottom: 1.75rem;
 }
 
+/* ---------- Tablette ---------- */
+
+@media screen and (max-width: 900px) {
+  .projet-gallery {
+    --pad-x: 4rem;
+  }
+}
+
+/* ---------- Téléphone ----------
+   Les flèches descendent de chaque côté des points (dans la marge du bas)
+   pour ne jamais recouvrir la capture ; le swipe fonctionne aussi. */
+
+@media screen and (max-width: 640px) {
+  .projet-gallery {
+    --stage-h: clamp(300px, 46vh, 420px);
+    --pad-top: 3.75rem;
+    --pad-bottom: 3.75rem;
+    --pad-x: 1rem;
+    --gap: 1rem;
+  }
+
+  .projet-gallery[data-platform="mobile"] {
+    --stage-h: clamp(520px, 78vh, 740px);
+  }
+
+  .projet-gallery-slide[data-frame="phone"] {
+    --bezel: 0.4rem;
+    --frame-radius: 1.9rem;
+  }
+
+  .projet-gallery-arrow {
+    top: auto;
+    bottom: 0.6rem;
+    width: 2.4rem;
+    height: 2.4rem;
+    transform: none;
+  }
+
+  .projet-gallery-arrow-previous,
+  .projet-gallery-arrow-previous:hover,
+  .projet-gallery-arrow-previous:focus-visible {
+    left: 0.75rem;
+    transform: none;
+  }
+
+  .projet-gallery-arrow-next,
+  .projet-gallery-arrow-next:hover,
+  .projet-gallery-arrow-next:focus-visible {
+    right: 0.75rem;
+    transform: none;
+  }
+}
+
 @media screen and (max-width: 480px) {
   .projet-page-hero-image {
     width: 100vw;
@@ -361,16 +630,6 @@ body.no-navbar main {
     left: 1rem;
     padding: 0.5rem 1rem;
     font-size: 0.8rem;
-  }
-  .projet-gallery-arrow {
-    width: 2.5rem;
-    height: 2.5rem;
-  }
-  .projet-gallery-arrow-previous {
-    left: 0.65rem;
-  }
-  .projet-gallery-arrow-next {
-    right: 0.65rem;
   }
   .projet-page-container {
     padding: 1.75rem 1.25rem 0;
