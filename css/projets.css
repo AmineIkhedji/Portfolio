@@ -62,21 +62,37 @@
   border-radius: 14px;
   background-color: var(--color-surface-secondary);
   margin-bottom: 1.25rem;
+  box-sizing: border-box;
+  padding: 0.85rem;
+}
+
+/* Fond flouté : reprend l'image (fournie en inline via --projet-card-bg)
+   pour remplir joliment les bords quand l'image ne fait pas 16:9 pile,
+   plutôt que de rogner l'image (voir .projet-image-wrap img ci-dessous). */
+.projet-image-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  z-index: 0;
+  background-image: var(--projet-card-bg);
+  background-position: center;
+  background-size: cover;
+  filter: blur(20px);
+  opacity: 0.55;
+  transform: scale(1.1);
 }
 
 .projet-image-wrap img {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  background-color: var(--color-surface-secondary);
+  /* "contain" : l'image principale de la carte est toujours visible en
+     entier, jamais rognée, quel que soit son ratio (portrait, carré...). */
+  object-fit: contain;
+  background-color: transparent;
   display: block;
   transition: transform 0.5s ease;
-}
-
-.projet-image-wrap img.projet-image-portrait,
-.projet-transition-clone.projet-image-portrait {
-  object-fit: contain;
-  padding: 0.75rem;
 }
 
 .projet-card:hover .projet-image-wrap img {
@@ -88,10 +104,13 @@
   position: fixed;
   z-index: 9999;
   margin: 0;
-  object-fit: cover;
+  object-fit: contain;
+  background-color: var(--color-surface-secondary);
   pointer-events: none;
-  transform-origin: center center;
-  will-change: top, left, width, height, border-radius;
+  transform-origin: top left;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform, border-radius;
 }
 
 .projet-type-badge {
@@ -235,6 +254,12 @@
   color: #ffffff;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .projet-transition-clone {
+    transition: none !important;
+  }
+}
+
 @media screen and (max-width: 900px) {
   #projets {
     padding: 0 0 4.5rem;
@@ -260,5 +285,24 @@
   .projet-card {
     padding: 0.75rem 0.75rem 1.25rem;
     border-radius: 14px;
+  }
+  .projet-image-wrap {
+    padding: 0.6rem;
+  }
+  /* Sur téléphone, une carte de projet mobile (captures portrait, hautes et
+     étroites) dans un cadre 16:9 laisse énormément de vide flouté de chaque
+     côté. On lui donne un cadre plus vertical pour que la capture occupe
+     davantage d'espace réel. */
+  .projet-card[data-platform="mobile"] .projet-image-wrap {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .projets-container {
+    padding: 0 1rem;
+  }
+  .projet-image-wrap {
+    padding: 0.45rem;
   }
 }

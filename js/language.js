@@ -349,21 +349,8 @@ function renderProjetsWithTranslation(projectsData) {
   const container = document.getElementById("projetsGrid");
   if (!container) return;
 
-  // On conserve les données des projets (inchangées)
-  // On met à jour uniquement les textes des boutons
-  container.querySelectorAll(".projet-card").forEach((card) => {
-    const readMoreBtn = card.querySelector(".projet-readmore");
-    if (readMoreBtn) {
-      readMoreBtn.innerHTML = `${projectsData.read_more} <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>`;
-    }
-
-    const viewBtn = card.querySelector(".projet-btn-primary");
-    if (viewBtn) {
-      const icon =
-        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>';
-      viewBtn.innerHTML = `${icon} ${projectsData.view_project}`;
-    }
-  });
+  renderProjets(getLanguage());
+  updateReadMoreVisibility();
 }
 
 // ============ EXPORT DES FONCTIONS ============

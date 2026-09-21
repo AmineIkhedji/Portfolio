@@ -37,11 +37,11 @@ function projetUrl(id) {
   return `projet.html?id=${encodeURIComponent(id)}`;
 }
 
-function renderProjetCard(projet) {
+function renderProjetCard(projet, labels) {
   return `
-    <article class="projet-card" data-reveal="scale" data-projet-id="${projet.id}">
-      <a class="projet-image-link" href="${projetUrl(projet.id)}" aria-label="Voir le projet ${projet.title}">
-        <div class="projet-image-wrap">
+    <article class="projet-card" data-reveal="scale" data-projet-id="${projet.id}" data-platform="${projet.platform || ""}">
+      <a class="projet-image-link" href="${projetUrl(projet.id)}" aria-label="${labels.view_project} ${projet.title}">
+        <div class="projet-image-wrap" style="--projet-card-bg: url('${projet.image}');">
           <img src="${projet.image}" alt="${projet.title}" loading="lazy" />
           <span class="projet-type-badge">${projet.tag}</span>
         </div>
@@ -52,7 +52,7 @@ function renderProjetCard(projet) {
         <p class="projet-description">${projet.description}</p>
 
         <a class="projet-readmore" href="${projetUrl(projet.id)}">
-          Lire la suite ${ICON_ARROW}
+          ${labels.read_more} ${ICON_ARROW}
         </a>
 
         <div class="projet-tags">
@@ -61,16 +61,16 @@ function renderProjetCard(projet) {
 
         <div class="projet-actions">
           <a class="projet-btn projet-btn-primary" href="${projetUrl(projet.id)}">
-            ${ICON_EYE} Voir le projet
+            ${ICON_EYE} ${labels.view_project}
           </a>
           ${
             projet.demoUrl
-              ? `<a class="projet-btn" href="${projet.demoUrl}" target="_blank" rel="noopener">${ICON_EXTERNAL} Demo</a>`
+              ? `<a class="projet-btn" href="${projet.demoUrl}" target="_blank" rel="noopener">${ICON_EXTERNAL} ${labels.demo}</a>`
               : ""
           }
           ${
             projet.githubUrl
-              ? `<a class="projet-btn" href="${projet.githubUrl}" target="_blank" rel="noopener">${ICON_GITHUB} GitHub</a>`
+              ? `<a class="projet-btn" href="${projet.githubUrl}" target="_blank" rel="noopener">${ICON_GITHUB} ${labels.github}</a>`
               : ""
           }
         </div>
@@ -79,25 +79,13 @@ function renderProjetCard(projet) {
   `;
 }
 
-function markPortraitProjectImages() {
-  document.querySelectorAll(".projet-image-wrap img").forEach((img) => {
-    const updateOrientation = () => {
-      img.classList.toggle("projet-image-portrait", img.naturalHeight > img.naturalWidth);
-    };
-
-    if (img.complete) {
-      updateOrientation();
-    } else {
-      img.addEventListener("load", updateOrientation, { once: true });
-    }
-  });
-}
-
-function renderProjets() {
+function renderProjets(lang = getLanguage()) {
   const container = document.getElementById("projetsGrid");
   if (!container) return;
-  container.innerHTML = projetsData.map(renderProjetCard).join("");
-  markPortraitProjectImages();
+  const labels = translations[lang].projects;
+  container.innerHTML = projetsData
+    .map((projet) => renderProjetCard(getLocalizedProjet(projet, lang), labels))
+    .join("");
 }
 
 function updateReadMoreVisibility() {
@@ -136,39 +124,60 @@ function getRadius(el, fallback) {
   return Number.isFinite(val) ? val : fallback;
 }
 
-function createTransitionClone(src, rect, radius, isPortrait = false) {
+const prefersReducedMotion = () =>
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// ---------- Technique FLIP (First, Last, Invert, Play) ----------
+// Le clone est posé UNE SEULE FOIS à sa position/taille FINALE (layout
+// figé, aucun reflow ensuite), puis on lui applique un transform
+// (translate + scale) qui le fait visuellement apparaître à la position de
+// départ. On anime seulement "transform" (et "border-radius", qui n'est
+// que du paint) : le navigateur peut composer ça directement sur le GPU,
+// sans jamais recalculer la mise en page pendant l'animation. C'est ce qui
+// rend le mouvement fluide au lieu de saccadé.
+function computeFlipTransform(startRect, endRect) {
+  const scaleX = startRect.width / endRect.width;
+  const scaleY = startRect.height / endRect.height;
+  const translateX = startRect.left - endRect.left;
+  const translateY = startRect.top - endRect.top;
+  return `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
+}
+
+function createTransitionClone(src, startRect, endRect, endRadius, startRadius = 0) {
   const clone = document.createElement("img");
-  clone.className = `projet-transition-clone${isPortrait ? " projet-image-portrait" : ""}`;
+  clone.className = "projet-transition-clone";
   clone.src = src;
-  clone.style.top = `${rect.top}px`;
-  clone.style.left = `${rect.left}px`;
-  clone.style.width = `${rect.width}px`;
-  clone.style.height = `${rect.height}px`;
-  clone.style.borderRadius = `${radius}px`;
+  clone.style.top = `${endRect.top}px`;
+  clone.style.left = `${endRect.left}px`;
+  clone.style.width = `${endRect.width}px`;
+  clone.style.height = `${endRect.height}px`;
+  clone.style.borderRadius = `${startRadius}px`;
+  clone.style.transform = computeFlipTransform(startRect, endRect);
   document.body.appendChild(clone);
   return clone;
 }
 
-function animateClone(clone, rect, radius, onDone) {
+function animateClone(clone, endRadius, onDone) {
+  if (prefersReducedMotion()) {
+    clone.style.transform = "translate(0px, 0px) scale(1, 1)";
+    clone.style.borderRadius = `${endRadius}px`;
+    onDone();
+    return;
+  }
+
   clone.style.transition = [
-    `top ${TRANSITION_DURATION}ms ${TRANSITION_EASING}`,
-    `left ${TRANSITION_DURATION}ms ${TRANSITION_EASING}`,
-    `width ${TRANSITION_DURATION}ms ${TRANSITION_EASING}`,
-    `height ${TRANSITION_DURATION}ms ${TRANSITION_EASING}`,
+    `transform ${TRANSITION_DURATION}ms ${TRANSITION_EASING}`,
     `border-radius ${TRANSITION_DURATION}ms ${TRANSITION_EASING}`,
   ].join(", ");
 
-  // Double rAF : on s'assure que le navigateur a bien peint la position de
-  // départ avant de déclencher la transition vers la position d'arrivée.
-  // Sans ça, les deux états peuvent être fusionnés en un seul repaint et
-  // l'animation ne se joue pas (saut direct, pas de mouvement visible).
+  // Double rAF : on s'assure que le navigateur a bien peint le transform de
+  // départ avant de déclencher la transition vers l'identité. Sans ça, les
+  // deux états peuvent être fusionnés en un seul repaint et l'animation ne
+  // se joue pas (saut direct, pas de mouvement visible).
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      clone.style.top = `${rect.top}px`;
-      clone.style.left = `${rect.left}px`;
-      clone.style.width = `${rect.width}px`;
-      clone.style.height = `${rect.height}px`;
-      clone.style.borderRadius = `${radius}px`;
+      clone.style.transform = "translate(0px, 0px) scale(1, 1)";
+      clone.style.borderRadius = `${endRadius}px`;
     });
   });
 
@@ -200,18 +209,18 @@ function startForwardTransition(id, card) {
   const targetRect = getHeroBannerRect();
   const src = img.currentSrc || img.src;
   const radius = getRadius(wrap, 14);
+  const startRectPlain = {
+    top: startRect.top,
+    left: startRect.left,
+    width: startRect.width,
+    height: startRect.height,
+  };
 
-  const clone = createTransitionClone(
-    src,
-    {
-      top: startRect.top,
-      left: startRect.left,
-      width: startRect.width,
-      height: startRect.height,
-    },
-    radius,
-    img.classList.contains("projet-image-portrait"),
-  );
+  // Le clone est posé à sa propre position (start === end) : il ne bouge
+  // pas, il sert juste de relais visuel pendant que le navigateur quitte
+  // la page. L'animation réelle démarre sur projet.html, qui a la vraie
+  // position finale (voir playArrivalTransition dans projet-page.js).
+  createTransitionClone(src, startRectPlain, startRectPlain, radius, radius);
   wrap.style.visibility = "hidden";
 
   try {
@@ -221,12 +230,7 @@ function startForwardTransition(id, card) {
         id,
         src,
         direction: "forward",
-        startRect: {
-          top: startRect.top,
-          left: startRect.left,
-          width: startRect.width,
-          height: startRect.height,
-        },
+        startRect: startRectPlain,
         targetRect,
         time: Date.now(),
       }),
@@ -302,35 +306,22 @@ function playBackwardTransition(data) {
   if (!wrap) return;
 
   const startRect = data.rect || getHeroBannerRect();
-  const targetRect = wrap.getBoundingClientRect();
+  const targetRectRaw = wrap.getBoundingClientRect();
+  const targetRect = {
+    top: targetRectRaw.top,
+    left: targetRectRaw.left,
+    width: targetRectRaw.width,
+    height: targetRectRaw.height,
+  };
   const radius = getRadius(wrap, 14);
 
-  const clone = createTransitionClone(
-    data.src,
-    {
-      top: startRect.top,
-      left: startRect.left,
-      width: startRect.width,
-      height: startRect.height,
-    },
-    0,
-  );
+  const clone = createTransitionClone(data.src, startRect, targetRect, radius, 0);
   wrap.style.visibility = "hidden";
 
-  animateClone(
-    clone,
-    {
-      top: targetRect.top,
-      left: targetRect.left,
-      width: targetRect.width,
-      height: targetRect.height,
-    },
-    radius,
-    () => {
-      wrap.style.visibility = "visible";
-      clone.remove();
-    },
-  );
+  animateClone(clone, radius, () => {
+    wrap.style.visibility = "visible";
+    clone.remove();
+  });
 }
 
 // Déclenché par splash.js une fois le scroll vers #projets effectué, pour

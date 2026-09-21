@@ -9,6 +9,13 @@ const ICON_GITHUB = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
 
 const TRANSITION_STORAGE_KEY = "projetTransition";
 
+// Filet de sécurité : si le rendu échoue ou prend trop de temps pour une
+// raison quelconque, on lève quand même le voile anti-flash pour ne jamais
+// laisser la page invisible indéfiniment.
+setTimeout(() => {
+  document.documentElement.classList.remove("project-transition-active");
+}, 1500);
+
 function getProjetIdFromUrl() {
   const params = new URLSearchParams(window.location.search);
   return params.get("id");
@@ -94,6 +101,7 @@ function setupSlideMedia(gallery, projet) {
 }
 
 function renderProjetNotFound(heroContainer, container) {
+  revealArrivalPage();
   heroContainer.innerHTML = "";
   container.innerHTML = `
     <div class="projet-page-notfound">
@@ -120,6 +128,26 @@ function readIncomingTransition(id) {
   } catch (e) {
     return null;
   }
+}
+
+const TRANSITION_DURATION = 550; // ms - doit rester cohérent avec projets.js
+const TRANSITION_EASING = "cubic-bezier(0.4, 0, 0.2, 1)";
+
+const prefersReducedMotion = () =>
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Technique FLIP (voir le commentaire détaillé dans projets.js) : le clone
+// est posé UNE SEULE FOIS à sa position/taille finale (layout figé, aucun
+// reflow ensuite), puis un transform (translate + scale) le fait
+// apparaître à la position de départ. On n'anime ensuite QUE "transform" et
+// "border-radius" -> tout est composé sur le GPU, jamais de recalcul de
+// mise en page pendant l'animation, donc plus de saccades.
+function computeFlipTransform(startRect, endRect) {
+  const scaleX = startRect.width / endRect.width;
+  const scaleY = startRect.height / endRect.height;
+  const translateX = startRect.left - endRect.left;
+  const translateY = startRect.top - endRect.top;
+  return `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
 }
 
 function playArrivalTransition(incoming, heroImg) {
@@ -150,33 +178,44 @@ function playArrivalTransition(incoming, heroImg) {
   const clone = document.createElement("img");
   clone.src = incoming.src;
   clone.className = "projet-transition-clone";
-  clone.style.top = `${startRect.top}px`;
-  clone.style.left = `${startRect.left}px`;
-  clone.style.width = `${startRect.width}px`;
-  clone.style.height = `${startRect.height}px`;
+  clone.style.top = `${targetRect.top}px`;
+  clone.style.left = `${targetRect.left}px`;
+  clone.style.width = `${targetRect.width}px`;
+  clone.style.height = `${targetRect.height}px`;
   clone.style.borderRadius = "14px";
+  clone.style.transform = computeFlipTransform(startRect, targetRect);
   document.body.appendChild(clone);
 
+  // Le clone est maintenant peint exactement à la position de départ : on
+  // peut révéler le reste de la page (elle était masquée par la classe
+  // "project-transition-active", voir revealArrivalPage ci-dessous) sans
+  // aucun flash, tout est déjà en place au premier paint.
+  revealArrivalPage();
   revealPageContent();
 
+  if (prefersReducedMotion()) {
+    clone.style.transform = "translate(0px, 0px) scale(1, 1)";
+    clone.style.borderRadius = targetRadius;
+    finishArrival(clone, heroImg, 0);
+    return;
+  }
+
   clone.style.transition = [
-    "top 550ms cubic-bezier(0.4, 0, 0.2, 1)",
-    "left 550ms cubic-bezier(0.4, 0, 0.2, 1)",
-    "width 550ms cubic-bezier(0.4, 0, 0.2, 1)",
-    "height 550ms cubic-bezier(0.4, 0, 0.2, 1)",
-    "border-radius 550ms cubic-bezier(0.4, 0, 0.2, 1)",
+    `transform ${TRANSITION_DURATION}ms ${TRANSITION_EASING}`,
+    `border-radius ${TRANSITION_DURATION}ms ${TRANSITION_EASING}`,
   ].join(", ");
 
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      clone.style.top = `${targetRect.top}px`;
-      clone.style.left = `${targetRect.left}px`;
-      clone.style.width = `${targetRect.width}px`;
-      clone.style.height = `${targetRect.height}px`;
+      clone.style.transform = "translate(0px, 0px) scale(1, 1)";
       clone.style.borderRadius = targetRadius;
     });
   });
 
+  finishArrival(clone, heroImg, TRANSITION_DURATION);
+}
+
+function finishArrival(clone, heroImg, delay) {
   let revealed = false;
   const reveal = () => {
     if (revealed) return;
@@ -190,13 +229,19 @@ function playArrivalTransition(incoming, heroImg) {
 
   // La fin du mouvement pilote le raccord. Le chargement réseau ne doit
   // jamais laisser l'image réelle invisible après la disparition du clone.
-  setTimeout(reveal, 550);
+  setTimeout(reveal, delay);
 }
 
 // ---------- Apparition du contenu texte (badge, titre, description...) ----------
 // En dehors d'une transition entrante (visite directe, rafraîchissement),
 // on révèle le contenu quasi immédiatement, juste avec un petit fondu pour
 // éviter un "pop" brutal.
+
+// Retire le voile anti-flash posé par le script inline de <head> (voir
+// projet.html). Idempotent : peut être appelée plusieurs fois sans risque.
+function revealArrivalPage() {
+  document.documentElement.classList.remove("project-transition-active");
+}
 
 function revealPageContent() {
   const container = document.getElementById("projetPageContent");
@@ -416,12 +461,16 @@ function renderProjetPage() {
   if (typeof projetsData === "undefined") return;
 
   const id = getProjetIdFromUrl();
-  const projet = projetsData.find((p) => p.id === id);
+  const sourceProjet = projetsData.find((p) => p.id === id);
 
-  if (!projet) {
+  if (!sourceProjet) {
     renderProjetNotFound(heroContainer, container);
     return;
   }
+
+  const lang = getLanguage();
+  const projet = getLocalizedProjet(sourceProjet, lang);
+  const projectLabels = translations[lang].projects;
 
   document.title = `${projet.title} - Ikhedji Amine`;
 
@@ -448,13 +497,13 @@ function renderProjetPage() {
         ${
           images.length > 1
             ? `
-              <button class="projet-gallery-arrow projet-gallery-arrow-previous" type="button" data-gallery-previous aria-label="Image précédente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
-              <button class="projet-gallery-arrow projet-gallery-arrow-next" type="button" data-gallery-next aria-label="Image suivante"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
-              <div class="projet-gallery-dots" aria-label="Aller à une image">
+              <button class="projet-gallery-arrow projet-gallery-arrow-previous" type="button" data-gallery-previous aria-label="${lang === "en" ? "Previous image" : "Image précédente"}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
+              <button class="projet-gallery-arrow projet-gallery-arrow-next" type="button" data-gallery-next aria-label="${lang === "en" ? "Next image" : "Image suivante"}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
+              <div class="projet-gallery-dots" aria-label="${lang === "en" ? "Go to an image" : "Aller à une image"}">
                 ${images
                   .map(
                     (_, index) =>
-                      `<button class="projet-gallery-dot${index === 0 ? " is-active" : ""}" type="button" aria-label="Afficher l'image ${index + 1}" aria-current="${index === 0 ? "true" : "false"}"></button>`,
+                      `<button class="projet-gallery-dot${index === 0 ? " is-active" : ""}" type="button" aria-label="${lang === "en" ? "Show image" : "Afficher l'image"} ${index + 1}" aria-current="${index === 0 ? "true" : "false"}"></button>`,
                   )
                   .join("")}
               </div>
@@ -479,12 +528,12 @@ function renderProjetPage() {
     <div class="projet-actions projet-page-actions">
       ${
         projet.demoUrl
-          ? `<a class="projet-btn projet-btn-primary" href="${projet.demoUrl}" target="_blank" rel="noopener">${ICON_EXTERNAL} <span data-i18n="projects.demo">Demo</span></a>`
+          ? `<a class="projet-btn projet-btn-primary" href="${projet.demoUrl}" target="_blank" rel="noopener">${ICON_EXTERNAL} <span data-i18n="projects.demo">${projectLabels.demo}</span></a>`
           : ""
       }
       ${
         projet.githubUrl
-          ? `<a class="projet-btn" href="${projet.githubUrl}" target="_blank" rel="noopener">${ICON_GITHUB} <span data-i18n="projects.github">GitHub</span></a>`
+          ? `<a class="projet-btn" href="${projet.githubUrl}" target="_blank" rel="noopener">${ICON_GITHUB} <span data-i18n="projects.github">${projectLabels.github}</span></a>`
           : ""
       }
     </div>
@@ -499,6 +548,7 @@ function renderProjetPage() {
   if (incoming && heroImg) {
     playArrivalTransition(incoming, heroImg);
   } else {
+    revealArrivalPage();
     revealPageContent();
   }
 
@@ -510,6 +560,7 @@ function renderProjetPage() {
 // Sécurité : restauration depuis le cache du navigateur (bouton précédent).
 window.addEventListener("pageshow", (event) => {
   if (!event.persisted) return;
+  document.documentElement.classList.remove("project-transition-active");
   const heroImg = document.getElementById("projetHeroImage");
   if (heroImg) {
     heroImg.style.opacity = "";

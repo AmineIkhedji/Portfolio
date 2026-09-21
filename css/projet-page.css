@@ -6,6 +6,19 @@ body.no-navbar main {
   padding-top: 0;
 }
 
+/* ---------- Anti-flash à l'arrivée ----------
+   Ajoutée en inline dans <head> de projet.html (avant tout rendu), AVANT
+   que le CSS/JS n'ait eu le temps de positionner le clone et le contenu.
+   On garde la page invisible (mais déjà mise en page, donc pas de reflow
+   au moment de la révéler) jusqu'à ce que projet-page.js confirme que
+   tout est prêt et retire la classe. Sans ça, on voit une fraction de
+   seconde de page vide / mal positionnée avant que le clone n'apparaisse
+   -> c'est le flash. Un filet de sécurité (timeout) dans le JS garantit
+   que la page n'affiche jamais indéfiniment. */
+html.project-transition-active body {
+  visibility: hidden;
+}
+
 /* ---------- Clone d'animation (voir projet-page.js) ----------
    Image temporaire, positionnée en `fixed`, qui part de la position
    exacte de l'image cliquée sur la liste des projets et anime jusqu'à
@@ -20,7 +33,10 @@ body.no-navbar main {
   object-fit: contain;
   background-color: var(--color-surface-secondary);
   pointer-events: none;
-  will-change: top, left, width, height, border-radius;
+  transform-origin: top left;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform, border-radius;
 }
 
 #projet-detail {
@@ -61,6 +77,34 @@ body.no-navbar main {
   position: relative;
 }
 
+/* Projets mobiles : les captures sont hautes et ÉTROITES (ratio ~0.46), donc
+   c'est la hauteur de la scène qui limite leur taille, pas sa largeur (voir
+   .projet-media-screen : width = min(fit-w, fit-h * ratio), et avec un ratio
+   aussi petit c'est quasi toujours la branche "fit-h * ratio" qui gagne).
+   On donne donc beaucoup plus de hauteur, et on réduit le padding vertical
+   pour que les téléphones restent grands et bien lisibles. */
+.projet-gallery[data-platform="mobile"] {
+  --stage-h: clamp(560px, 92vh, 960px);
+  --pad-top: 3rem;
+  --pad-bottom: 2rem;
+}
+
+/* Sur un vrai téléphone, "vh" inclut la zone que la barre d'adresse du
+   navigateur peut masquer/révéler en scrollant : la scène (et donc les
+   images) change de taille ou se retrouve coupée au moment où la barre
+   apparaît/disparaît. "dvh" (dynamic viewport height) suit la taille
+   RÉELLEMENT visible à chaque instant -> plus de saut ni de recadrage
+   surprise. Repli sur "vh" pour les navigateurs qui ne le supportent pas. */
+@supports (height: 100dvh) {
+  .projet-gallery {
+    --stage-h: clamp(420px, 86dvh, 880px);
+  }
+
+  .projet-gallery[data-platform="mobile"] {
+    --stage-h: clamp(560px, 92dvh, 960px);
+  }
+}
+
 .projet-gallery-track {
   position: relative;
   height: var(--stage-h);
@@ -99,6 +143,8 @@ body.no-navbar main {
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
 }
 
 .projet-gallery-strip::-webkit-scrollbar {
@@ -547,6 +593,10 @@ body.no-navbar main {
   .projet-gallery-track::before {
     transition: none;
   }
+
+  .projet-transition-clone {
+    transition: none !important;
+  }
 }
 
 /* ---------- État "projet introuvable" ---------- */
@@ -589,7 +639,19 @@ body.no-navbar main {
   }
 
   .projet-gallery[data-platform="mobile"] {
-    --stage-h: clamp(520px, 78vh, 740px);
+    --stage-h: clamp(560px, 86vh, 800px);
+    --pad-top: 3.25rem;
+    --pad-bottom: 3.25rem;
+  }
+
+  @supports (height: 100dvh) {
+    .projet-gallery {
+      --stage-h: clamp(300px, 46dvh, 420px);
+    }
+
+    .projet-gallery[data-platform="mobile"] {
+      --stage-h: clamp(560px, 86dvh, 800px);
+    }
   }
 
   .projet-gallery-slide[data-frame="phone"] {
@@ -598,25 +660,7 @@ body.no-navbar main {
   }
 
   .projet-gallery-arrow {
-    top: auto;
-    bottom: 0.6rem;
-    width: 2.4rem;
-    height: 2.4rem;
-    transform: none;
-  }
-
-  .projet-gallery-arrow-previous,
-  .projet-gallery-arrow-previous:hover,
-  .projet-gallery-arrow-previous:focus-visible {
-    left: 0.75rem;
-    transform: none;
-  }
-
-  .projet-gallery-arrow-next,
-  .projet-gallery-arrow-next:hover,
-  .projet-gallery-arrow-next:focus-visible {
-    right: 0.75rem;
-    transform: none;
+    display: none;
   }
 }
 
@@ -633,5 +677,24 @@ body.no-navbar main {
   }
   .projet-page-container {
     padding: 1.75rem 1.25rem 0;
+  }
+}
+
+/* Très petits téléphones (iPhone SE, petits Android...) : le padding
+   standard grignote une trop grande part d'un écran déjà étroit, on le
+   resserre pour laisser un maximum de place à l'image elle-même. */
+@media screen and (max-width: 380px) {
+  .projet-gallery {
+    --pad-x: 0.6rem;
+    --gap: 0.75rem;
+  }
+
+  .projet-gallery-slide[data-frame="phone"] {
+    --bezel: 0.3rem;
+  }
+
+  .projet-gallery-arrow {
+    width: 2.1rem;
+    height: 2.1rem;
   }
 }
