@@ -65,6 +65,7 @@ const projetsData = [
       "assets/projets/NLS 1960.png",
       "assets/projets/Responsive.jpg",
       "assets/projets/VR && AR.jpeg",
+      "assets/projets/prduit fournisseur info.png"
     ],
   },
 ];
