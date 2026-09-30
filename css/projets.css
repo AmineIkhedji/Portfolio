@@ -180,18 +180,24 @@
 .projet-btn {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   padding: 0.45rem 0.85rem;
   border-radius: 50px;
   font-family: var(--font-main);
   font-size: 0.76rem;
   font-weight: 600;
+  line-height: 1;
   text-decoration: none;
   cursor: pointer;
   border: 1px solid var(--color-border);
   background-color: transparent;
   color: var(--color-text-primary);
   transition: var(--transition-smooth);
+}
+
+.projet-btn span {
+  display: block;
+  padding-top: 2px;
 }
 
 .projet-btn svg {

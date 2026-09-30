@@ -23,7 +23,7 @@ function renderProjetCard(projet, labels) {
         <p class="projet-description">${projet.description}</p>
 
         <a class="projet-readmore" href="${projetUrl(projet.id)}">
-          ${labels.read_more} ${ICON_ARROW}
+          <span>${labels.read_more}</span> ${ICON_ARROW}
         </a>
 
         <div class="projet-tags">
@@ -32,16 +32,16 @@ function renderProjetCard(projet, labels) {
 
         <div class="projet-actions">
           <a class="projet-btn projet-btn-primary" href="${projetUrl(projet.id)}">
-            ${ICON_EYE} ${labels.view_project}
+            ${ICON_EYE} <span>${labels.view_project}</span>
           </a>
           ${
             projet.demoUrl
-              ? `<a class="projet-btn" href="${projet.demoUrl}" target="_blank" rel="noopener">${ICON_EXTERNAL} ${labels.demo}</a>`
+              ? `<a class="projet-btn" href="${projet.demoUrl}" target="_blank" rel="noopener">${ICON_EXTERNAL} <span>${labels.demo}</span></a>`
               : ""
           }
           ${
             projet.githubUrl
-              ? `<a class="projet-btn" href="${projet.githubUrl}" target="_blank" rel="noopener">${ICON_GITHUB} ${labels.github}</a>`
+              ? `<a class="projet-btn" href="${projet.githubUrl}" target="_blank" rel="noopener">${ICON_GITHUB} <span>${labels.github}</span></a>`
               : ""
           }
         </div>
