@@ -1,12 +1,3 @@
-// ==================== DONNÉES DES PROJETS ====================
-// Pour ajouter un projet : copie/colle un objet dans le tableau ci-dessous.
-// Champs optionnels : demoUrl, githubUrl, gallery, platform.
-// - Si "demoUrl" est vide/absent -> le bouton "Demo" est caché.
-// - Si "githubUrl" est vide/absent -> le bouton "GitHub" est caché.
-// - "description" = texte court affiché sur la carte (tronqué à 3 lignes).
-// - "fullDescription" = texte complet affiché dans la fenêtre de détail.
-// - "gallery" = liste d'images affichées dans le carrousel de la page détail.
-// - "platform: mobile" = affiche les captures dans un mockup de téléphone.
 
 const projetsData = [
   {
@@ -106,6 +97,51 @@ const projetsData = [
       "assets/projets/Responsive.jpg",
       "assets/projets/VR && AR.jpeg",
       "assets/projets/prduit fournisseur info.png"
+    ],
+  },
+   {
+    id: "diabetes-prediction test",
+    tag: "Mobile",
+    title: "Diabetes Prediction Systems",
+    translations: {
+      fr: {
+        title: "Diabetes Prediction Systems",
+        description:
+          "Application web de santé propulsée par le machine learning qui prédit le risque de diabète et génère des rapports professionnels.",
+        fullDescription: [
+          "Application web de santé propulsée par le machine learning qui prédit le risque de diabète et génère des rapports professionnels.",
+          "Le système repose sur un modèle entraîné sur des données médicales, avec un tableau de bord utilisateur permettant de suivre l'historique des prédictions et d'exporter les résultats en PDF.",
+        ],
+      },
+      en: {
+        title: "Diabetes Prediction System",
+        description:
+          "A machine learning-powered healthcare web application that predicts diabetes risk and generates professional reports.",
+        fullDescription: [
+          "A machine learning-powered healthcare web application that predicts diabetes risk and generates professional reports.",
+          "The system uses a model trained on medical data, with a user dashboard for tracking prediction history and exporting results as PDF files.",
+        ],
+      },
+    },
+    image: "assets/projets/Notification Commercant.png",
+    description:
+      "Application web de santé propulsée par le machine learning qui prédit le risque de diabète et génère des rapports professionnels.",
+    fullDescription: [
+      "Application web de santé propulsée par le machine learning qui prédit le risque de diabète et génère des rapports professionnels.",
+      "Le système repose sur un modèle entraîné sur des données médicales, avec un tableau de bord utilisateur permettant de suivre l'historique des prédictions et d'exporter les résultats en PDF.",
+    ],
+    tags: [
+      "Risk Prediction",
+      "Authentication",
+      "PDF Reports",
+      "User Dashboard",
+    ],
+    demoUrl: "",
+    githubUrl: "",
+    gallery: [
+      "assets/projets/prduit fournisseur info.png",
+      "assets/projets/Inscription 3.png",
+      "assets/projets/prduit fournisseur modifier.png"
     ],
   },
 ];

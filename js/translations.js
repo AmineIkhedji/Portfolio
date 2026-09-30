@@ -119,6 +119,8 @@ const translations = {
       demo: "Demo",
       github: "GitHub",
       back: "Retour aux projets",
+      screens: "Galerie",
+      next: "Projet suivant",
       not_found: {
         title: "Projet introuvable",
         description: "Ce projet n'existe pas ou a été retiré.",
@@ -317,6 +319,8 @@ const translations = {
       demo: "Demo",
       github: "GitHub",
       back: "Back to projects",
+      screens: "Screenshots",
+      next: "Next project",
       not_found: {
         title: "Project not found",
         description: "This project does not exist or has been removed.",

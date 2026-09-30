@@ -3,7 +3,6 @@
 :root {
   --font-main: "Josefin Sans", sans-serif;
 
-  /* Couleurs Dark Mode */
   --color-bg: #080b12;
   --color-bg-secondary: #0d111a;
   --color-surface: #111722;
@@ -19,11 +18,9 @@
   --scrollbar-thumb: rgba(96, 165, 250, 0.75);
   --scrollbar-thumb-hover: rgba(96, 165, 250, 1);
 
-  /* Transitions */
   --transition-smooth: all 0.3s ease;
 }
 
-/* Variables pour le futur Light Mode */
 [data-theme="light"] {
   --color-bg: #f7f8fa;
   --color-bg-secondary: #eef1f5;
@@ -41,18 +38,6 @@
   --scrollbar-thumb-hover: rgba(37, 99, 235, 0.85);
 }
 
-/* ==================== TRANSITIONS DE PAGE ====================
-   La transition d'image entre la grille des projets et la page de détail
-   (et le retour) n'utilise plus la View Transitions API "cross-document" :
-   elle n'est supportée que par certains navigateurs, ce qui donnait une
-   navigation "normale" sans aucune animation ailleurs, et ne gérait pas du
-   tout le retour. Elle est désormais gérée entièrement en JS via un clone
-   d'image animé, relayé entre les deux pages par sessionStorage — voir le
-   commentaire en tête de js/projets.js pour le détail du mécanisme. */
-
-/* La transition de thème (clair/sombre, voir navbar.js) utilise elle bien
-   la View Transitions API, mais uniquement au sein d'un même document : on
-   garde donc ce garde-fou pour prefers-reduced-motion. */
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(*),
   ::view-transition-old(*),
@@ -120,9 +105,6 @@ section {
   scroll-margin-top: 100px;
 }
 
-/* La navbar rétrécit sur mobile (voir navbar.css) : on aligne le padding
-   du main et le scroll-margin des sections sur les mêmes paliers, pour
-   ne pas laisser un espace trop grand entre la navbar et le contenu. */
 @media screen and (max-width: 900px) {
   main {
     padding-top: 86px;
@@ -142,8 +124,6 @@ section {
     scroll-margin-top: 74px;
   }
 }
-
-/* ==================== SPLASH SCREEN ==================== */
 
 body.splash-active {
   overflow: hidden;

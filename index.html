@@ -12,11 +12,6 @@
         } catch (e) {}
       })();
     </script>
-    <script>
-      if (new URLSearchParams(window.location.search).has("back")) {
-        document.documentElement.classList.add("skip-splash");
-      }
-    </script>
     <title>Portfolio - Ikhedji Amine</title>
     <link rel="icon" type="image/png" href="assets/favicon.png" />
     <link rel="stylesheet" href="css/style.css" />
@@ -329,7 +324,6 @@
             Mes <span class="accent">compétences.</span>
           </h2>
           <div class="competences-grid" id="competencesGrid" data-reveal-group>
-            <!-- Les cartes sont générées dynamiquement par competences.js -->
           </div>
         </div>
         <div class="hero-divider" data-reveal="line" aria-hidden="true"></div>
@@ -345,7 +339,6 @@
             Mes <span class="accent">projets.</span>
           </h2>
           <div class="projets-grid" id="projetsGrid" data-reveal-group>
-            <!-- Les cartes sont générées dynamiquement par projets.js -->
           </div>
         </div>
         <div class="hero-divider" data-reveal="line" aria-hidden="true"></div>
@@ -375,7 +368,6 @@
               id="formationTimeline"
               data-reveal-group
             >
-              <!-- Générée dynamiquement par formation.js -->
             </div>
           </div>
 
@@ -392,7 +384,6 @@
               id="certificationsGrid"
               data-reveal-group
             >
-              <!-- Générée dynamiquement par formation.js -->
             </div>
           </div>
         </div>

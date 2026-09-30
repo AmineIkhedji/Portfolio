@@ -12,13 +12,6 @@
         } catch (e) {}
       })();
     </script>
-    <script>
-      try {
-        if (sessionStorage.getItem("projetTransition")) {
-          document.documentElement.classList.add("project-transition-active");
-        }
-      } catch (e) {}
-    </script>
     <title>Projet - Ikhedji Amine</title>
     <link rel="icon" type="image/png" href="assets/favicon.png" />
     <link rel="stylesheet" href="css/style.css" />
@@ -29,14 +22,7 @@
   <body class="no-navbar">
     <main>
       <section id="projet-detail">
-        <div class="projet-page-hero" id="projetPageHero">
-          <!-- Image + bouton retour injectés par projet-page.js -->
-        </div>
-        <div class="projet-page-container">
-          <div id="projetPageContent">
-            <!-- Badge, titre, description, tags, actions injectés par projet-page.js -->
-          </div>
-        </div>
+        <div class="pp" id="projetPage"></div>
       </section>
     </main>
 

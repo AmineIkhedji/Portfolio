@@ -1,5 +1,3 @@
-/* ==================== PROJETS ==================== */
-
 #projets {
   padding: 0 0 6rem;
 }
@@ -26,8 +24,9 @@
 
 .projets-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  align-items: start;
 }
 
 .projet-card {
@@ -36,8 +35,8 @@
   min-width: 0;
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 20px;
-  padding: 1rem 1rem 1.5rem;
+  border-radius: 16px;
+  padding: 0.75rem 0.75rem 1.15rem;
   transition: var(--transition-smooth);
 }
 
@@ -57,89 +56,89 @@
 .projet-image-wrap {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
   overflow: hidden;
-  border-radius: 14px;
+  border-radius: 12px;
   background-color: var(--color-surface-secondary);
-  margin-bottom: 1.25rem;
-  box-sizing: border-box;
-  padding: 0.85rem;
-}
-
-/* Fond flouté : reprend l'image (fournie en inline via --projet-card-bg)
-   pour remplir joliment les bords quand l'image ne fait pas 16:9 pile,
-   plutôt que de rogner l'image (voir .projet-image-wrap img ci-dessous). */
-.projet-image-wrap::before {
-  content: "";
-  position: absolute;
-  inset: -12%;
-  z-index: 0;
-  background-image: var(--projet-card-bg);
-  background-position: center;
-  background-size: cover;
-  filter: blur(20px);
-  opacity: 0.55;
-  transform: scale(1.1);
+  margin-bottom: 0.9rem;
 }
 
 .projet-image-wrap img {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  /* "contain" : l'image principale de la carte est toujours visible en
-     entier, jamais rognée, quel que soit son ratio (portrait, carré...). */
-  object-fit: contain;
-  background-color: transparent;
   display: block;
+  width: 100%;
+  height: auto;
   transition: transform 0.5s ease;
 }
 
 .projet-card:hover .projet-image-wrap img {
-  transform: scale(1.04);
+  transform: scale(1.03);
 }
 
-.projet-transition-clone {
-  display: block;
-  position: fixed;
-  z-index: 9999;
-  margin: 0;
+.projet-image-wrap[data-orientation="portrait"] {
+  display: grid;
+  aspect-ratio: 4 / 5;
+  place-items: center;
+  isolation: isolate;
+  background-color: var(--color-bg-secondary);
+}
+
+.projet-image-wrap[data-orientation="portrait"]::before {
+  position: absolute;
+  z-index: -1;
+  inset: -10%;
+  background-image: var(--projet-card-bg);
+  background-position: center;
+  background-size: cover;
+  content: "";
+  filter: blur(22px);
+  opacity: 0.45;
+  transform: scale(1.08);
+}
+
+.projet-image-wrap[data-orientation="portrait"] img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: auto;
+  height: calc(100% - 1.5rem);
+  max-width: calc(100% - 1.5rem);
+  max-height: calc(100% - 1.5rem);
   object-fit: contain;
-  background-color: var(--color-surface-secondary);
-  pointer-events: none;
-  transform-origin: top left;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  will-change: transform, border-radius;
+  border-radius: 8px;
+  box-shadow: 0 0.75rem 1.75rem rgba(0, 0, 0, 0.35);
+  transform: translate(-50%, -50%);
+}
+
+.projet-card:hover .projet-image-wrap[data-orientation="portrait"] img {
+  transform: translate(-50%, -50%) scale(1.03);
 }
 
 .projet-type-badge {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  padding: 0.3rem 0.75rem;
+  top: 8px;
+  right: 8px;
+  padding: 0.22rem 0.6rem;
   background-color: rgba(8, 11, 18, 0.65);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 20px;
   color: #ffffff;
-  font-size: 0.72rem;
+  font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
 }
 
 .projet-body {
-  padding: 0 0.5rem;
+  padding: 0 0.35rem;
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
 .projet-title {
-  margin: 0 0 0.6rem;
-  font-size: 1.2rem;
+  margin: 0 0 0.45rem;
+  font-size: 1.02rem;
   font-weight: 700;
   color: var(--color-text-primary);
   line-height: 1.3;
@@ -147,8 +146,8 @@
 
 .projet-description {
   margin: 0;
-  font-size: 0.92rem;
-  line-height: 1.65;
+  font-size: 0.82rem;
+  line-height: 1.55;
   color: var(--color-text-secondary);
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -161,20 +160,20 @@
   align-items: center;
   gap: 5px;
   align-self: flex-start;
-  margin-top: 0.5rem;
+  margin-top: 0.4rem;
   padding: 0;
   background: none;
   border: none;
   color: var(--color-accent);
   font-family: var(--font-main);
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   font-weight: 600;
   cursor: pointer;
 }
 
 .projet-readmore svg {
-  width: 15px;
-  height: 15px;
+  width: 13px;
+  height: 13px;
   stroke: var(--color-accent);
   transition: transform 0.25s ease;
 }
@@ -186,17 +185,17 @@
 .projet-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 1.1rem;
+  gap: 6px;
+  margin-top: 0.85rem;
 }
 
 .projet-tag-chip {
   background-color: var(--color-bg-secondary);
   border: 1px solid var(--color-border);
   color: var(--color-text-secondary);
-  border-radius: 12px;
-  padding: 0.4rem 0.8rem;
-  font-size: 0.78rem;
+  border-radius: 10px;
+  padding: 0.3rem 0.65rem;
+  font-size: 0.7rem;
   font-weight: 500;
   transition: var(--transition-smooth);
 }
@@ -209,18 +208,18 @@
 .projet-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-top: 1.4rem;
+  gap: 0.5rem;
+  margin-top: 1rem;
 }
 
 .projet-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 0.55rem 1.05rem;
+  gap: 5px;
+  padding: 0.45rem 0.85rem;
   border-radius: 50px;
   font-family: var(--font-main);
-  font-size: 0.85rem;
+  font-size: 0.76rem;
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
@@ -231,8 +230,8 @@
 }
 
 .projet-btn svg {
-  width: 15px;
-  height: 15px;
+  width: 13px;
+  height: 13px;
   stroke: currentColor;
   flex-shrink: 0;
 }
@@ -254,9 +253,9 @@
   color: #ffffff;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .projet-transition-clone {
-    transition: none !important;
+@media screen and (max-width: 1024px) {
+  .projets-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -271,6 +270,13 @@
     margin-bottom: 2.5rem;
   }
   .projets-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.1rem;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .projets-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -283,18 +289,14 @@
     padding: 0 1.25rem;
   }
   .projet-card {
-    padding: 0.75rem 0.75rem 1.25rem;
-    border-radius: 14px;
+    padding: 0.6rem 0.6rem 1rem;
+    border-radius: 12px;
   }
-  .projet-image-wrap {
-    padding: 0.6rem;
+  .projet-title {
+    font-size: 0.95rem;
   }
-  /* Sur téléphone, une carte de projet mobile (captures portrait, hautes et
-     étroites) dans un cadre 16:9 laisse énormément de vide flouté de chaque
-     côté. On lui donne un cadre plus vertical pour que la capture occupe
-     davantage d'espace réel. */
-  .projet-card[data-platform="mobile"] .projet-image-wrap {
-    aspect-ratio: 4 / 5;
+  .projet-description {
+    font-size: 0.78rem;
   }
 }
 
@@ -302,7 +304,8 @@
   .projets-container {
     padding: 0 1rem;
   }
-  .projet-image-wrap {
-    padding: 0.45rem;
+  .projet-btn {
+    padding: 0.4rem 0.7rem;
+    font-size: 0.72rem;
   }
 }
