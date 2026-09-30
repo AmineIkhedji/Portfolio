@@ -1,103 +1,132 @@
 const projetsData = [
   {
-    id: "diabetes-prediction",
-    tag: "ML",
-    title: "Diabetes Prediction System",
+    id: "Darlink",
+    tag: "Mobile",
+    title: "Darlink",
+
     translations: {
       fr: {
-        title: "Diabetes Prediction System",
+        title: "DarLink",
         description:
-          "Application web de santé propulsée par le machine learning qui prédit le risque de diabète et génère des rapports professionnels.",
+          "Application immobilière multiplateforme permettant de rechercher, publier et gérer des biens à vendre ou à louer, avec messagerie, favoris et estimation intelligente des prix.",
+
         fullDescription: [
-          "Application web de santé propulsée par le machine learning qui prédit le risque de diabète et génère des rapports professionnels.",
-          "Le système repose sur un modèle entraîné sur des données médicales, avec un tableau de bord utilisateur permettant de suivre l'historique des prédictions et d'exporter les résultats en PDF.",
+          "DarLink est une application immobilière hybride conçue pour faciliter la mise en relation entre acheteurs, locataires, propriétaires et promoteurs immobiliers.",
+          "L’application permet de consulter et publier des annonces, rechercher des biens selon différents critères, sauvegarder des favoris, communiquer via une messagerie interne et gérer les réservations et abonnements.",
+          "Une fonctionnalité de Machine Learning permet également d’estimer le prix d’un bien à partir de critères tels que le type de bien, la localisation, la surface et le nombre de pièces.",
+          "Le projet intègre également une approche DevSecOps avec GitHub Actions, incluant des pipelines CI/CD ainsi que des analyses de sécurité SAST, DAST et SCA.",
         ],
       },
+
       en: {
-        title: "Diabetes Prediction System",
+        title: "DarLink",
         description:
-          "A machine learning-powered healthcare web application that predicts diabetes risk and generates professional reports.",
+          "A cross-platform real estate application for searching, publishing and managing properties for sale or rent, with messaging, favorites and intelligent price estimation.",
+
         fullDescription: [
-          "A machine learning-powered healthcare web application that predicts diabetes risk and generates professional reports.",
-          "The system uses a model trained on medical data, with a user dashboard for tracking prediction history and exporting results as PDF files.",
+          "DarLink is a hybrid real estate application designed to connect buyers, tenants, property owners and real estate developers.",
+          "The application allows users to browse and publish listings, search for properties using different criteria, save favorites, communicate through internal messaging, and manage reservations and subscriptions.",
+          "A Machine Learning feature also estimates property prices based on criteria such as property type, location, surface area and number of rooms.",
+          "The project also follows a DevSecOps approach using GitHub Actions, including CI/CD pipelines and SAST, DAST and SCA security analysis.",
         ],
       },
     },
-    image: "assets/projets/diabetes-prediction.png",
+
+    platform: "Android / IOS",
+    image: "assets/projets/Darlink/logo.png",
+
     description:
-      "Application web de santé propulsée par le machine learning qui prédit le risque de diabète et génère des rapports professionnels.",
+      "Application immobilière multiplateforme avec annonces, messagerie et estimation intelligente des prix.",
+
     fullDescription: [
-      "Application web de santé propulsée par le machine learning qui prédit le risque de diabète et génère des rapports professionnels.",
-      "Le système repose sur un modèle entraîné sur des données médicales, avec un tableau de bord utilisateur permettant de suivre l'historique des prédictions et d'exporter les résultats en PDF.",
+      "Application hybride de mise en relation pour la vente, l’achat et la location de biens immobiliers.",
+      "Recherche avancée, gestion des annonces, favoris, messagerie interne, réservations et abonnements.",
+      "Intégration d’un modèle de Machine Learning pour l’estimation automatique des prix immobiliers.",
+      "Mise en place d’une approche DevSecOps avec CI/CD et analyses de sécurité automatisées.",
     ],
+
     tags: [
-      "Risk Prediction",
-      "Authentication",
-      "PDF Reports",
-      "User Dashboard",
+      "Flutter",
+      "Dart",
+      "Supabase",
+      "FastAPI",
+      "Python",
+      "Machine Learning",
+      "GitHub Actions",
+      "DevSecOps",
     ],
-    demoUrl: "",
-    githubUrl: "",
-  },
-  {
-    id: "kidney-stone-detection",
-    tag: "ML",
-    title: "Kidney Stone Detection",
-    translations: {
-      fr: {
-        title: "Kidney Stone Detection",
-        description:
-          "Solution d'imagerie médicale par deep learning utilisant des modèles CNN pour classifier des images d'échographie rénale.",
-        fullDescription: [
-          "Solution d'imagerie médicale par deep learning utilisant des modèles CNN pour classifier des images d'échographie rénale.",
-          "Un tableau de bord de détection permet de visualiser les résultats de classification en temps réel, avec un focus sur la précision du modèle et l'analyse d'images médicales.",
-        ],
-      },
-      en: {
-        title: "Kidney Stone Detection",
-        description:
-          "A deep learning medical imaging solution using CNN models to classify kidney ultrasound images.",
-        fullDescription: [
-          "A deep learning medical imaging solution using CNN models to classify kidney ultrasound images.",
-          "A detection dashboard displays classification results in real time, focusing on model accuracy and medical image analysis.",
-        ],
-      },
-    },
-    platform: "mobile",
-    image: "assets/projets/chill.jpg",
-    description:
-      "Solution d'imagerie médicale par deep learning utilisant des modèles CNN pour classifier des images d'échographie rénale.",
-    fullDescription: [
-      "Solution d'imagerie médicale par deep learning utilisant des modèles CNN pour classifier des images d'échographie rénale.",
-      "Un tableau de bord de détection permet de visualiser les résultats de classification en temps réel, avec un focus sur la précision du modèle et l'analyse d'images médicales.",
-    ],
-    tags: [
-      "Medical Image Analysis",
-      "CNN Classification",
-      "Detection Dashboard",
-      "Deep Learning",
-    ],
+
     demoUrl: "",
     githubUrl: "",
     gallery: [
-      "assets/projets/chill.jpg",
-      "assets/projets/diabetes-prediction.png",
-      "assets/projets/Ergonomie.avif",
-      "assets/projets/HTML interface.webp",
-      "assets/projets/IMG20260920162425.jpg",
-      "assets/projets/interface 1960.jpg",
-      "assets/projets/Interface du futur.jpeg",
-      "assets/projets/Machine Interface Homme.png",
-      "assets/projets/Macintosh.webp",
-      "assets/projets/Methode evaluation UI.gif",
-      "assets/projets/Modern UI.webp",
-      "assets/projets/msdos 1960.webp",
-      "assets/projets/NLS 1960.png",
-      "assets/projets/Responsive.jpg",
-      "assets/projets/VR && AR.jpeg",
-      "assets/projets/prduit fournisseur info.png",
+      "assets/projets/Darlink/login.png",
+      "assets/projets/Darlink/catalogue.png",
+      "assets/projets/Darlink/Messagerie.png",
+      "assets/projets/Darlink/cree_annonce.png",
+      "assets/projets/Darlink/projet.png",
     ],
   },
+  {
+    id: "wfs",
+    tag: "web",
+    title: "WFS — Wide Format Space",
+
+    translations: {
+      fr: {
+        title: "WFS — Wide Format Space",
+        description:
+          "Site vitrine et catalogue bilingue pour Wide Format Space : impression grand format KIP, plieuses GERA / KIPFold, scanners, consommables, papiers, pièces de rechange et SAV.",
+        fullDescription: [
+          "Wide Format Space (WFS) est une entreprise d’Aubervilliers spécialisée dans l’impression grand format. Le site présente l’offre destinée aux professionnels de l’architecture, de l’ingénierie et de la création : matériel KIP, plieuses GERA et KIPFold, scanners, logiciels, consommables, papiers, pièces de rechange et service après-vente.",
+          "Le catalogue machines (séries KIP 71G / 75G / 79G, 700C et 900C, GeraFold, KIPFold, scanners 720 et 2300) est intégré au code, avec fiches produits, visuels, points forts et brochures PDF. Les consommables et papiers sont filtrables ; les pièces de rechange sont servies depuis MySQL, avec recherche par référence ou désignation.",
+          "Le site est bilingue (français par défaut, anglais), responsive, et optimisé SEO (canonical, Open Graph, données structurées, sitemaps). Les formulaires contact, devis et SAV utilisent Cloudflare Turnstile. Google Maps et YouTube ne se chargent qu’après consentement cookies.",
+          "Stack : HTML, CSS, JavaScript et PHP, sans CMS. Hébergement LWS sur wfsk.fr (HTTPS, redirection www vers l’apex). Identité : Montserrat, accent #0A5AAF.",
+        ],
+      },
+      en: {
+        title: "WFS — Wide Format Space",
+        description:
+          "Bilingual showcase and catalog site for Wide Format Space: KIP wide-format printing, GERA / KIPFold folders, scanners, supplies, papers, spare parts, and after-sales service.",
+        fullDescription: [
+          "Wide Format Space (WFS) is an Aubervilliers-based company specializing in wide-format printing. The site presents the offering for architecture, engineering, and creative professionals: KIP hardware, GERA and KIPFold folders, scanners, software, supplies, papers, spare parts, and after-sales service.",
+          "The machine catalog (KIP 71G / 75G / 79G, 700C and 900C series, GeraFold, KIPFold, 720 and 2300 scanners) lives in the codebase, with product pages, visuals, highlights, and PDF brochures. Supplies and papers are filterable; spare parts come from MySQL, searchable by reference or name.",
+          "The site is bilingual (French default, English), responsive, and SEO-oriented (canonical, Open Graph, structured data, sitemaps). Contact, quote, and after-sales forms use Cloudflare Turnstile. Google Maps and YouTube load only after cookie consent.",
+          "Stack: HTML, CSS, JavaScript, and PHP, no CMS. Hosted on LWS at wfsk.fr (HTTPS, www to apex redirect). Visual identity: Montserrat, accent #0A5AAF.",
+        ],
+      },
+    },
+
+    platform: "Web",
+    image: "/assets/projets/WFSK/logo.png",
+    description:
+      "Site vitrine et catalogue bilingue pour Wide Format Space : impression grand format KIP, plieuses GERA / KIPFold, scanners, consommables, papiers, pièces de rechange et SAV.",
+    fullDescription: [
+      "Wide Format Space (WFS) est une entreprise d’Aubervilliers spécialisée dans l’impression grand format. Le site présente l’offre destinée aux professionnels de l’architecture, de l’ingénierie et de la création : matériel KIP, plieuses GERA et KIPFold, scanners, logiciels, consommables, papiers, pièces de rechange et service après-vente.",
+      "Le catalogue machines (séries KIP 71G / 75G / 79G, 700C et 900C, GeraFold, KIPFold, scanners 720 et 2300) est intégré au code, avec fiches produits, visuels, points forts et brochures PDF. Les consommables et papiers sont filtrables ; les pièces de rechange sont servies depuis MySQL, avec recherche par référence ou désignation.",
+      "Le site est bilingue (français par défaut, anglais), responsive, et optimisé SEO (canonical, Open Graph, données structurées, sitemaps). Les formulaires contact, devis et SAV utilisent Cloudflare Turnstile. Google Maps et YouTube ne se chargent qu’après consentement cookies.",
+      "Stack : HTML, CSS, JavaScript et PHP, sans CMS. Hébergement LWS sur wfsk.fr (HTTPS, redirection www vers l’apex). Identité : Montserrat, accent #0A5AAF.",
+    ],
+    tags: [
+      "PHP",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "MySQL",
+      "SEO",
+      "Bilingue",
+      "Vitrine",
+    ],
+
+    demoUrl: "https://wfsk.fr/",
+    githubUrl: "",
+    gallery: [
+      "/images/projects/wfs/accueil.webp",
+      "/images/projects/wfs/catalogue.webp",
+      "/images/projects/wfs/fiche-produit.webp",
+      "/images/projects/wfs/pieces-de-rechange.webp",
+    ],
+  },
+
   {
     id: "tijarti",
     tag: "Mobile",
@@ -150,20 +179,11 @@ const projetsData = [
       "Cloudinary",
       "REST API",
       "Supabase",
-      "Render"
+      "Render",
     ],
 
     githubUrl: "",
-    gallery: [
-      "/images/projects/tijarti/onboarding.png",
-      "/images/projects/tijarti/login.png",
-      "/images/projects/tijarti/fiche-produit.png",
-      "/images/projects/tijarti/panier.png",
-      "/images/projects/tijarti/historique-commandes.png",
-      "/images/projects/tijarti/catalogue-fournisseur.png",
-      "/images/projects/tijarti/stats-fournisseur.png",
-      "/images/projects/tijarti/dashboard-admin.png",
-    ],
+    gallery: [],
   },
 ];
 
