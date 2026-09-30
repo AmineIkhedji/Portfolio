@@ -76,11 +76,25 @@ function renderWall(projet, images, lang, labels) {
   const rest = images.slice(1);
   if (!rest.length) return "";
   const enlarge = lang === "en" ? "Enlarge image" : "Agrandir l'image";
-  return `
-    <div class="pp-wall-head">
-      <h2 data-i18n="projects.screens">${labels.screens}</h2>
-      <span class="pp-wall-count">${images.length}</span>
-    </div>
+  const gallery =
+    rest.length > 2
+      ? `
+    <button class="pp-gallery-preview" type="button" data-lightbox-index="1" aria-label="${labels.see_more}">
+      <span class="pp-gallery-preview-images" aria-hidden="true">
+        ${rest
+          .slice(0, 2)
+          .map(
+            (src) => `
+          <span class="pp-gallery-preview-thumb"><img src="${src}" alt="" loading="lazy" /></span>`,
+          )
+          .join("")}
+      </span>
+      <span class="pp-gallery-preview-overlay">
+        <span class="pp-gallery-preview-label">${labels.see_more}</span>
+        <span class="pp-gallery-preview-count">+${rest.length}</span>
+      </span>
+    </button>`
+      : `
     <div class="pp-wall" data-platform="${projet.platform || "auto"}">
       ${rest
         .map(
@@ -90,7 +104,13 @@ function renderWall(projet, images, lang, labels) {
         </button>`,
         )
         .join("")}
+    </div>`;
+  return `
+    <div class="pp-wall-head">
+      <h2 data-i18n="projects.screens">${labels.screens}</h2>
+      <span class="pp-wall-count">${images.length}</span>
     </div>
+    ${gallery}
   `;
 }
 

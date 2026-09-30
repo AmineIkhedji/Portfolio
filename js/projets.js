@@ -57,25 +57,6 @@ function renderProjets(lang = getLanguage()) {
   container.innerHTML = projetsData
     .map((projet) => renderProjetCard(getLocalizedProjet(projet, lang), labels))
     .join("");
-  setupProjetCardImages(container);
-}
-
-function setupProjetCardImages(container) {
-  container.querySelectorAll(".projet-image-wrap img").forEach((img) => {
-    const applyOrientation = () => {
-      if (!img.naturalWidth || !img.naturalHeight) return;
-      const wrap = img.closest(".projet-image-wrap");
-      if (!wrap) return;
-      wrap.dataset.orientation =
-        img.naturalWidth / img.naturalHeight < 0.78 ? "portrait" : "standard";
-    };
-
-    if (img.complete) {
-      applyOrientation();
-    } else {
-      img.addEventListener("load", applyOrientation, { once: true });
-    }
-  });
 }
 
 function updateReadMoreVisibility() {

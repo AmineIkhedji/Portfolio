@@ -120,6 +120,7 @@ const translations = {
       github: "GitHub",
       back: "Retour aux projets",
       screens: "Galerie",
+      see_more: "Voir plus",
       next: "Projet suivant",
       not_found: {
         title: "Projet introuvable",
@@ -320,6 +321,7 @@ const translations = {
       github: "GitHub",
       back: "Back to projects",
       screens: "Screenshots",
+      see_more: "See more",
       next: "Next project",
       not_found: {
         title: "Project not found",
