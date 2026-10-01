@@ -11,7 +11,7 @@ const projetsData = [
           "Application immobilière multiplateforme permettant de rechercher, publier et gérer des biens à vendre ou à louer, avec messagerie, favoris et estimation intelligente des prix.",
 
         fullDescription: [
-          "DarLink est une application immobilière hybride conçue pour faciliter la mise en relation entre acheteurs, locataires, propriétaires et promoteurs immobiliers.",
+          "DarLink est une application immobilière hybride conçue pour faciliter la mise en relation entre acheteurs, locataires, propriétaires et promoteurs immobiliers. Ce projet universitaire a été réalisé en groupe.",
           "L’application permet de consulter et publier des annonces, rechercher des biens selon différents critères, sauvegarder des favoris, communiquer via une messagerie interne et gérer les réservations et abonnements.",
           "Une fonctionnalité de Machine Learning permet également d’estimer le prix d’un bien à partir de critères tels que le type de bien, la localisation, la surface et le nombre de pièces.",
           "Le projet intègre également une approche DevSecOps avec GitHub Actions, incluant des pipelines CI/CD ainsi que des analyses de sécurité SAST, DAST et SCA.",
@@ -24,7 +24,7 @@ const projetsData = [
           "A cross-platform real estate application for searching, publishing and managing properties for sale or rent, with messaging, favorites and intelligent price estimation.",
 
         fullDescription: [
-          "DarLink is a hybrid real estate application designed to connect buyers, tenants, property owners and real estate developers.",
+          "DarLink is a hybrid real estate application designed to connect buyers, tenants, property owners and real estate developers. It was developed as a university group project.",
           "The application allows users to browse and publish listings, search for properties using different criteria, save favorites, communicate through internal messaging, and manage reservations and subscriptions.",
           "A Machine Learning feature also estimates property prices based on criteria such as property type, location, surface area and number of rooms.",
           "The project also follows a DevSecOps approach using GitHub Actions, including CI/CD pipelines and SAST, DAST and SCA security analysis.",
@@ -39,7 +39,7 @@ const projetsData = [
       "Application immobilière multiplateforme avec annonces, messagerie et estimation intelligente des prix.",
 
     fullDescription: [
-      "Application hybride de mise en relation pour la vente, l’achat et la location de biens immobiliers.",
+      "Application hybride de mise en relation pour la vente, l’achat et la location de biens immobiliers. Ce projet universitaire a été réalisé en groupe.",
       "Recherche avancée, gestion des annonces, favoris, messagerie interne, réservations et abonnements.",
       "Intégration d’un modèle de Machine Learning pour l’estimation automatique des prix immobiliers.",
       "Mise en place d’une approche DevSecOps avec CI/CD et analyses de sécurité automatisées.",
@@ -210,6 +210,135 @@ const projetsData = [
       "/assets/projets/Tijarti/statistiques 2.png",
       "/assets/projets/Tijarti/Statistiques 3.png",
       "/assets/projets/Tijarti/Statistiques.png",
+    ],
+  },
+  {
+    id: "PlantCheck",
+    tag: "ML / Mobile",
+    title: "Plant Check",
+
+    translations: {
+      fr: {
+        title: "Plant Check",
+        description:
+          "Projet universitaire réalisé en groupe. Application mobile de détection des maladies des plantes grâce à l'intelligence artificielle, avec analyse d'images directement sur l'appareil.",
+        fullDescription: [
+          "Plant Check est un projet universitaire réalisé en groupe dans le cadre du Master en Génie Logiciel. L'application permet de détecter automatiquement les maladies des plantes à partir d'une photo prise avec l'appareil ou importée depuis la galerie.",
+          "Le projet combine Deep Learning et Big Data. Un modèle EfficientNetB3 a été entraîné sur un dataset construit à partir de quatre sources de données publiques, après fusion, nettoyage, déduplication et équilibrage des classes.",
+          "Le modèle a ensuite été converti en TensorFlow Lite et intégré directement dans l'application Flutter. L'analyse est ainsi effectuée localement sur l'appareil, ce qui permet d'utiliser la détection sans connexion Internet.",
+          "L'application propose également un historique des analyses, un tableau de bord statistique et un système de sauvegarde des résultats avec MongoDB Atlas et Cloudinary.",
+        ],
+      },
+
+      en: {
+        title: "Plant Check",
+        description:
+          "University group project. Mobile application for detecting plant diseases using artificial intelligence, with image analysis performed directly on the device.",
+        fullDescription: [
+          "Plant Check is a university group project. The application automatically detects plant diseases from a photo taken with the camera or imported from the gallery.",
+          "The project combines Deep Learning and Big Data. An EfficientNetB3 model was trained on a dataset built from four public data sources after class merging, cleaning, deduplication and balancing.",
+          "The model was then converted to TensorFlow Lite and integrated directly into the Flutter application. This allows the analysis to run locally on the device without requiring an Internet connection.",
+          "The application also provides analysis history, statistical dashboards and result storage using MongoDB Atlas and Cloudinary.",
+        ],
+      },
+    },
+
+    platform: "Android / iOS",
+
+    image: "/assets/projets/plantcheck/logo.jpg",
+
+    description:
+      "Projet universitaire réalisé en groupe : application mobile de détection des maladies des plantes par IA avec analyse locale hors ligne.",
+
+    fullDescription: [
+      "Projet universitaire réalisé en groupe",
+      "Détection automatique des maladies à partir d'images de feuilles.",
+      "Modèle EfficientNetB3 entraîné avec une approche de transfer learning et de fine-tuning.",
+      "Dataset construit à partir de quatre sources publiques, avec nettoyage, déduplication par MD5, suppression des images floues et équilibrage des classes.",
+      "Modèle converti en TensorFlow Lite pour permettre l'inférence directement sur smartphone.",
+      "Backend Node.js / Express avec API REST pour la gestion des utilisateurs et des analyses.",
+      "MongoDB Atlas pour stocker les utilisateurs et l'historique des analyses.",
+      "Cloudinary pour le stockage des images sauvegardées.",
+      "Authentification basée sur JWT.",
+      "Tableau de bord, historique des analyses et gestion du profil.",
+    ],
+
+    tags: [
+      "Flutter",
+      "Dart",
+      "TensorFlow",
+      "TensorFlow Lite",
+      "EfficientNetB3",
+      "Deep Learning",
+      "Node.js",
+      "Express",
+      "MongoDB Atlas",
+      "Cloudinary",
+      "JWT",
+      "Render",
+    ],
+
+    demoUrl: "",
+    githubUrl: "",
+    gallery: [
+      "/assets/projets/plantcheck/1.jpg",
+      "/assets/projets/plantcheck/2.jpg",
+      "/assets/projets/plantcheck/3.jpg",
+      "/assets/projets/plantcheck/4.jpg",
+    ],
+  },
+  {
+    id: "maktaba-dz",
+    tag: "Projet universitaire",
+    title: "MAKTABA.DZ",
+    translations: {
+      fr: {
+        title: "MAKTABA.DZ",
+        description:
+          "Une marketplace algérienne de livres d’occasion qui donne une seconde vie aux ouvrages grâce à une communauté de lecteurs.",
+        fullDescription: [
+          "MAKTABA.DZ est un projet universitaire réalisé en équipe. La plateforme met en relation lecteurs et vendeurs autour d’un catalogue de livres d’occasion, avec l’ambition de faciliter l’accès à la lecture et de favoriser le réemploi des ouvrages.",
+          "Les utilisateurs peuvent parcourir le catalogue, vendre des livres, gérer leurs commandes et utiliser le DZK, le solde virtuel de la plateforme. Des espaces dédiés aux clients, employés et administrateurs permettent également de gérer les livres, les ventes et l’activité.",
+          "Le projet intègre un assistant conversationnel connecté à Google Gemini ainsi qu’un service de prévision des ventes par période et par catégorie. Un AGL a servi à modéliser plusieurs entités métier et à produire certains éléments du backend.",
+        ],
+      },
+      en: {
+        title: "MAKTABA.DZ",
+        description:
+          "An Algerian second-hand book marketplace giving books a new life through a community of readers.",
+        fullDescription: [
+          "MAKTABA.DZ is a team-built university project. The platform connects readers and sellers through a second-hand book catalogue, aiming to make reading more accessible and encourage the reuse of books.",
+          "Users can browse the catalogue, list books for sale, manage orders and use DZK, the platform’s virtual balance. Dedicated spaces for customers, employees and administrators support book, sales and activity management.",
+          "The project includes a conversational assistant connected to Google Gemini and a sales forecasting service by period and category. A software engineering tool (AGL) was used to model several business entities and generate parts of the backend.",
+        ],
+      },
+    },
+    platform: "Application web",
+    image: "/assets/projets/maktabadz/logo.png",
+    description:
+      "Une marketplace algérienne de livres d’occasion qui donne une seconde vie aux ouvrages grâce à une communauté de lecteurs.",
+    fullDescription: [
+      "MAKTABA.DZ est un projet universitaire réalisé en équipe. La plateforme met en relation lecteurs et vendeurs autour d’un catalogue de livres d’occasion, avec l’ambition de faciliter l’accès à la lecture et de favoriser le réemploi des ouvrages.",
+      "Les utilisateurs peuvent parcourir le catalogue, vendre des livres, gérer leurs commandes et utiliser le DZK, le solde virtuel de la plateforme. Des espaces dédiés aux clients, employés et administrateurs permettent également de gérer les livres, les ventes et l’activité.",
+      "Le projet intègre un assistant conversationnel connecté à Google Gemini ainsi qu’un service de prévision des ventes par période et par catégorie. Un AGL a servi à modéliser plusieurs entités métier et à produire certains éléments du backend.",
+    ],
+    tags: [
+      "Marketplace",
+      "E-commerce",
+      "React",
+      "Node.js",
+      "Python",
+      "Intelligence artificielle",
+      "Projet universitaire",
+    ],
+    demoUrl: "https://maktabadz.netlify.app/",
+    githubUrl: "",
+    gallery: [
+      "/assets/projets/maktabadz/accueil.png",
+      "/assets/projets/maktabadz/panier.png",
+      "/assets/projets/maktabadz/vente.png",
+      "/assets/projets/maktabadz/profile.png",
+      "/assets/projets/maktabadz/IA.png",
     ],
   },
 ];
