@@ -329,6 +329,176 @@ body.no-navbar main {
   box-shadow: 0 0 0 2px var(--color-accent);
 }
 
+/* ---------- journal des évolutions ---------- */
+
+.pp-changelog {
+  margin-top: clamp(4rem, 8vw, 7rem);
+  padding: clamp(1.5rem, 4vw, 3rem) 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pp-changelog-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.pp-changelog-eyebrow {
+  margin: 0 0 0.65rem;
+  color: var(--color-accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.pp-changelog-heading h2 {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  line-height: 1.15;
+}
+
+.pp-changelog-intro {
+  max-width: 48rem;
+  margin: 0.8rem 0 0;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
+.pp-changelog-source {
+  flex: none;
+  color: var(--color-accent);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.pp-changelog-source:focus-visible,
+.pp-changelog-details summary:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+.pp-changelog-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 3rem;
+  margin: 2rem 0 1.5rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+.pp-changelog-stats strong {
+  margin-right: 0.25rem;
+  color: var(--color-text-primary);
+  font-size: 1.15rem;
+}
+
+.pp-changelog-content > p {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+.pp-changelog-content.is-error > p {
+  color: var(--color-text-secondary);
+}
+
+.pp-changelog-details summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-weight: 700;
+  list-style: none;
+}
+
+.pp-changelog-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.pp-changelog-details summary::after {
+  content: "+";
+  color: var(--color-accent);
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.pp-changelog-details[open] summary::after {
+  content: "−";
+}
+
+.pp-changelog-details summary span {
+  margin-left: auto;
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.pp-changelog-timeline {
+  padding: 0 0 0 1rem;
+  border-left: 1px solid var(--color-border);
+}
+
+.pp-changelog-release {
+  position: relative;
+  padding: 0.25rem 0 1.75rem 1.5rem;
+}
+
+.pp-changelog-release::before {
+  position: absolute;
+  top: 0.55rem;
+  left: -1.28rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 2px solid var(--color-accent);
+  border-radius: 50%;
+  background: var(--color-background);
+  content: "";
+}
+
+.pp-changelog-release h3 {
+  margin: 0 0 0.9rem;
+  color: var(--color-text-primary);
+  font-size: 1rem;
+}
+
+.pp-changelog-group + .pp-changelog-group {
+  margin-top: 1rem;
+}
+
+.pp-changelog-group h4 {
+  margin: 0 0 0.4rem;
+  color: var(--color-accent);
+  font-size: 0.9rem;
+}
+
+.pp-changelog-group ul {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding-left: 1.15rem;
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+}
+
+.pp-changelog-group li::marker {
+  color: var(--color-accent);
+}
+
+.pp-changelog-group code {
+  overflow-wrap: anywhere;
+  color: var(--color-text-primary);
+  font-size: 0.9em;
+}
+
 /* ---------- projet suivant ---------- */
 
 .pp-next {
@@ -609,6 +779,24 @@ body.lightbox-open {
   .pp-next {
     flex-direction: column-reverse;
     align-items: flex-start;
+  }
+
+  .pp-changelog-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .pp-changelog-stats {
+    gap: 0.75rem 1.5rem;
+  }
+
+  .pp-changelog-timeline {
+    padding-left: 0.65rem;
+  }
+
+  .pp-changelog-release {
+    padding-left: 1rem;
   }
 
   .pp-next-thumb {

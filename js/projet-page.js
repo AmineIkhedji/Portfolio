@@ -114,6 +114,178 @@ function renderWall(projet, images, lang, labels) {
   `;
 }
 
+function renderChangelogSection(projet, lang) {
+  if (!projet.changelog) return "";
+
+  const labels =
+    lang === "en"
+      ? {
+          eyebrow: "TIJARTI · SOLO CONTINUATION",
+          title: "Changelog (French)",
+          intro:
+            "After the team project, I continued development independently. Here is the full record of fixes, improvements and additions.",
+          source: "Open Markdown source",
+          loading: "Loading the changelog…",
+          loadError: "The changelog could not be loaded. Use the source link above.",
+          updates: "documented changes",
+          dates: "release dates",
+          allChanges: "Browse all documented changes (in French)",
+        }
+      : {
+          eyebrow: "TIJARTI · REPRISE INDIVIDUELLE",
+          title: "Journal des évolutions",
+          intro:
+            "Après le projet réalisé en équipe, j’ai poursuivi le développement en solo. Voici le détail des corrections, améliorations et ajouts.",
+          source: "Ouvrir la source Markdown",
+          loading: "Chargement du changelog…",
+          loadError: "Le changelog n’a pas pu être chargé. Utilise le lien source ci-dessus.",
+          updates: "changements documentés",
+          dates: "dates de livraison",
+          allChanges: "Parcourir tous les changements",
+        };
+
+  return `
+    <section class="pp-changelog" aria-labelledby="pp-changelog-title" data-changelog-url="${projet.changelog}">
+      <div class="pp-changelog-heading">
+        <div>
+          <p class="pp-changelog-eyebrow">${labels.eyebrow}</p>
+          <h2 id="pp-changelog-title">${labels.title}</h2>
+          <p class="pp-changelog-intro">${labels.intro}</p>
+        </div>
+        <a class="pp-changelog-source" href="${projet.changelog}" target="_blank" rel="noopener" lang="fr">${labels.source}</a>
+      </div>
+      <div class="pp-changelog-stats" aria-live="polite">
+        <span><strong data-changelog-count>—</strong> ${labels.updates}</span>
+        <span><strong data-changelog-dates>—</strong> ${labels.dates}</span>
+      </div>
+      <div class="pp-changelog-content" data-changelog-content aria-live="polite">
+        <p>${labels.loading}</p>
+      </div>
+    </section>
+  `;
+}
+
+function parseChangelog(markdown) {
+  const releases = [];
+  let release = null;
+  let group = null;
+
+  markdown.split(/\r?\n/).forEach((line) => {
+    const dateMatch = line.match(/^## (\d{4}-\d{2}-\d{2})\s*$/);
+    if (dateMatch) {
+      release = { date: dateMatch[1], groups: [] };
+      releases.push(release);
+      group = null;
+      return;
+    }
+
+    const groupMatch = line.match(/^### (.+)$/);
+    if (groupMatch && release) {
+      group = { title: groupMatch[1], items: [] };
+      release.groups.push(group);
+      return;
+    }
+
+    const itemMatch = line.match(/^- (.+)$/);
+    if (itemMatch && group) group.items.push(itemMatch[1]);
+  });
+
+  return releases.filter((entry) => entry.groups.some((item) => item.items.length));
+}
+
+function appendChangelogText(element, text) {
+  const parts = text.split(/`([^`]+)`/g);
+  parts.forEach((part, index) => {
+    if (index % 2) {
+      const code = document.createElement("code");
+      code.textContent = part;
+      element.appendChild(code);
+    } else {
+      element.appendChild(document.createTextNode(part));
+    }
+  });
+}
+
+function formatChangelogDate(date, lang) {
+  return new Intl.DateTimeFormat(lang === "en" ? "en-GB" : "fr-FR", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${date}T12:00:00Z`));
+}
+
+async function loadProjetChangelog(section, lang) {
+  const labels =
+    lang === "en"
+      ? { error: "The changelog could not be loaded. Use the source link above.", all: "Browse all documented changes (in French)" }
+      : { error: "Le changelog n’a pas pu être chargé. Utilise le lien source ci-dessus.", all: "Parcourir tous les changements" };
+  const content = section.querySelector("[data-changelog-content]");
+
+  try {
+    const response = await fetch(section.dataset.changelogUrl);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+    const releases = parseChangelog(await response.text());
+    if (!releases.length) throw new Error("No dated entries found");
+    if (!section.isConnected) return;
+
+    const changeCount = releases.reduce(
+      (total, entry) => total + entry.groups.reduce((count, item) => count + item.items.length, 0),
+      0,
+    );
+    section.querySelector("[data-changelog-count]").textContent = changeCount;
+    section.querySelector("[data-changelog-dates]").textContent = releases.length;
+
+    const details = document.createElement("details");
+    details.className = "pp-changelog-details";
+    const summary = document.createElement("summary");
+    summary.append(document.createTextNode(labels.all));
+    const summaryCount = document.createElement("span");
+    summaryCount.textContent = `${releases.length}`;
+    summary.appendChild(summaryCount);
+    details.appendChild(summary);
+
+    const timeline = document.createElement("div");
+    timeline.className = "pp-changelog-timeline";
+    timeline.lang = "fr";
+
+    releases.forEach((entry) => {
+      const article = document.createElement("article");
+      article.className = "pp-changelog-release";
+      const heading = document.createElement("h3");
+      heading.textContent = formatChangelogDate(entry.date, lang);
+      article.appendChild(heading);
+
+      entry.groups.forEach((item) => {
+        const group = document.createElement("section");
+        group.className = "pp-changelog-group";
+        const groupHeading = document.createElement("h4");
+        groupHeading.textContent = item.title;
+        group.appendChild(groupHeading);
+
+        const list = document.createElement("ul");
+        item.items.forEach((change) => {
+          const listItem = document.createElement("li");
+          appendChangelogText(listItem, change);
+          list.appendChild(listItem);
+        });
+        group.appendChild(list);
+        article.appendChild(group);
+      });
+
+      timeline.appendChild(article);
+    });
+
+    details.appendChild(timeline);
+    content.replaceChildren(details);
+  } catch (error) {
+    if (!section.isConnected) return;
+    content.textContent = labels.error;
+    content.classList.add("is-error");
+  }
+}
+
 function renderNext(sourceProjet, lang, labels) {
   if (projetsData.length < 2) return "";
   const idx = projetsData.findIndex((p) => p.id === sourceProjet.id);
@@ -190,8 +362,12 @@ function renderProjetPage() {
       </div>
     </div>
 
+    ${renderChangelogSection(sourceProjet, lang)}
     ${renderNext(sourceProjet, lang, labels)}
   `;
+
+  const changelogSection = root.querySelector(".pp-changelog");
+  if (changelogSection) loadProjetChangelog(changelogSection, lang);
 
   setupLightbox(root, lang);
 }
