@@ -289,7 +289,7 @@ const projetsData = [
   },
   {
     id: "maktaba-dz",
-    tag: "Projet universitaire",
+    tag: "Web",
     title: "MAKTABA.DZ",
     translations: {
       fr: {
