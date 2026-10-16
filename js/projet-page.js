@@ -39,11 +39,7 @@ function getProjetImages(projet) {
 }
 
 function absoluteUrl(path) {
-  try {
-    return new URL(path, document.baseURI).href;
-  } catch (e) {
-    return path;
-  }
+  return new URL(path.replace(/^\/+/, ""), document.baseURI).href;
 }
 
 function projetHref(id) {
@@ -145,14 +141,14 @@ function renderChangelogSection(projet, lang) {
         };
 
   return `
-    <section class="pp-changelog" aria-labelledby="pp-changelog-title" data-changelog-url="${projet.changelog}">
+    <section class="pp-changelog" aria-labelledby="pp-changelog-title" data-changelog-url="${absoluteUrl(projet.changelog)}">
       <div class="pp-changelog-heading">
         <div>
           <p class="pp-changelog-eyebrow">${labels.eyebrow}</p>
           <h2 id="pp-changelog-title">${labels.title}</h2>
           <p class="pp-changelog-intro">${labels.intro}</p>
         </div>
-        <a class="pp-changelog-source" href="${projet.changelog}" target="_blank" rel="noopener" lang="fr">${labels.source}</a>
+        <a class="pp-changelog-source" href="${absoluteUrl(projet.changelog)}" target="_blank" rel="noopener" lang="fr">${labels.source}</a>
       </div>
       <div class="pp-changelog-stats" aria-live="polite">
         <span><strong data-changelog-count>—</strong> ${labels.updates}</span>
@@ -297,7 +293,7 @@ function renderNext(sourceProjet, lang, labels) {
         <strong class="pp-next-title">${next.title}</strong>
       </span>
       <span class="pp-next-thumb">
-        <img src="${next.image}" alt="" loading="lazy" />
+        <img src="${absoluteUrl(next.image)}" alt="" loading="lazy" />
         <span class="pp-next-arrow">${ICON_ARROW}</span>
       </span>
     </a>
@@ -318,7 +314,7 @@ function renderProjetPage() {
   }
 
   const projet = getLocalizedProjet(sourceProjet, lang);
-  const images = getProjetImages(projet);
+  const images = getProjetImages(projet).map(absoluteUrl);
   lightboxImages = images;
   document.title = `${projet.title} - Ikhedji Amine`;
 

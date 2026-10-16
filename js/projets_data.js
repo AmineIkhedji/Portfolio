@@ -46,29 +46,21 @@ const projetsData = [
 
     tags: [
       "PHP",
-
+      "HTML/CSS",
       "MySQL",
-
       "JavaScript",
-
       "Full-Stack",
-
       "UI/UX Design",
-
       "SEO",
-
       "Bilingue",
-
-      "Sur-mesure",
+      "LWS",
+      "Cloudflare Turnstile"
     ],
 
     demoUrl: "https://wfsk.fr/",
-
     githubUrl: "",
-
     gallery: [
       "/assets/projets/WFSK/accueil.png",
-
       "/assets/projets/WFSK/pages_materiel_grand_format.png",
     ],
   },
@@ -86,7 +78,6 @@ const projetsData = [
 
         description:
           "Application mobile B2B de commerce de gros adaptée au marché algérien, réunissant commerçants, fournisseurs, employés et administrateurs au sein d’un même parcours de commande.",
-
         fullDescription: [
           "Application mobile B2B de commerce de gros adaptée au marché algérien, réunissant commerçants, fournisseurs, employés et administrateurs au sein d’un même parcours de commande. Elle remplace les commandes souvent gérées par téléphone ou WhatsApp et permet aux fournisseurs de présenter leurs produits avec prix, conditionnements et photos.",
 
@@ -236,7 +227,7 @@ const projetsData = [
 
     platform: "Android / iOS",
 
-    image: "/assets/projets/plantcheck/logo.png",
+    image: "assets/projets/Plantcheck/logo.png",
 
     tags: [
       "Flutter",
@@ -269,13 +260,13 @@ const projetsData = [
     githubUrl: "",
 
     gallery: [
-      "/assets/projets/plantcheck/1.jpg",
+      "assets/projets/Plantcheck/1.jpg",
 
-      "/assets/projets/plantcheck/2.jpg",
+      "assets/projets/Plantcheck/2.jpg",
 
-      "/assets/projets/plantcheck/3.jpg",
+      "assets/projets/Plantcheck/3.jpg",
 
-      "/assets/projets/plantcheck/4.jpg",
+      "assets/projets/Plantcheck/4.jpg",
     ],
   },
 
@@ -393,7 +384,7 @@ const projetsData = [
 
     platform: "Application web",
 
-    image: "/assets/projets/maktabadz/logo.png",
+    image: "assets/projets/MaktabaDZ/logo.png",
 
     tags: [
       "Marketplace",
@@ -416,15 +407,15 @@ const projetsData = [
     githubUrl: "",
 
     gallery: [
-      "/assets/projets/maktabadz/accueil.png",
+      "assets/projets/MaktabaDZ/Accueil.png",
 
-      "/assets/projets/maktabadz/panier.png",
+      "assets/projets/MaktabaDZ/panier.png",
 
-      "/assets/projets/maktabadz/vente.png",
+      "assets/projets/MaktabaDZ/vente.png",
 
-      "/assets/projets/maktabadz/profile.png",
+      "assets/projets/MaktabaDZ/profile.png",
 
-      "/assets/projets/maktabadz/IA.png",
+      "assets/projets/MaktabaDZ/IA.png",
     ],
   },
 
@@ -583,26 +574,62 @@ const projetsData = [
     demoUrl: "",
     githubUrl: "https://github.com/AmineIkhedji/Chronos",
     gallery: [
-      "/assets/projets/chronos/SplashScreen.jpg",
-      "/assets/projets/chronos/tuto.jpg",
-      "/assets/projets/chronos/tuto4.jpg",
-      "/assets/projets/chronos/tuto5.jpg",
-      "/assets/projets/chronos/tuto3.jpg",
-      "/assets/projets/chronos/tuto2.jpg",
-      "/assets/projets/chronos/accueil.jpg",
-      "/assets/projets/chronos/accueil2.jpg",
-      "/assets/projets/chronos/accueil3.jpg",
-      "/assets/projets/chronos/nouveau.jpg",
-      "/assets/projets/chronos/tache.jpg",
-      "/assets/projets/chronos/detail tache.jpg",
-      "/assets/projets/chronos/habit.jpg",
-      "/assets/projets/chronos/calendrier.jpg",
-      "/assets/projets/chronos/calendrier2.jpg",
-      "/assets/projets/chronos/stats.jpg",
-      "/assets/projets/chronos/parametre.jpg",
-      "/assets/projets/chronos/personnaliser.jpg",
-      "/assets/projets/chronos/parametre2.jpg",
+      "assets/projets/Chronos/SplashScreen.jpg",
+      "assets/projets/Chronos/tuto.jpg",
+      "assets/projets/Chronos/tuto4.jpg",
+      "assets/projets/Chronos/tuto5.jpg",
+      "assets/projets/Chronos/tuto3.jpg",
+      "assets/projets/Chronos/tuto2.jpg",
+      "assets/projets/Chronos/accueil.jpg",
+      "assets/projets/Chronos/accueil2.jpg",
+      "assets/projets/Chronos/accueil3.jpg",
+      "assets/projets/Chronos/nouveau.jpg",
+      "assets/projets/Chronos/tache.jpg",
+      "assets/projets/Chronos/detail tache.jpg",
+      "assets/projets/Chronos/habit.jpg",
+      "assets/projets/Chronos/calendrier.jpg",
+      "assets/projets/Chronos/calendrier2.jpg",
+      "assets/projets/Chronos/stats.jpg",
+      "assets/projets/Chronos/parametre.jpg",
+      "assets/projets/Chronos/personnaliser.jpg",
+      "assets/projets/Chronos/parametre2.jpg",
     ],
+  },
+  {
+    id: "chronosport",
+    tag: "Mobile & Sport",
+    title: "ChronoSport",
+
+    translations: {
+      fr: {
+        title: "ChronoSport",
+        description:
+          "Un chrono sportif personnalisable pour préparer et suivre automatiquement des séances de Tabata, HIIT, boxe ou fractionné.",
+        fullDescription: [
+          "ChronoSport simplifie les entraînements par intervalles : configurez le nombre d’efforts, leur durée, les pauses et la grande pause, ou choisissez un preset modifiable.",
+          "Avant de démarrer, visualisez le programme et sa durée totale. Pendant la séance, un compte à rebours circulaire coloré, une timeline des étapes et des bips sonores indiquent la progression.",
+          "Mettez la séance en pause ou reprenez-la à tout moment. L’application propose des thèmes clair, sombre ou système et une interface adaptative pour téléphones, tablettes et écrans plus larges.",
+        ],
+      },
+      en: {
+        title: "ChronoSport",
+        description:
+          "A customizable workout timer to plan and automatically run Tabata, HIIT, boxing, or interval-running sessions.",
+        fullDescription: [
+          "ChronoSport simplifies interval training: set the number and duration of work intervals, short breaks, and the final rest, or start from an editable preset.",
+          "Preview the workout sequence and total duration before starting. During a session, a color-coded circular countdown, step timeline, and audio cues keep track of progress.",
+          "Pause and resume workouts at any time. The app includes light, dark, and system themes, with a responsive layout for phones, tablets, and wider screens.",
+        ],
+      },
+    },
+
+    platform: "Android, iOS, Web, Windows, macOS, Linux",
+    image: "assets/projets/Chronosport/logo.png",
+    tags: ["Flutter", "Dart", "Fitness", "HIIT", "Cross-platform"],
+
+    demoUrl: "",
+    githubUrl: "https://github.com/AmineIkhedji/chronosport",
+    gallery: [],
   },
 ];
 

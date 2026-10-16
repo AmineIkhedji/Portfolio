@@ -190,7 +190,14 @@ const translations = {
       title: 'Discutons de votre projet<span class="accent">.</span>',
       subtitle:
         "Disponible pour un stage, une collaboration ou simplement échanger.",
-      email: "ikhedjiamine43@gmail.com",
+      revealButton: "Révéler mon adresse e-mail",
+      loadingWidget: "Chargement de la vérification…",
+      verifying: "Vérification en cours…",
+      emailRevealed: "Adresse révélée.",
+      widgetExpired: "La vérification a expiré. Recommencez.",
+      widgetError: "Impossible de charger Turnstile. Réessayez.",
+      emailError: "Impossible de vérifier la demande. Réessayez.",
+      notConfigured: "La fonction de contact n'est pas encore configurée.",
     },
 
     // ============ FOOTER ============
@@ -390,7 +397,14 @@ const translations = {
     contact: {
       title: 'Let\'s discuss your project<span class="accent">.</span>',
       subtitle: "Available for an internship, collaboration, or just to chat.",
-      email: "ikhedjiamine43@gmail.com",
+      revealButton: "Reveal my email address",
+      loadingWidget: "Loading verification…",
+      verifying: "Verifying…",
+      emailRevealed: "Email address revealed.",
+      widgetExpired: "Verification expired. Please try again.",
+      widgetError: "Unable to load Turnstile. Please try again.",
+      emailError: "Unable to verify the request. Please try again.",
+      notConfigured: "The contact feature has not been configured yet.",
     },
 
     // ============ FOOTER ============

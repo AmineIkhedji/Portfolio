@@ -8,12 +8,15 @@ function projetUrl(id) {
 }
 
 function renderProjetCard(projet, labels) {
-  const imageUrl = new URL(projet.image, document.baseURI).href;
+  const imageUrl = new URL(
+    projet.image.replace(/^\/+/, ""),
+    document.baseURI,
+  ).href;
   return `
     <article class="projet-card" data-reveal="scale" data-projet-id="${projet.id}" data-platform="${projet.platform || ""}">
       <a class="projet-image-link" href="${projetUrl(projet.id)}" aria-label="${labels.view_project} ${projet.title}">
         <div class="projet-image-wrap" style="--projet-card-bg: url('${imageUrl}');">
-          <img src="${projet.image}" alt="${projet.title}" loading="lazy" />
+          <img src="${imageUrl}" alt="${projet.title}" loading="lazy" />
           <span class="projet-type-badge">${projet.tag}</span>
         </div>
       </a>

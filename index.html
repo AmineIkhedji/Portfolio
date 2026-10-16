@@ -405,15 +405,33 @@
           >
             Disponible pour un stage, une collaboration ou simplement échanger.
           </p>
+          <button
+            class="contact-reveal-button"
+            id="contact-reveal-button"
+            type="button"
+            data-reveal="up"
+            data-i18n="contact.revealButton"
+          >
+            Révéler mon adresse e-mail
+          </button>
+          <div
+            id="contact-turnstile"
+            class="contact-turnstile"
+            hidden
+          ></div>
+          <p
+            id="contact-status"
+            class="contact-status"
+            role="status"
+            aria-live="polite"
+          ></p>
           <a
             class="contact-email"
-            href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=ikhedjiamine43@gmail.com"
+            id="contact-email"
             target="_blank"
             rel="noopener noreferrer"
-            data-reveal="up"
-            data-i18n="contact.email"
-            >ikhedjiamine43@gmail.com</a
-          >
+            hidden
+          ></a>
         </div>
       </section>
     </main>
@@ -448,7 +466,7 @@
           </a>
           <a
             class="site-footer-social-link"
-            href="#"
+            href="https://www.linkedin.com/in/ikhedji-amine-881551444/"
             target="_blank"
             rel="noopener"
             aria-label="LinkedIn"
@@ -491,5 +509,7 @@
     <script src="js/formation.js"></script>
     <script src="js/scroll-reveal.js"></script>
     <script src="js/starfield.js"></script>
+    <script src="js/contact-config.js"></script>
+    <script src="js/contact.js"></script>
   </body>
 </html>

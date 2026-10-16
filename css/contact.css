@@ -62,8 +62,10 @@
   color: var(--color-text-secondary);
 }
 
+.contact-reveal-button,
 .contact-email {
   display: inline-block;
+  font-family: inherit;
   font-size: 1.05rem;
   font-weight: 600;
   color: var(--color-text-primary);
@@ -73,9 +75,50 @@
   transition: var(--transition-smooth);
 }
 
+.contact-reveal-button {
+  padding: 0 0 3px;
+  background: transparent;
+  border-top: 0;
+  border-right: 0;
+  border-left: 0;
+  cursor: pointer;
+}
+
+.contact-reveal-button:hover,
 .contact-email:hover {
   color: var(--color-accent);
   border-color: var(--color-accent);
+}
+
+.contact-reveal-button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+.contact-reveal-button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.contact-email[hidden] {
+  display: none;
+}
+
+.contact-turnstile[hidden] {
+  display: none;
+}
+
+.contact-turnstile:not([hidden]) {
+  display: flex;
+  justify-content: center;
+  margin: 1.25rem auto 0;
+}
+
+.contact-status {
+  min-height: 1.5em;
+  margin: 0.75rem 0 0;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
 }
 
 /* ==================== FOOTER ==================== */

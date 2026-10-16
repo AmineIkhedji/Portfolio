@@ -171,10 +171,7 @@ function updateAllTexts(lang) {
   // === CONTACT ===
   updateElementHTML('[data-i18n="contact.title"]', t.contact.title);
   updateElementText('[data-i18n="contact.subtitle"]', t.contact.subtitle);
-
-  // L'email est un lien, on garde la même valeur (ne change pas)
-  // const emailEl = document.querySelector('[data-i18n="contact.email"]');
-  // if (emailEl) emailEl.textContent = t.contact.email;
+  if (window.updateContactTexts) window.updateContactTexts(t.contact);
 
   // === FOOTER ===
   const year = new Date().getFullYear();

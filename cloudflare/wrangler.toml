@@ -1,0 +1,3 @@
+name = "portfolio-contact"
+main = "contact-worker.js"
+compatibility_date = "2026-10-16"
