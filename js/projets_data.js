@@ -28,6 +28,19 @@ const projetsData = [
 
       en: {
         title: "WFS — Wide Format Space",
+        tag: "Web",
+        tags: [
+          "PHP",
+          "HTML/CSS",
+          "MySQL",
+          "JavaScript",
+          "Full-Stack",
+          "UI/UX Design",
+          "SEO",
+          "Bilingual",
+          "LWS",
+          "Cloudflare Turnstile",
+        ],
         description:
           "A bilingual showcase website and custom product catalog for Wide Format Space, independently designed and developed from interface design to deployment.",
         fullDescription: [
@@ -91,6 +104,7 @@ const projetsData = [
 
       en: {
         title: "Tijarti",
+        tag: "Mobile",
         description:
           "A B2B wholesale mobile app tailored to the Algerian market, bringing merchants, suppliers, employees and administrators together in a single ordering workflow.",
         fullDescription: [
@@ -214,6 +228,7 @@ const projetsData = [
 
       en: {
         title: "Plant Check",
+        tag: "ML / Mobile",
         description:
           "A university group project: a mobile app that detects plant diseases using artificial intelligence, with image analysis performed directly on the device.",
         fullDescription: [
@@ -297,6 +312,7 @@ const projetsData = [
 
       en: {
         title: "DarLink",
+        tag: "Mobile",
         description:
           "A cross-platform real estate app for searching, publishing and managing properties for sale or rent, with messaging, favorites and intelligent price estimation.",
         fullDescription: [
@@ -372,6 +388,17 @@ const projetsData = [
 
       en: {
         title: "MAKTABA.DZ",
+        tag: "Web",
+        platform: "Web application",
+        tags: [
+          "Marketplace",
+          "E-commerce",
+          "React",
+          "Node.js",
+          "Python",
+          "Artificial intelligence",
+          "University project",
+        ],
         description:
           "An Algerian second-hand book marketplace that gives books a second life through a community of readers.",
         fullDescription: [
@@ -444,6 +471,8 @@ const projetsData = [
 
       en: {
         title: "Pong — Arcade Game",
+        tag: "Video game",
+        tags: ["C", "raylib", "Game AI", "Local multiplayer"],
         description:
           "A version of the classic Pong game, developed in C with raylib, featuring a single-player mode with multiple difficulty levels and local multiplayer.",
         fullDescription: [
@@ -490,6 +519,15 @@ const projetsData = [
       },
       en: {
         title: "First 3D Game",
+        tag: "3D game",
+        tags: [
+          "Godot",
+          "Blender",
+          "C#",
+          "3D game",
+          "Prototype",
+          "Learning project",
+        ],
         description:
           "A small prototype made to explore Godot, Blender, and the basics of 3D game development.",
         fullDescription: [
@@ -542,6 +580,20 @@ const projetsData = [
       },
       en: {
         title: "Chronos",
+        tag: "Mobile",
+        tags: [
+          "Flutter",
+          "Dart",
+          "Productivity",
+          "Time management",
+          "Tasks",
+          "Habits",
+          "Calendar",
+          "Statistics",
+          "Offline-first",
+          "Riverpod",
+          "Isar",
+        ],
         description:
           "My personal time-management app, bringing tasks, recurring habits and a calendar together in a clear, customizable experience that works offline.",
         fullDescription: [
@@ -613,6 +665,7 @@ const projetsData = [
       },
       en: {
         title: "ChronoSport",
+        tag: "Mobile & Sports",
         description:
           "A customizable workout timer to plan and automatically run Tabata, HIIT, boxing, or interval-running sessions.",
         fullDescription: [
