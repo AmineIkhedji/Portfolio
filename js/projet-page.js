@@ -117,7 +117,7 @@ function renderChangelogSection(projet, lang) {
     lang === "en"
       ? {
           eyebrow: "TIJARTI · SOLO CONTINUATION",
-          title: "Changelog (French)",
+          title: "Changelog",
           intro:
             "After the team project, I continued development independently. Here is the full record of fixes, improvements and additions.",
           source: "Open Markdown source",
@@ -125,7 +125,7 @@ function renderChangelogSection(projet, lang) {
           loadError: "The changelog could not be loaded. Use the source link above.",
           updates: "documented changes",
           dates: "release dates",
-          allChanges: "Browse all documented changes (in French)",
+          allChanges: "Browse all documented changes",
         }
       : {
           eyebrow: "TIJARTI · REPRISE INDIVIDUELLE",
@@ -140,15 +140,21 @@ function renderChangelogSection(projet, lang) {
           allChanges: "Parcourir tous les changements",
         };
 
+  const changelogUrl = absoluteUrl(
+    lang === "en"
+      ? "assets/projets/Tijarti/CHANGELOG.en.md"
+      : projet.changelog,
+  );
+
   return `
-    <section class="pp-changelog" aria-labelledby="pp-changelog-title" data-changelog-url="${absoluteUrl(projet.changelog)}">
+    <section class="pp-changelog" aria-labelledby="pp-changelog-title" data-changelog-url="${changelogUrl}">
       <div class="pp-changelog-heading">
         <div>
           <p class="pp-changelog-eyebrow">${labels.eyebrow}</p>
           <h2 id="pp-changelog-title">${labels.title}</h2>
           <p class="pp-changelog-intro">${labels.intro}</p>
         </div>
-        <a class="pp-changelog-source" href="${absoluteUrl(projet.changelog)}" target="_blank" rel="noopener" lang="fr">${labels.source}</a>
+        <a class="pp-changelog-source" href="${changelogUrl}" target="_blank" rel="noopener" lang="${lang}">${labels.source}</a>
       </div>
       <div class="pp-changelog-stats" aria-live="polite">
         <span><strong data-changelog-count>—</strong> ${labels.updates}</span>
@@ -244,7 +250,7 @@ async function loadProjetChangelog(section, lang) {
 
     const timeline = document.createElement("div");
     timeline.className = "pp-changelog-timeline";
-    timeline.lang = "fr";
+    timeline.lang = lang;
 
     releases.forEach((entry) => {
       const article = document.createElement("article");
