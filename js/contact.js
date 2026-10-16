@@ -76,7 +76,7 @@
       emailLink.hidden = false;
       widgetContainer.hidden = true;
       button.hidden = true;
-      setStatus("emailRevealed");
+      setStatus("");
     } catch {
       setStatus("emailError");
       button.hidden = false;
