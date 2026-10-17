@@ -213,10 +213,10 @@ const projetsData = [
         title: "Plant Check",
 
         description:
-          "Application mobile universitaire de détection des maladies des plantes par intelligence artificielle, avec analyse d’images exécutée directement sur l’appareil.",
+          "Projet universitaire réalisé par une équipe de six étudiants : une application mobile de détection des maladies des plantes par intelligence artificielle.",
 
         fullDescription: [
-          "Application mobile universitaire de détection des maladies des plantes par intelligence artificielle, avec analyse d’images exécutée directement sur l’appareil. Réalisée en groupe dans le cadre du Master en Génie Logiciel, elle accepte les photos prises avec l’appareil ou importées depuis la galerie.",
+          "L’application détecte les maladies des plantes par intelligence artificielle, avec une analyse d’images exécutée directement sur l’appareil. Elle accepte les photos prises avec l’appareil ou importées depuis la galerie.",
 
           "Le projet combine Deep Learning et préparation de données : un modèle EfficientNetB3 a été entraîné sur un jeu de données issu de quatre sources publiques, après fusion, nettoyage, déduplication et équilibrage des classes.",
 
@@ -230,9 +230,9 @@ const projetsData = [
         title: "Plant Check",
         tag: "ML / Mobile",
         description:
-          "A university group project: a mobile app that detects plant diseases using artificial intelligence, with image analysis performed directly on the device.",
+          "A university project developed by a team of six: a mobile app that detects plant diseases using artificial intelligence.",
         fullDescription: [
-          "A university group project: a mobile app that detects plant diseases using artificial intelligence, with image analysis performed directly on the device. Developed as part of a Master’s degree in Software Engineering, it accepts photos taken with the camera or imported from the gallery.",
+          "The app detects plant diseases using artificial intelligence, with image analysis performed directly on the device. It accepts photos taken with the camera or imported from the gallery.",
           "The project combines Deep Learning and Big Data. An EfficientNetB3 model was trained on a dataset assembled from four public data sources, after merging classes, cleaning the data, removing duplicates and balancing the classes.",
           "The model was converted to TensorFlow Lite and integrated into the Flutter app, allowing disease detection without an Internet connection.",
           "The app also includes an analysis history, a statistical dashboard and result storage using MongoDB Atlas and Cloudinary.",
